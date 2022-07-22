@@ -19,6 +19,7 @@ void	add_node(t_list *lst, t_node *pos, char *str)
 	new = malloc(sizeof(t_node));
 	new->str = str;
 	new->next = NULL;
+	lst->size++;
 	if (!lst->head || !pos)
 	{
 		add_front(lst, new);
@@ -37,6 +38,7 @@ void	delete_node(t_list *lst, t_node *to_delete)
 
 	if (!lst->head || !to_delete)
 		return ;
+	lst->size--;
 	if (lst->head == to_delete)
 	{
 		tmp = lst->head;

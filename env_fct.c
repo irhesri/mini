@@ -2,16 +2,16 @@
 
 void	init_env(t_data *data, char **envp)
 {
+	char	*str;
 	t_list	*exp;
 	t_list	*env;
-	char	*str;
 
 	env = malloc(sizeof(t_list));
 	exp = malloc(sizeof(t_list));
 	env->head = NULL;
 	exp->head = NULL;
-	env->last = NULL;
-	exp->last = NULL;
+	data->env->size = 0;
+	data->exp->size = 0;
 	while (envp && *envp)
 	{
 		str = my_strdup(*envp, '\0');
@@ -23,6 +23,27 @@ void	init_env(t_data *data, char **envp)
 	add_node(exp, get_position(exp->head, str), str);
 	data->env = env;
 	data->exp = exp;
+	data->b = 0;
+}
+
+void	init_envp(t_data *data)
+{
+	int		i;
+	t_node	*head;
+
+	if (data->b == 2)
+		return ;
+	if (data->b == 1)
+		free(data->envp);
+	data->envp = malloc(sizeof(char **) * data->env->size);
+	head = data->env->head;
+	i = -1;
+	while (head)
+	{
+		data->envp[++i] = head->str;
+		head = head->next;
+	}
+	data->b = 2;	
 }
 
 t_node	*my_getenv(t_node *head, char *str)
@@ -57,8 +78,8 @@ t_node	*get_position(t_node *head, char *str)
 	return (pos);
 }
 
-t_node *node;
-char	*str;
+// t_node *node;
+// char	*str;
 
-node = my_getenv(DATA->ENV->HEAD, "LANG");
-str = node->str + my_search(node->str, '=') + 1;
+// node = my_getenv(DATA->ENV->HEAD, "LANG");
+// str = node->str + my_search(node->str, '=') + 1;

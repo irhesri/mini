@@ -29,21 +29,39 @@ int	check_export(char *str)
 void	export(t_data *data, char **str)
 {
 	int		i;
+	char	*find;
+	t_node	*node;
 
 	if (!str || !*str)
 	{
 		export_print(data->exp);
 		return ;
 	}
-	// while (*str)
-	// {
-	// 	// 2 exist whithout value
-	// 	// 1 doesn't exist
-	// 	if (check_export(*str) == 1 || check_export(*str) == 2)
-	// 		add_node(data->env, *str, -1);
-	// 	add_node(exp, *str, get_index(exp->head, *str));
-	// 	str++;
-	// }
+	while (*str)
+	{
+		find = my_strdup(str, '=');
+		i = my_search(str, '=');
+		node = my_getenv(data->exp->head, find);
+		if (!node)
+			add_node(data->exp, get_position(data->exp->head, find), str);
+		else
+		{
+			if (str[i - 1])
+			free (node->str);
+			node->str = str;
+		}
+		if (!node && i >= 0)
+			add_node(data->env, -1, str);
+		else if (i >= 0)
+		{
+			node = my_getenv(data->env->head, find);
+			free (node->str);
+			node->str = str;
+		}
+		if (i >= 0)
+			data->b = 1;
+		str++;
+	}
 	
 }
 

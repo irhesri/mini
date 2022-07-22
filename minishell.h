@@ -20,6 +20,8 @@ typedef struct s_list
 
 typedef struct s_data
 {
+	short	b;
+	char	**envp;
 	t_list	*env;
 	t_list	*exp;
 }	t_data;
