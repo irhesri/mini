@@ -34,27 +34,25 @@ void	add_node(t_list *lst, t_node *pos, char *str)
 void	init_env(t_data *data, char **envp)
 {
 	char	*str;
-	t_list	*exp;
-	t_list	*env;
 
-	env = malloc(sizeof(t_list));
-	exp = malloc(sizeof(t_list));
-	env->head = NULL;
-	env->last = NULL;
-	exp->head = NULL;
-	env->size = 0;
-	exp->size = 0;
-	while (envp && *envp)
+	data->env = malloc(sizeof(t_list));
+	data->exp = malloc(sizeof(t_list));
+	data->env->head = NULL;
+	data->env->last = NULL;
+	data->exp->head = NULL;
+	data->env->size = 0;
+	data->exp->size = 0;
+	while (envp && *(envp + 1))
 	{
 		str = my_strdup(*envp, '\0');
-		add_node(env, env->last, str);
-		add_node(exp, get_position(exp->head, *envp), str);
+		add_node(data->env, data->env->last, str);
+		add_node(data->exp, get_position(data->exp->head, *envp), str);
 		envp++;
 	}
 	str = my_strdup("OLDPWD", '\0');
-	add_node(exp, get_position(exp->head, str), str);
-	data->env = env;
-	data->exp = exp;
+	add_node(data->exp, get_position(data->exp->head, str), str);
+	str = my_strdup("_=/usr/bin/env", '\0');
+	add_node(data->env, data->env->last, str);
 	data->envp = NULL;
 	update_envp(data);
 }
