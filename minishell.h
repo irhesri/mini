@@ -25,6 +25,10 @@ typedef struct s_data
 	t_list	*exp;
 }	t_data;
 
+//	PARSE
+char	*var_expand(t_list *env, char *str, int *len);
+char	*get_var_data(t_node *node);
+char	*var_expand(t_list *env, char *str, int *len);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, char *str);

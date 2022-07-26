@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	is_special(char c)
+static int	is_special(char c)
 {		
 	return (!((c > 47 && c < 58) || (c > 64 && c < 91)
 			|| (c > 96 && c < 123) || (c == 43)
@@ -24,7 +24,7 @@ int	env_regex(char *str, short b)
 	{
 		if ((!b && (str[i] == 43 || str[i] == 61))
 			|| (b && str[i] == 43 && str[i + 1] != '=')
-			||is_special(str[i]))
+			|| is_special(str[i]))
 			error = 1;
 		i++;
 	}
@@ -87,7 +87,7 @@ void	unset(t_data *data, char **arg)
 
 	while (*arg)
 	{
-		if (env_regex(*arg, 0) && arg++)
+		if ((env_regex(*arg, 0) || (**arg == '_' && !*(arg + 1))) && arg++)
 			continue ;
 		node = my_getenv(data->exp->head, *arg);
 		if (node)

@@ -22,8 +22,19 @@ int	main(int ac, char **av, char **envp)
 		av++;
 	}
 	arg[i] = NULL;
-	
-	export(data, arg);
+	i = -1;
+	int x;
+	int j;
+	while (++i < ac - 1)
+	{
+		printf("%s\n", var_expand(data->env, arg[i] + 1, &j));
+
+		// printf("%s\n", get_var_data(my_getenv(data->env->head, arg[i])));
+		
+		// printf("---2-----: %s\n", arg[i] + x);
+		// printf("---2-----: %s\n", arg[i]);
+	}
+	// export(data, arg);
 	// env(data->env);
 	// unset(data, arg);
 	// export(data, NULL);
@@ -32,5 +43,4 @@ int	main(int ac, char **av, char **envp)
 	// {
 	// 	;
 	// }
-	
 }
