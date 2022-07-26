@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	is_special(char c)
+static int	_is_special(char c)
 {		
 	return (!((c > 47 && c < 58) || (c > 64 && c < 91)
 			|| (c > 96 && c < 123) || (c == 43)
@@ -24,7 +24,7 @@ int	env_regex(char *str, short b)
 	{
 		if ((!b && (str[i] == 43 || str[i] == 61))
 			|| (b && str[i] == 43 && str[i + 1] != '=')
-			|| is_special(str[i]))
+			|| _is_special(str[i]))
 			error = 1;
 		i++;
 	}
@@ -62,17 +62,19 @@ void	delete_node(t_list *lst, t_node *to_delete)
 	free (tmp);
 }
 
-t_node	*my_getenv(t_node *head, char *str)
+t_node	*getenv_node(t_node *head, char *str)
 {
 	char	*var;
+	char	*content;
 	size_t	size;
 
 	var = my_strdup(str, '=');
+	content = head->content;
 	size = my_size(NULL, var);
 	while (head)
 	{
-		if (!my_strncmp(head->str, var, size)
-			&& (head->str[size] == '=' || head->str[size] == '\0'))
+		if (!my_strncmp(head->content, var, size)
+			&& (content[size] == '=' || content[size] == '\0'))
 			break ;
 		head = head->next;
 	}
@@ -82,19 +84,21 @@ t_node	*my_getenv(t_node *head, char *str)
 
 void	unset(t_data *data, char **arg)
 {
+	int		j;
 	char	*tmp;
 	t_node	*node;
 
+	// while (arg && j++ < data->n)
 	while (*arg)
 	{
 		if ((env_regex(*arg, 0) || (**arg == '_' && !*(arg + 1))) && arg++)
 			continue ;
-		node = my_getenv(data->exp->head, *arg);
+		node = getenv_node(data->exp->head, *arg);
 		if (node)
 		{
-			tmp = node->str;
+			tmp = node->content;
 			delete_node(data->exp, node);
-			node = my_getenv(data->env->head, *arg);
+			node = getenv_node(data->env->head, *arg);
 			if (node)
 			{
 				delete_node(data->env, node);

@@ -12,12 +12,12 @@ static void	add_front(t_list *lst, t_node *new)
 	lst->head = new;
 }
 
-void	add_node(t_list *lst, t_node *pos, char *str)
+void	add_node(t_list *lst, t_node *pos, void *content)
 {
 	t_node	*new;
 
 	new = malloc(sizeof(t_node));
-	new->str = str;
+	new->content = content;
 	new->next = NULL;
 	lst->size++;
 	if (!lst->head || !pos)
@@ -69,7 +69,7 @@ void	update_envp(t_data *data)
 	i = -1;
 	while (head)
 	{
-		data->envp[++i] = head->str;
+		data->envp[++i] = head->content;
 		head = head->next;
 	}
 }
@@ -81,7 +81,7 @@ void	env(t_list *env)
 	tmp = env->head;
 	while (tmp)
 	{
-		printf("%s\n", tmp->str);
+		printf("%s\n", tmp->content);
 		tmp = tmp->next;
 	}
 }
