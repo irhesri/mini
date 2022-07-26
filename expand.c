@@ -6,18 +6,17 @@ static int	is_special(char c)
 			|| (c > 96 && c < 123) || (c == 95)));
 }
 
-char	*get_var_data(t_node *node)
+char	*my_getenv(t_list *env, char *str)
 {
 	int		i;
-	char	*str;
+	t_node	*node;
 
-	str = NULL;
-	if (node)
-	{
-		str = node->str;
-		i = my_search(str, '=');
-		str = my_strdup(str + i + 1, '\0');
-	}
+	node = getenv_node(env->head, str);
+	if (!node)
+		return (NULL);
+	str = node->content;
+	i = my_search(str, '=');
+	str = my_strdup(str + i + 1, '\0');
 	return (str);
 }
 
@@ -44,8 +43,7 @@ char	*var_expand(t_list *env, char *str, int *len)
 		return (my_strdup("$", '\0'));
 	c = str[(*len)];
 	str[(*len)] = '\0';
-	node = my_getenv(env->head, str);
-	str = get_var_data(node);
+	str = my_getenv(env, str);
 	res[(*len)] = c;
 	return (str);
 }
