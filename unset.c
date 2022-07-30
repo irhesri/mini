@@ -7,6 +7,9 @@ static int	_is_special(char c)
 			|| (c == 95) || (c == 61)));
 }
 
+// b == 0 for unset
+// b == 1 for export
+// checks regular expression for unset and export
 int	env_regex(char *str, short b)
 {
 	int			i;
@@ -36,7 +39,8 @@ int	env_regex(char *str, short b)
 	return (error);
 }
 
-//	CHANGE	IT 
+// delete node to_delete 
+// get to_delete using getenv_node() function
 void	delete_node(t_list *lst, t_node *to_delete)
 {
 	t_node	*tmp;
@@ -62,6 +66,7 @@ void	delete_node(t_list *lst, t_node *to_delete)
 	free (tmp);
 }
 
+// like getenv() except that it returns pointer to a node
 t_node	*getenv_node(t_node *head, char *str)
 {
 	char	*var;
@@ -69,11 +74,11 @@ t_node	*getenv_node(t_node *head, char *str)
 	size_t	size;
 
 	var = my_strdup(str, '=');
-	content = head->content;
 	size = my_size(NULL, var);
 	while (head)
 	{
-		if (!my_strncmp(head->content, var, size)
+		content = head->content;
+		if (!ft_strncmp(head->content, var, size)
 			&& (content[size] == '=' || content[size] == '\0'))
 			break ;
 		head = head->next;
@@ -82,12 +87,12 @@ t_node	*getenv_node(t_node *head, char *str)
 	return (head);
 }
 
+// doesn't unset _
 void	unset(t_data *data, char **arg)
 {
 	int		j;
 	char	*tmp;
 	t_node	*node;
-
 	// while (arg && j++ < data->n)
 	while (*arg)
 	{
@@ -108,7 +113,6 @@ void	unset(t_data *data, char **arg)
 			}
 			free (tmp);
 		}
-		free (*arg);
-		arg++;
+		free (*arg++);
 	}
 }

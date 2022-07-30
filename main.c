@@ -19,28 +19,20 @@ int	main(int ac, char **av, char **envp)
 	while (++i < ac - 1)
 	{
 		arg[i] = my_strdup(*av, '\0');
+		// printf("%s\n", arg[i]);
+
 		av++;
 	}
 	arg[i] = NULL;
-	// i = -1;
-	// int x;
-	// int j;
-	// while (++i < ac - 1)
-	// {
-	// 	printf("%s\n", var_expand(data->env, arg[i], &j));
-
-	// 	// printf("%s\n", my_getenv(getenv_node(data->env->head, arg[i])));
-		
-	// 	// printf("---2-----: %s\n", arg[i] + x);
-	// 	// printf("---2-----: %s\n", arg[i]);
-	// }
-	// export(data, arg);
-	env(data->env);
-	// unset(data, arg);
-	// export(data, NULL);
-	// arg = NULL;
-	// while (1)
-	// {
-	// 	;
-	// }
+	
+	int len = 1;
+	i = -1;
+	while (arg[++i])
+	{
+		len = 0;
+		printf("%s\n", expand(data->env, arg[i], &len));
+		printf("%d\n", len);
+	}
+	// env(data->env);
+	
 }

@@ -1,49 +1,84 @@
 #include "minishell.h"
 
 static int	is_special(char c)
-{		
+{
 	return (!((c > 47 && c < 58) || (c > 64 && c < 91)
 			|| (c > 96 && c < 123) || (c == 95)));
 }
 
-char	*my_getenv(t_list *env, char *str)
-{
-	int		i;
-	t_node	*node;
-
-	node = getenv_node(env->head, str);
-	if (!node)
-		return (NULL);
-	str = node->content;
-	i = my_search(str, '=');
-	str = my_strdup(str + i + 1, '\0');
-	return (str);
-}
-
-char	*var_expand(t_list *env, char *str, int *len)
+// expand one variable only without joining
+char	*var_expand(t_list *env, char *str, int *size)
 {
 	int		i;
 	char	c;
 	char	*res;
 	t_node	*node;
 
-	(*len) = 0;
 	res = str;
-	if (str[(*len)] > 47 && str[(*len)] < 58)
+	if (str[(*size)] > 47 && str[(*size)] < 58)
 	{
-		c = str[++(*len)];
-		str[(*len)] = '\0';
+		c = str[++(*size)];
+		str[(*size)] = '\0';
 		str = my_strdup(str, '\0');
-		res[(*len)] = c;
-		return (my_strjoin("$", str));
+		res[(*size)] = c;
+		return (ft_strjoin("$", str));
 	}
-	while (!is_special(str[(*len)]) && str[(*len)])
-		(*len)++;
-	if (!(*len))
+	while (!is_special(str[(*size)]) && str[(*size)])
+		(*size)++;
+	if (!(*size))
 		return (my_strdup("$", '\0'));
-	c = str[(*len)];
-	str[(*len)] = '\0';
+	c = str[(*size)];
+	str[(*size)] = '\0';
 	str = my_getenv(env, str);
-	res[(*len)] = c;
+	res[(*size)] = c;
 	return (str);
+}
+
+// expand and join variables
+char	*exp(t_list *env, char *str, int *len)
+{
+	int		size;
+	char	*res;
+
+	size = 1;
+	(*len) = 0;
+	res = NULL;
+	while (*(str + *len) == '$')
+	{
+		size = 0;
+		res = free_join(res, var_expand(env, str + (*len) + 1, &size, 0));
+		(*len) += size + 1;
+		size = 0;
+		while (*(str + *len + size) != ' ' && *(str + *len + size) != '|'
+			&& *(str + *len + size) != '$' && *(str + *len + size) != '"'
+			&& *(str + *len + size) != '\0')
+			size++;
+		if (size)
+			res = free_join(res, \
+				my_strdup(str + *len, *(str + *len + size)), 0);
+		(*len) += size;
+	}
+	return (res);
+}
+
+// expand
+// split if b == 1
+char	**expand(t_list *env, char *str, int *len, short b)
+{
+	char	*res;
+	char	**ress;
+
+	res = exp(env, str, len);
+	if (b)
+	{
+		ress = my_split(res, ' ', 0);
+		free (res);
+	}
+	else
+	{
+		ress = malloc(sizeof(char *) * 2);
+		*ress = res;
+		*(ress + 1) = NULL;
+	}
+	return (ress);
 }

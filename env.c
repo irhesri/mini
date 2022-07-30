@@ -1,36 +1,5 @@
 #include "minishell.h"
-
-static void	add_front(t_list *lst, t_node *new)
-{
-	if (!lst->head)
-	{
-		lst->head = new;
-		lst->last = new;
-		return ;
-	}
-	new->next = lst->head;
-	lst->head = new;
-}
-
-void	add_node(t_list *lst, t_node *pos, void *content)
-{
-	t_node	*new;
-
-	new = malloc(sizeof(t_node));
-	new->content = content;
-	new->next = NULL;
-	lst->size++;
-	if (!lst->head || !pos)
-	{
-		add_front(lst, new);
-		return ;
-	}
-	new->next = pos->next;
-	pos->next = new;
-	if (!new->next)
-		lst->last = new;
-}
-
+// initialise enviroment and export list
 void	init_env(t_data *data, char **envp)
 {
 	char	*str;
@@ -57,6 +26,7 @@ void	init_env(t_data *data, char **envp)
 	update_envp(data);
 }
 
+// update **envp for excve if envp is null
 void	update_envp(t_data *data)
 {
 	int		i;
@@ -74,6 +44,22 @@ void	update_envp(t_data *data)
 	}
 }
 
+// get enviroment variable data
+char	*my_getenv(t_list *env, char *str)
+{
+	int		i;
+	t_node	*node;
+
+	node = getenv_node(env->head, str);
+	if (!node)
+		return (NULL);
+	str = (char *)node->content;
+	i = my_search(str, '=');
+	str = my_strdup(str + i + 1, '\0');
+	return (str);
+}
+
+// print enviroment variables (env)
 void	env(t_list *env)
 {
 	t_node	*tmp;

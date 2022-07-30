@@ -1,0 +1,2 @@
+--> get file content as arguments
+mycommand "$(< file.txt)"

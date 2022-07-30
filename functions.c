@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+// returns arr size if str NULL
+// returns str size if arr NULL
+// returns 0 if both of them NULL
+// returns str size + arr size if both of them !NULL
 size_t	my_size(char **arr, char *str)
 {
 	size_t	size;
@@ -12,18 +16,9 @@ size_t	my_size(char **arr, char *str)
 	return (size);
 }
 
-int	my_strncmp(char *str1, char *str2, size_t n)
-{
-	if (!str1 || !str2)
-		return (1);
-	while (--n && *str1 && *str2 && *str1 == *str2)
-	{
-		str1++;
-		str2++;
-	}
-	return (*str1 - *str2);
-}
-
+// returns substring of str from the beginning to char c 
+// c not included
+// returns copy of str if c doesn't exist
 char	*my_strdup(char *str, char c)
 {
 	int		i;
@@ -43,6 +38,8 @@ char	*my_strdup(char *str, char c)
 	return (new);
 }
 
+//	returns c index in str
+//	returns -1 if c doesn't exist
 int	my_search(char *str, char c)
 {
 	int	i;
@@ -55,19 +52,21 @@ int	my_search(char *str, char c)
 	return (i);
 }
 
-char	*my_strjoin(char *str1, char *str2)
+// b == 1 : free(str1)
+// b == 2 : free(str2)
+// b == 3 : free both
+char	*free_join(char *str1, char *str2, short b)
 {
-	int		i;
-	char	*res;
+	char	*str;
 
-	i = -1;
-	res = malloc(my_size(NULL, str1) + my_size(NULL, str2) + 1);
-	if (!res)
-		exit(printf("allocation error\n"));
-	while (*str1)
-		res[++i] = *str1++;
-	while (*str2)
-		res[++i] = *str2++;
-	res[++i] = '\0';
-	return (res);
+	if (!str2)
+		return (str1);
+	if (!str1)
+		return (str2);
+	str = ft_strjoin(str1, str2);
+	if (!b || b == 1)
+		free (str1);
+	if (!b || b == 2)
+		free (str2);
+	return (str);
 }
