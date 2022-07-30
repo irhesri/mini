@@ -1,6 +1,6 @@
 #include "minishell.h"
-
-void	export_print(t_list *exp)
+//	prints enviroment variables 
+static void	export_print(t_list *exp)
 {
 	int		i;
 	t_node	*tmp;
@@ -24,17 +24,18 @@ void	export_print(t_list *exp)
 	}
 }
 
+// get position of new variable in export list (sorted)
 t_node	*get_position(t_node *head, char *str)
 {
 	size_t	size;
 	t_node	*pos;
 
 	size = my_size(NULL, str) + 1;
-	if (!head || my_strncmp(head->content, str, size) > 0)
+	if (!head || ft_strncmp(head->content, str, size) > 0)
 		return (NULL);
 	pos = head;
 	head = head->next;
-	while (head && (my_strncmp(head->content, str, size) < 0))
+	while (head && (ft_strncmp(head->content, str, size) < 0))
 	{
 		pos = head;
 		head = head->next;
@@ -42,6 +43,7 @@ t_node	*get_position(t_node *head, char *str)
 	return (pos);
 }
 
+// add a new variable
 void	new_var(t_data *data, t_node *node, char *str, int i)
 {
 	char	*tmp;
@@ -49,7 +51,7 @@ void	new_var(t_data *data, t_node *node, char *str, int i)
 	if (str[i - 1] == '\0')
 	{
 		tmp = str;
-		str = my_strjoin(node->content, tmp + i + 1);
+		str = ft_strjoin(node->content, tmp + i + 1);
 		free (tmp);
 	}
 	tmp = node->content;
@@ -65,6 +67,7 @@ void	new_var(t_data *data, t_node *node, char *str, int i)
 	free(tmp);
 }
 
+// updates an exiting variable
 void	update_var(t_data *data, char *str, int i)
 {
 	char	*tmp;
@@ -72,7 +75,7 @@ void	update_var(t_data *data, char *str, int i)
 	if (i != -1 && str[i - 1] == '\0')
 	{
 		tmp = str;
-		str = my_strjoin(tmp, tmp + i);
+		str = ft_strjoin(tmp, tmp + i);
 		free (tmp);
 	}
 	add_node(data->exp, get_position(data->exp->head, str), str);
@@ -80,6 +83,8 @@ void	update_var(t_data *data, char *str, int i)
 		add_node(data->env, data->env->last, str);
 }
 
+// exports arg
+// prints enviroment variables if arg is NULL (export)
 void	export(t_data *data, char **arg)
 {
 	int		i;
@@ -103,6 +108,7 @@ void	export(t_data *data, char **arg)
 			update_var(data, *arg, i);
 		else if (i != -1)
 			new_var(data, node, *arg, i);
+		free (*arg);
 		arg++;
 	}
 }

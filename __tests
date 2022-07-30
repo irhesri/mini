@@ -1,0 +1,16 @@
+export var="hello world"; export $var=hey; ---> hello ; world=hey 
+
+
+
+
+
+
+
+
+
+*****************************************CD**************************************
+cd    ; unset HOME   ; cd    ;
+cd ~  ; unset HOME   ; cd ~  ;
+cd ~+ ; unset PWD    ; cd ~+ ;
+cd ~- ; unset OLDPWD ; cd ~- ;
+**********************************************************************************

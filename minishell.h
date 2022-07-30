@@ -26,28 +26,39 @@ typedef struct s_redirection
 	short	type;
 }	t_redirection;
 
+typedef struct s_pipe
+{
+	int		pipe_id;
+	char	**arg;
+	int		input;
+	int		output;
+}	t_pipe;
+
 typedef struct s_data
 {
 	int		n;
 	char	**envp;
 	t_list	*env;
 	t_list	*exp;
-	t_list	*redirections;
+	// t_list	*input;
+	// t_list	*output;
 }	t_data;
 
 //	PARSE
 char	*var_expand(t_list *env, char *str, int *len);
 char	*my_getenv(t_list *env, char *str);
+char	**expand(t_list *env, char *str, int *len, short b);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
 
 //	FUNCTIONS
-int		my_strncmp(char *str1, char *str2, size_t n);
+int		ft_strncmp(char *str1, char *str2, size_t n);
 int		my_search(char *str, char c);					//returns c position or -1 if it didn't exist
 char	*my_strdup(char *str, char c);
-char	*my_strjoin(char *str1, char *str2);
+char	*ft_strjoin(char *str1, char *str2);
 size_t	my_size(char **arr, char *str);
+char	*free_join(char *str1, char *str2, short b);
 
 
 //	BUILTINS
@@ -61,5 +72,7 @@ void	update_envp(t_data *data);
 t_node	*getenv_node(t_node *head, char *str);
 t_node	*get_position(t_node *head, char *str);
 int		env_regex(char *str, short b);
+
+char	**my_split(char *str, char c, short b);
 
 #endif
