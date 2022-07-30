@@ -35,7 +35,7 @@ char	*var_expand(t_list *env, char *str, int *size)
 }
 
 // expand and join variables
-char	*exp(t_list *env, char *str, int *len)
+char	*_expand(t_list *env, char *str, int *len)
 {
 	int		size;
 	char	*res;
@@ -46,7 +46,7 @@ char	*exp(t_list *env, char *str, int *len)
 	while (*(str + *len) == '$')
 	{
 		size = 0;
-		res = free_join(res, var_expand(env, str + (*len) + 1, &size, 0));
+		res = free_join(res, var_expand(env, str + (*len) + 1, &size), 0);
 		(*len) += size + 1;
 		size = 0;
 		while (*(str + *len + size) != ' ' && *(str + *len + size) != '|'
@@ -68,17 +68,13 @@ char	**expand(t_list *env, char *str, int *len, short b)
 	char	*res;
 	char	**ress;
 
-	res = exp(env, str, len);
+	res = _expand(env, str, len);
 	if (b)
 	{
 		ress = my_split(res, ' ', 0);
 		free (res);
 	}
 	else
-	{
-		ress = malloc(sizeof(char *) * 2);
-		*ress = res;
-		*(ress + 1) = NULL;
-	}
+		ress = array_realloc(NULL, res, 0);
 	return (ress);
 }

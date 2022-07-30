@@ -6,8 +6,10 @@ static void	add_front(t_list *lst, t_node *new)
 	{
 		lst->head = new;
 		lst->last = new;
+		lst->size = 1;
 		return ;
 	}
+	lst->size++;
 	new->next = lst->head;
 	lst->head = new;
 }
@@ -22,12 +24,12 @@ void	add_node(t_list *lst, t_node *pos, void *content)
 	new = malloc(sizeof(t_node));
 	new->content = content;
 	new->next = NULL;
-	lst->size++;
 	if (!lst->head || !pos)
 	{
 		add_front(lst, new);
 		return ;
 	}
+	lst->size++;
 	new->next = pos->next;
 	pos->next = new;
 	if (!new->next)

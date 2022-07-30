@@ -8,9 +8,7 @@ int	main(int ac, char **av, char **envp)
 	init_env(data, envp);
 
 	update_envp(data);
-	
-	// printf ("-----------------\n");
-	// unset(data->exp, "__CF_USER_TEXT_ENCODING");
+
 	char	**arg;
 
 	arg = malloc(sizeof(char*) * (ac + 1));
@@ -18,21 +16,26 @@ int	main(int ac, char **av, char **envp)
 	av++;
 	while (++i < ac - 1)
 	{
-		arg[i] = my_strdup(*av, '\0');
+		arg[i] = my_strdup(av[i], '\0');
 		// printf("%s\n", arg[i]);
 
-		av++;
+		// av[i];
 	}
 	arg[i] = NULL;
 	
-	int len = 1;
+
+	char *str = my_strdup("hhhhhhh", '\0');
+		// printf("%s\n", str);
+
+	// int len = 1;
+
+	char **res = array_realloc(arg, str, 0);
 	i = -1;
-	while (arg[++i])
+	while (res[++i])
 	{
-		len = 0;
-		printf("%s\n", expand(data->env, arg[i], &len));
-		printf("%d\n", len);
+	// 	len = 0;
+	// 	printf("%s\n", expand(data->env, arg[i], &len));
+		printf("%s\n", res[i]);
 	}
 	// env(data->env);
-	
 }
