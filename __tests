@@ -1,4 +1,20 @@
-export var="hello world"; export $var=hey; ---> hello ; world=hey 
+***************************************************PARSING***********************************************************************************
+echo abc"abc" / abc'abc'	;
+				---> abcabc
+echo "$var"		;
+				---> expand var value without spliting
+echo  $var		;
+				---> expand var value with spliting 
+echo '$var'		;
+				---> doesn't expand 
+echo "'$var'"	;	
+				---> expand var value and prints single quotes
+$	always expands except in simple quotes(that aren't included in double quotes) and if used in heredoc limiter
+*****************************************************export***********************************************************************************
+export var="hello world"; export $var=hey; 
+				---> hello ; world=hey ; both should be added to export
+
+**********************************************************************************************************************************************
 
 
 
@@ -7,10 +23,6 @@ export var="hello world"; export $var=hey; ---> hello ; world=hey
 
 
 
-
-*****************************************CD**************************************
+*****************************************************CD**************************************************************************************
 cd    ; unset HOME   ; cd    ;
-cd ~  ; unset HOME   ; cd ~  ;
-cd ~+ ; unset PWD    ; cd ~+ ;
-cd ~- ; unset OLDPWD ; cd ~- ;
-**********************************************************************************
+**********************************************************************************************************************************************

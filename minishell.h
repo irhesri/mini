@@ -22,7 +22,7 @@ typedef struct s_redirection
 {
 	int		fd;
 	int		pipe_id;
-	char	*file;
+	char	*name;
 	short	type;
 }	t_redirection;
 
@@ -59,6 +59,7 @@ char	*my_strdup(char *str, char c);
 char	*ft_strjoin(char *str1, char *str2);
 size_t	my_size(char **arr, char *str);
 char	*free_join(char *str1, char *str2, short b);
+char	**array_realloc(char **arr, char *str, short b);
 
 
 //	BUILTINS

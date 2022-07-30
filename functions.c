@@ -70,3 +70,34 @@ char	*free_join(char *str1, char *str2, short b)
 		free (str2);
 	return (str);
 }
+
+// b == 0 add str in the beginning of arr
+// b == -1 add str in the end of arr
+// i free arr
+char	**array_realloc(char **arr, char *str, short b)
+{
+	char	**res;
+	size_t	size;
+	int		i;
+	int		j;
+
+	if (!str)
+		return (arr);
+	size = my_size(arr, NULL) + 1;
+	res = malloc(sizeof(char *) * (size + 1));
+	i = b;
+	j = -1;
+	while (arr && arr[++j])
+		res[++i] = arr[j];
+	i += (b == -1);
+	res[i * (b != 0) + b * (b == 0)] = str;
+	res[++i] = NULL;
+	if (arr)
+		free (arr);
+	return (res);
+}
+
+// char	**array_join(char **arr1, char **arr2, short b)
+// {
+
+// }
