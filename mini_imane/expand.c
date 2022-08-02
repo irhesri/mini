@@ -1,16 +1,11 @@
 #include "minishell.h"
 
-static int	is_special(char c)
-{
-	return (!((c > 47 && c < 58) || (c > 64 && c < 91)
-			|| (c > 96 && c < 123) || (c == 95)));
-}
-
 // expand one variable only without joining
 char	*var_expand(t_list *env, char *str, int *size)
 {
 	int		i;
 	char	c;
+	char	tmp;
 	char	*res;
 	t_node	*node;
 
@@ -23,7 +18,8 @@ char	*var_expand(t_list *env, char *str, int *size)
 		res[(*size)] = c;
 		return (ft_strjoin("$", str));
 	}
-	while (!is_special(str[(*size)]) && str[(*size)])
+	tmp = str[(*size)];
+	while (!(is_digit(tmp) || is_alphabet(tmp) || tmp == '_') && str[(*size)])
 		(*size)++;
 	if (!(*size))
 		return (my_strdup("$", '\0'));

@@ -28,15 +28,13 @@ typedef struct s_redirection
 
 typedef struct s_pipe
 {
+	int		n;
 	int		pipe_id;
 	char	**arg;
-	int		input;
-	int		output;
 }	t_pipe;
 
 typedef struct s_data
 {
-	int		n;
 	char	**envp;
 	t_list	*env;
 	t_list	*exp;
@@ -72,8 +70,14 @@ void	init_env(t_data *data, char **envp);			//call it at the begining of the pro
 void	update_envp(t_data *data);
 t_node	*getenv_node(t_node *head, char *str);
 t_node	*get_position(t_node *head, char *str);
-int		env_regex(char *str, short b);
+// int		env_regex(char *str, short b);
+short	env_regex(char *str, short b);
 
 char	**my_split(char *str, char c, short b);
+
+
+// MAKE IT READABLE
+short	is_digit(char c);
+short	is_alphabet(char c);
 
 #endif
