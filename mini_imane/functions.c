@@ -97,6 +97,16 @@ char	**array_realloc(char **arr, char *str, short b)
 	return (res);
 }
 
+short	is_digit(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+short	is_alphabet(char c)
+{
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
+
 // char	**array_join(char **arr1, char **arr2, short b)
 // {
 

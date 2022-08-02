@@ -1,0 +1,33 @@
+*****************************************************CD(.. after removing the file)**************************************************************
+bash-3.2$ echo $PWD
+/Users/irhesri/Desktop/mini/t1/t2
+bash-3.2$ echo $OLDPWD
+/Users/irhesri/Desktop/mini/t1
+bash-3.2$ cd ..
+bash-3.2$ echo $PWD; echo $OLDPWD
+/Users/irhesri/Desktop/mini/t1
+/Users/irhesri/Desktop/mini/t1/t2
+bash-3.2$ cd t2
+bash-3.2$ rm -r ../../t1/
+bash-3.2$ echo $PWD; echo $OLDPWD
+/Users/irhesri/Desktop/mini/t1/t2
+/Users/irhesri/Desktop/mini/t1
+bash-3.2$ cd ..
+cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+bash-3.2$ echo $PWD; echo $OLDPWD
+/Users/irhesri/Desktop/mini/t1/t2/..
+/Users/irhesri/Desktop/mini/t1/t2
+bash-3.2$ pwd
+/Users/irhesri/Desktop/mini/t1/t2/..
+bash-3.2$ cd ..
+bash-3.2$ echo $PWD; echo $OLDPWD
+/Users/irhesri/Desktop/mini
+/Users/irhesri/Desktop/mini/t1/t2/..
+bash-3.2$ /Users/irhesri/Desktop/mini/t1/t2/../..
+bash: /Users/irhesri/Desktop/mini/t1/t2/../..: No such file or directory
+bash-3.2$ pwd
+/Users/irhesri/Desktop/mini
+bash-3.2$ mkdir t1; cd t1; mkdir t2; cd t2
+bash-3.2$ pwd 
+/Users/irhesri/Desktop/mini/t1/t2
+bash-3.2$ cd /Users/irhesri/Desktop/mini/t1/t2/..

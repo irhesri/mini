@@ -1,38 +1,34 @@
 #include "minishell.h"
 
-static int	_is_special(char c)
+static int	is_special(char c)
 {		
-	return (!((c > 47 && c < 58) || (c > 64 && c < 91)
-			|| (c > 96 && c < 123) || (c == 43)
-			|| (c == 95) || (c == 61)));
+	return (!(is_digit(c) || is_alphabet(c) 
+			|| (c == '_')));
 }
 
 // b == 0 for unset
 // b == 1 for export
 // checks regular expression for unset and export
-int	env_regex(char *str, short b)
+short	env_regex(char *str, short b)
 {
 	int			i;
-	int			size;
 	int			error;
 	const char	*set[2];
 
-	error = 0;
-	set[0] = "unset";
-	set[1] = "export";
-	if (*str == '+' || *str == '=' || (*str > 47 && *str < 58))
-		error = 1;
-	i = 0;
-	while (!error && str[i] && str[i + 1] != '=')
+	i = -1;
+	error = (*str == '+' || *str == '=' || is_digit(*str));
+	while (!error && str[++i])
 	{
-		if ((!b && (str[i] == 43 || str[i] == 61))
-			|| (b && str[i] == 43 && str[i + 1] != '=')
-			|| _is_special(str[i]))
-			error = 1;
-		i++;
+		if (b && str[i] == '=')
+			break ;
+		error = ((!b && str[i] == '+')
+			|| (b && str[i] == '+' && str[i + 1] != '=')
+			|| is_special(str[i]));
 	}
 	if (error)
 	{
+		set[0] = "unset";
+		set[1] = "export";
 		printf("minishell: %s: `%s': not a valid identifier\n", set[b], str);
 		free (str);
 	}
