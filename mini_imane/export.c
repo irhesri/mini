@@ -112,3 +112,6 @@ void	export(t_data *data, char **arg)
 		arg++;
 	}
 }
+
+// free (*arg);
+// free (arg);

@@ -6,16 +6,18 @@ void	init_env(t_data *data, char **envp)
 
 	data->env = malloc(sizeof(t_list));
 	data->exp = malloc(sizeof(t_list));
-	data->env->head = NULL;
-	data->env->last = NULL;
-	data->exp->head = NULL;
+	(data->env)->head = NULL;
+	(data->env)->last = NULL;
+	(data->exp)->head = NULL;
+	(data->exp)->last = NULL;
 	data->env->size = 0;
 	data->exp->size = 0;
-	while (envp && *(envp + 1))
+	while (envp && *envp)
 	{
 		str = my_strdup(*envp, '\0');
 		add_node(data->env, data->env->last, str);
-		add_node(data->exp, get_position(data->exp->head, *envp), str);
+		// if (**envp != '_' || (**envp && *envp[1] != '='))
+			add_node(data->exp, get_position(data->exp->head, *envp), str);
 		envp++;
 	}
 	str = my_strdup("OLDPWD", '\0');

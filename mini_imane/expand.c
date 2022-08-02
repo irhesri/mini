@@ -19,7 +19,7 @@ char	*var_expand(t_list *env, char *str, int *size)
 		return (ft_strjoin("$", str));
 	}
 	tmp = str[(*size)];
-	while (!(is_digit(tmp) || is_alphabet(tmp) || tmp == '_') && str[(*size)])
+	while ((is_digit(tmp) || is_alphabet(tmp) || tmp == '_') && str[(*size)])
 		(*size)++;
 	if (!(*size))
 		return (my_strdup("$", '\0'));
@@ -54,6 +54,7 @@ char	*_expand(t_list *env, char *str, int *len)
 				my_strdup(str + *len, *(str + *len + size)), 0);
 		(*len) += size;
 	}
+
 	return (res);
 }
 
@@ -64,6 +65,8 @@ char	**expand(t_list *env, char *str, int *len, short b)
 	char	*res;
 	char	**ress;
 
+	// if (str[1] == 39 || str[1] == '"')
+	// 	return (is_double_quoted());
 	res = _expand(env, str, len);
 	if (b)
 	{
