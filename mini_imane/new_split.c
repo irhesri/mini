@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:46:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/07/30 11:42:51 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/02 17:49:41 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static	char	**fill(t_struct *size, char *str, char c, short b)
 }
 
 // b == 1 python split
+// len == size of the array
 char	**my_split(char *str, char c, short b/*, int *len*/)
 {
 	t_struct	*size;
@@ -115,7 +116,8 @@ char	**my_split(char *str, char c, short b/*, int *len*/)
 		str++;
 	size = get_size(str, c, b);
 	words = fill(size, str, c, b);
-	// *len = size->data;
+	/*if (len)
+		*len = size->data;*/
 	while (size)
 	{
 		tmp = size->next;
