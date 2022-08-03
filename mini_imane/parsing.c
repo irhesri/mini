@@ -4,8 +4,8 @@ short	is_special(char *c)
 {
 	if (*c == 39)
 		return (1);
-	if (*c == 34)
-		return (2);
+	// if (*c == 34)
+	// 	return (2);
 	if (*c == '$')
 		return (3);
 	if (*c == '|')
@@ -47,6 +47,15 @@ t_pipe	*new_pipe(t_data *data)
 	return (pipe);
 }
 
+t_pipe	*new_argument(t_pipe *pipe, char *res)
+{
+	pipe->arg = array_realloc(pipe->arg, res, -1);
+	if (res)
+		pipe->last_arg = res;
+	pipe->n++;
+	return (NULL);
+}
+
 void	parse_time(t_data *data, char *str)
 {
 	int		i;
@@ -79,31 +88,43 @@ void	parse_time(t_data *data, char *str)
 		// else if (tmp == 2)
 		// 	res2 = is_double_quoted();
 		else if (tmp == 3)
-			res2 = expand(data->env, str + i, &len, 0);
+		{
+			res2 = split_expand(data->env, str + i, &len);
+			if (res2)
+				res = free_join(res, *res2, 0);
+			while (res2 && *res && *(res2 + 1))
+			{
+				pipe->arg = array_realloc(pipe->arg, res, -1);
+				res = *(++res2);
+			}
+		}
 		else if (tmp == 4)
 		{
-			// pipe->arg = array_realloc(pipe->arg, res, -1);
-			// pipe->last_arg = res;
-			// pipe->n++;
-			// res = NULL;
+			pipe->arg = array_realloc(pipe->arg, res, -1);
+			pipe->last_arg = res;
+			pipe->n++;
+			res = NULL;
 			pipe = new_pipe(data);
+			i++;
+			continue ;
 		}
 		// else if (tmp > 5)
 		// 	len += (is_redirection() + 1 + (tmp % 2));
 		i += len;
-		if (res2)
-		{
-			*res2 = free_join(res, *res2, 0);
-			while (*(res2 + 1))
-				array_realloc(pipe->arg, *res2++, -1);
-			res = *res2;
-			free(res2);
-		}
+		// if (res2)
+		// {
+		// 	*res2 = free_join(res, *res2, 0);
+		// 	while (*(res2 + 1))
+		// 		array_realloc(pipe->arg, *res2++, -1);
+		// 	res = *res2;
+		// 	free(res2);
+		// }
 		if (!str[i] || is_special(str + i) > 3)
 		{
 			// printf("%s\n", res)
 			pipe->arg = array_realloc(pipe->arg, res, -1);
-			pipe->last_arg = res;
+			if (res)
+				pipe->last_arg = res;
 			pipe->n++;
 			res = NULL;
 		}

@@ -52,7 +52,8 @@ void	init_env(t_data *data, char **envp);
 //	PARSE
 char	*var_expand(t_list *env, char *str, int *len);
 char	*my_getenv(t_list *env, char *str);
-char	**expand(t_list *env, char *str, int *len, short b);
+// char	**expand(t_list *env, char *str, int *len, short b);
+char	**split_expand(t_list *env, char *str, int *len);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);

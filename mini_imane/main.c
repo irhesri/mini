@@ -64,15 +64,16 @@ int	main(int ac, char **av, char **envp)
 	// 	arg[i++] = my_strdup(*av, '\0');
 	// 	av++;
 	// }
-	str = readline("-->");
-	init_data(data, str);
-	t_node	*tmp;
-	tmp = (data->pipes)->head;
+	// str = readline("-->");
+	// init_data(data, str);
+	// t_node	*tmp;
+	// tmp = (data->pipes)->head;
 	// while (tmp)
 	// {
 		// print_2D((char **)(((t_pipe *)(tmp->content))->arg));
 		// tmp=tmp->next;
 	// }
+	printf("%s - %s\n", my_strdup(av[1], '\0'), var_expand(data->env, my_strdup(av[1], '\0'), &i));
 	// print_pipes(data->pipes);
 
 	
