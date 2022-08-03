@@ -47,13 +47,27 @@ t_pipe	*new_pipe(t_data *data)
 	return (pipe);
 }
 
-t_pipe	*new_argument(t_pipe *pipe, char *res)
+char	*new_argument(t_pipe *pipe, char **res2, char *res, short b)
 {
-	pipe->arg = array_realloc(pipe->arg, res, -1);
-	if (res)
-		pipe->last_arg = res;
-	pipe->n++;
-	return (NULL);
+	if (b == 1)
+	{
+		pipe->arg = array_realloc(pipe->arg, res, -1);
+		if (res)
+			pipe->last_arg = res;
+		pipe->n++;
+		res = NULL;
+	}
+	else if (b == 2 && res2)
+	{
+		// res = free_join(res, *res2, 0);
+		// while (*res2 && *(res2 + 1))
+		// {
+		// 	// pipe->arg = array_realloc(pipe->arg, res, -1);
+		// 	res = *(++res2);
+		// }
+		// free (res2);
+	}
+	return (res);
 }
 
 void	parse_time(t_data *data, char *str)
@@ -88,22 +102,10 @@ void	parse_time(t_data *data, char *str)
 		// else if (tmp == 2)
 		// 	res2 = is_double_quoted();
 		else if (tmp == 3)
-		{
-			res2 = split_expand(data->env, str + i, &len);
-			if (res2)
-				res = free_join(res, *res2, 0);
-			while (res2 && *res && *(res2 + 1))
-			{
-				pipe->arg = array_realloc(pipe->arg, res, -1);
-				res = *(++res2);
-			}
-		}
+			res = new_argument(pipe, split_expand(data->env, str + i, &len), res, 2);
 		else if (tmp == 4)
 		{
-			pipe->arg = array_realloc(pipe->arg, res, -1);
-			pipe->last_arg = res;
-			pipe->n++;
-			res = NULL;
+			res = new_argument(pipe, NULL, res, 1);
 			pipe = new_pipe(data);
 			i++;
 			continue ;
@@ -111,23 +113,8 @@ void	parse_time(t_data *data, char *str)
 		// else if (tmp > 5)
 		// 	len += (is_redirection() + 1 + (tmp % 2));
 		i += len;
-		// if (res2)
-		// {
-		// 	*res2 = free_join(res, *res2, 0);
-		// 	while (*(res2 + 1))
-		// 		array_realloc(pipe->arg, *res2++, -1);
-		// 	res = *res2;
-		// 	free(res2);
-		// }
 		if (!str[i] || is_special(str + i) > 3)
-		{
-			// printf("%s\n", res)
-			pipe->arg = array_realloc(pipe->arg, res, -1);
-			if (res)
-				pipe->last_arg = res;
-			pipe->n++;
-			res = NULL;
-		}
+			res = new_argument(pipe, NULL, res, 1);
 	}
 	
 }

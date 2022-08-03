@@ -5,17 +5,17 @@ char	*var_expand(t_list *env, char *str, int *size)
 {
 	int		i;
 	char	c;
-	char	*res;
+	char	*tmp;
 	t_node	*node;
 
-	res = str;
+	tmp = str;
 	(*size) = 1;
 	if (is_digit(str[(*size)]))
 	{
 		c = str[++(*size)];
 		str[(*size)] = '\0';
 		str = my_strdup(str, '\0');
-		res[(*size)] = c;
+		tmp[(*size)] = c;
 		return (ft_strjoin("$", str));
 	}
 	while (str[(*size)] && (is_digit(str[(*size)]) || is_alphabet(str[(*size)]) || str[(*size)] == '_'))
@@ -25,7 +25,7 @@ char	*var_expand(t_list *env, char *str, int *size)
 	c = str[(*size)];
 	str[(*size)] = '\0';
 	str = my_getenv(env, str + 1);
-	res[(*size)] = c;
+	tmp[(*size)] = c;
 	return (str);
 }
 
