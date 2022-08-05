@@ -91,19 +91,19 @@ void	unset(t_data *data, char **arg)
 	char	*tmp;
 	t_node	*node;
 
-	while (*arg)
+	while (arg && *arg)
 	{
 		if ((env_regex(*arg, 0) || (**arg == '_' && !((*arg)[1]))) && arg++)
 			continue ;
-		node = getenv_node(data->exp->head, *arg);
+		node = getenv_node((get_exp(NULL))->head, *arg);
 		if (node)
 		{
 			tmp = node->content;
-			delete_node(data->exp, node);
-			node = getenv_node(data->env->head, *arg);
+			delete_node(get_exp(NULL), node);
+			node = getenv_node((get_env(NULL))->head, *arg);
 			if (node)
 			{
-				delete_node(data->env, node);
+				delete_node(get_env(NULL), node);
 				free (data->envp);
 				data->envp = NULL;
 			}

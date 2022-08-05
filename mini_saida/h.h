@@ -22,6 +22,7 @@
 int		ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 void	my_echo(t_pipe *towrite);
+void	my_echo(char **arg);
 char	*my_pwd(void);
 int		my_cd(t_pipe *path, t_data *data);
 int		my_exit(t_pipe *status);

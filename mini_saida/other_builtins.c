@@ -97,7 +97,7 @@ int	my_cd(t_pipe *path, t_data *data)
 	up_pwd = malloc(sizeof(char *) * 3);
 	up_pwd[0] = free_join("OLDPWD=", my_pwd(), 0);
 	if (!path->arg[1])
-		path->arg[1] = my_getenv(data->env ,"HOME");// env vr-modif
+		path->arg[1] = my_getenv(get_env(NULL) ,"HOME");// env vr-modif
 	if (chdir(path->arg[1]) < 0)
 		perror("");
 	up_pwd[1] = free_join("PWD=", my_pwd(), 0);
