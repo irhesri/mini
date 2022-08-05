@@ -1,6 +1,6 @@
 #include "minishell.h"
 //	prints enviroment variables 
-static void	export_print(t_list *exp)
+static short	export_print(t_list *exp)
 {
 	int		i;
 	t_node	*tmp;
@@ -22,6 +22,7 @@ static void	export_print(t_list *exp)
 		write(1, "\n", 1);
 		tmp = tmp->next;
 	}
+	return (1);
 }
 
 // get position of new variable in export list (sorted)
@@ -43,40 +44,39 @@ t_node	*get_position(t_node *head, char *str)
 	return (pos);
 }
 
-// add a new variable
-void	new_var(t_data *data, t_node *node, char *str, int i)
+// updates an exiting variable
+void	update_var(t_data *data, t_node *node, char *str, int i)
 {
 	char	*tmp;
 
 	if (str[i - 1] == '\0')
-		str = ft_strjoin(node->content, str + i + 1);
+		str = ft_strjoin(node->content, str + i + (my_search(node->content, '=') != -1));
 	else
 		str = my_strdup(str, '\0');
 	tmp = node->content;
 	node->content = str;
-	node = getenv_node(data->env->head, str);
+	node = getenv_node((get_env(NULL))->head, str);
 	if (node)
-		node->content = str;
-	if (node && data->envp)
 	{
+		node->content = str;
 		free (data->envp);
 		data->envp = NULL;
 	}
+	else
+		add_node(get_env(NULL), (get_env(NULL))->last, str);
 	free (tmp);
 }
 
-// updates an exiting variable
-void	update_var(t_data *data, char *str, int i)
+// add a new variable
+void	new_var(t_data *data, char *str, int i)
 {
-	char	*tmp;
-
 	if (i != -1 && str[i - 1] == '\0')
-		str = ft_strjoin(tmp, tmp + i);
+		str = ft_strjoin(str, str + i);
 	else
 		str = my_strdup(str, '\0');
-	add_node(data->exp, get_position(data->exp->head, str), str);
+	add_node(get_exp(NULL), get_position((get_exp(NULL))->head, str), str);
 	if (i != -1)
-		add_node(data->env, data->env->last, str);
+		add_node(get_env(NULL), (get_env(NULL))->last, str);
 }
 
 // exports arg
@@ -85,29 +85,25 @@ void	export(t_data *data, char **arg)
 {
 	int		i;
 	int		j;
-	char	*tmp;
 	t_node	*node;
 
-	if (!arg)
-	{
-		export_print(data->exp);
-		return ;
-	}
-	if (*arg && **arg == '_' && ((*arg)[1] == '=' || (*arg)[1] == '\0' || ((*arg)[1] == '+' && (*arg)[2] == '=')))
+	if ((!arg || !*arg) && export_print(get_exp(NULL)))
 		return ;
 	while (*arg)
 	{
 		if (env_regex(*arg, 1) && arg++)
 			continue ;
-		tmp = *arg;
 		i = my_search(*arg, '=');
 		if (i != -1 && ((*arg)[i - 1] == '+'))
 			(*arg)[i - 1] = '\0';
-		node = getenv_node(data->exp->head, *arg);
+		get_last(my_strdup(*arg, '='), 1);
+		if (**arg == '_' && ((*arg)[1] == '=' || (*arg)[1] == '\0') && arg++)
+			continue ;
+		node = getenv_node((get_exp(NULL))->head, *arg);
 		if (!node)
-			update_var(data, *arg, i);
+			new_var(data, *arg, i);
 		else if (i != -1)
-			new_var(data, node, *arg, i);
+			update_var(data, node, *arg, i);
 		arg++;
 	}
 }

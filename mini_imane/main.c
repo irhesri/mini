@@ -36,7 +36,7 @@
 // 	// while (res[++i])
 // 	// {
 // 	// // 	len = 0;
-// 	// // 	printf("%s\n", expand(data->env, arg[i], &len));
+// 	// // 	printf("%s\n", expand(get_env(NULL), arg[i], &len));
 // 	// 	// printf("%s\n", res[i]);
 
 // 	// }
@@ -56,17 +56,14 @@ int	main(int ac, char **av, char **envp)
 	data = malloc(sizeof(t_data));
 	init_data(data, str);
 	init_env(data, envp);
-	get_env(data->env);
+	// get_env(data->env);
 	while (1)
 	{
 		str = readline("---->  ");
 		parse_time (data, str);
-		print_pipes(data, data->pipes);
+		// print_pipes(data, data->pipes);
 		free (str);
-		export(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
-		// unset(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
-		// print_list(data->exp);
-		export(data, NULL);
+		builtins_call(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
 		empty_pipes(data->pipes);
 	}
 

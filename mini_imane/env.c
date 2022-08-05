@@ -1,37 +1,15 @@
 #include "minishell.h"
-// initialise enviroment and export list
-void	init_env(t_data *data, char **envp)
-{
-	char	*str;
-
-	while (envp && *envp)
-	{
-		str = my_strdup(*envp, '\0');
-		if (**envp != '_' || (**envp && (*envp)[1] != '='))
-		{
-			add_node(data->env, data->env->last, str);
-			add_node(data->exp, get_position(data->exp->head, *envp), str);
-		}
-		envp++;
-	}
-	str = my_strdup("OLDPWD", '\0');
-	add_node(data->exp, get_position(data->exp->head, str), str);
-	str = my_strdup("_=/usr/bin/env", '\0');
-	add_node(data->env, data->env->last, str);
-	data->envp = NULL;
-	update_envp(data);
-}
 
 // update **envp for excve if envp is null
 void	update_envp(t_data *data)
 {
 	int		i;
 	t_node	*head;
-
+	
 	if (data->envp)
 		return ;
-	data->envp = malloc(sizeof(char **) * data->env->size);
-	head = data->env->head;
+	data->envp = malloc(sizeof(char **) * (get_env(NULL))->size);
+	head = (get_env(NULL))->head;
 	i = -1;
 	while (head)
 	{

@@ -69,9 +69,8 @@ void	free_all(t_data *data)
 
 	empty_pipes(data->pipes);
 	free (data->pipes);
-	free (data->last_arg);
 	// free_list(data->env);
-	free_list(data->exp);
+	free_list(get_exp(NULL));
 	free (data->envp);
 	free (data);
 }

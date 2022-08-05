@@ -2,21 +2,31 @@
 
 short	is_special(char *c)
 {
-	if (*c == 39)
-		return (1);
-	if (*c == 34)
-		return (2);
-	if (*c == '$')
-		return (3);
-	if (*c == '|')
-		return (4);
-	if (*c == ' ')
-		return (5);
-	if (*c == '<')
-		return (6 + (*(c + 1) == '<'));
-	if (*c == '>')
-		return (8 + (*(c + 1) == '>'));
-	return (0);
+	int			i;
+	short		b;
+	static char s[10] = "\'\"$| <<>";
+
+	// if (*c == 39)
+	// 	return (1);
+	// if (*c == 34)
+	// 	return (2);
+	// if (*c == '$')
+	// 	return (3);
+	// if (*c == '|')
+	// 	return (4);
+	// if (*c == ' ')
+	// 	return (5);
+	// if (*c == '<')
+	// 	return (6 + (*(c + 1) == '<'));
+	// if (*c == '>')
+	// 	return (8 + (*(c + 1) == '>'));
+	b = 0;
+	i = -1;
+	while (!b && ++i < 8)
+		b = (s[i] == *c) * (i + 1);
+	if (b > 4)
+		return (b + (*(c + 1) == *c));
+	return (b);
 }
 	
 char	*is_quoted(t_pipe *pipe, char *str, int *len)
@@ -49,6 +59,7 @@ t_pipe	*new_pipe(t_data *data, short b)
 	pipe->output = malloc(sizeof(t_list));
 	(pipe->output)->head = NULL;
 	add_node(data->pipes, (data->pipes)->last, pipe);
+	data->nbr_pipes = id + 1;
 	return (pipe);
 }
 
@@ -133,23 +144,6 @@ void	parse_time(t_data *data, char *str)
 	}
 }
 
-void	init_data(t_data *data, char *str)
-{
-	data->pipes = malloc(sizeof(t_list));
-	(data->pipes)->head = NULL;
-	(data->pipes)->last = NULL;
-	data->last_arg = NULL;
-	data->env = malloc(sizeof(t_list));
-	data->exp = malloc(sizeof(t_list));
-	(data->env)->head = NULL;
-	(data->env)->last = NULL;
-	(data->exp)->head = NULL;
-	(data->exp)->last = NULL;
-}
-
-// O_RDONLY 
-// O_TRUNC
-// O_APPEND
 
 
 // is_redirection(t_list *input, t_list *output, t_list *env, short type)
