@@ -3,7 +3,7 @@
 static int	is_special(char c)
 {		
 	return (!(is_digit(c) || is_alphabet(c) 
-			|| (c == '_')));
+			|| (c == '+') || (c == '_')));
 }
 
 // b == 0 for unset
@@ -30,7 +30,6 @@ short	env_regex(char *str, short b)
 		set[0] = "unset";
 		set[1] = "export";
 		printf("minishell: %s: `%s': not a valid identifier\n", set[b], str);
-		free (str);
 	}
 	return (error);
 }
@@ -51,6 +50,8 @@ void	delete_node(t_list *lst, t_node *to_delete)
 		lst->head = lst->head->next;
 		if (!lst->head)
 			lst->last = NULL;
+		free (tmp);
+		return ;
 	}
 	head = lst->head;
 	while (head->next != to_delete)
@@ -89,10 +90,10 @@ void	unset(t_data *data, char **arg)
 	int		j;
 	char	*tmp;
 	t_node	*node;
-	// while (arg && j++ < data->n)
+
 	while (*arg)
 	{
-		if ((env_regex(*arg, 0) || (**arg == '_' && !*(arg + 1))) && arg++)
+		if ((env_regex(*arg, 0) || (**arg == '_' && !((*arg)[1]))) && arg++)
 			continue ;
 		node = getenv_node(data->exp->head, *arg);
 		if (node)
@@ -103,12 +104,11 @@ void	unset(t_data *data, char **arg)
 			if (node)
 			{
 				delete_node(data->env, node);
-				if (data->envp)
-					free (data->envp);
+				free (data->envp);
 				data->envp = NULL;
 			}
 			free (tmp);
 		}
-		free (*arg++);
+		arg++;
 	}
 }

@@ -49,11 +49,9 @@ void	new_var(t_data *data, t_node *node, char *str, int i)
 	char	*tmp;
 
 	if (str[i - 1] == '\0')
-	{
-		tmp = str;
-		str = ft_strjoin(node->content, tmp + i + 1);
-		free (tmp);
-	}
+		str = ft_strjoin(node->content, str + i + 1);
+	else
+		str = my_strdup(str, '\0');
 	tmp = node->content;
 	node->content = str;
 	node = getenv_node(data->env->head, str);
@@ -64,7 +62,7 @@ void	new_var(t_data *data, t_node *node, char *str, int i)
 		free (data->envp);
 		data->envp = NULL;
 	}
-	free(tmp);
+	free (tmp);
 }
 
 // updates an exiting variable
@@ -73,11 +71,9 @@ void	update_var(t_data *data, char *str, int i)
 	char	*tmp;
 
 	if (i != -1 && str[i - 1] == '\0')
-	{
-		tmp = str;
 		str = ft_strjoin(tmp, tmp + i);
-		free (tmp);
-	}
+	else
+		str = my_strdup(str, '\0');
 	add_node(data->exp, get_position(data->exp->head, str), str);
 	if (i != -1)
 		add_node(data->env, data->env->last, str);
@@ -93,9 +89,13 @@ void	export(t_data *data, char **arg)
 	t_node	*node;
 
 	if (!arg)
+	{
 		export_print(data->exp);
-	// while (arg && j++ < data->n)
-	while (arg && *arg)
+		return ;
+	}
+	if (*arg && **arg == '_' && ((*arg)[1] == '=' || (*arg)[1] == '\0' || ((*arg)[1] == '+' && (*arg)[2] == '=')))
+		return ;
+	while (*arg)
 	{
 		if (env_regex(*arg, 1) && arg++)
 			continue ;
@@ -108,10 +108,6 @@ void	export(t_data *data, char **arg)
 			update_var(data, *arg, i);
 		else if (i != -1)
 			new_var(data, node, *arg, i);
-		free (*arg);
 		arg++;
 	}
 }
-
-// free (*arg);
-// free (arg);
