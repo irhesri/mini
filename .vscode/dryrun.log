@@ -1,0 +1,16 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/irhesri/Desktop/mini'
+gcc  -o mini_imane/debugging.o -c mini_imane/debugging.c
+gcc  -o mini_imane/expand.o -c mini_imane/expand.c
+gcc  -o mini_imane/functions.o -c mini_imane/functions.c
+gcc  -o mini_imane/list_functions.o -c mini_imane/list_functions.c
+gcc  -o mini_imane/parsing.o -c mini_imane/parsing.c
+gcc  -o mini_imane/env.o -c mini_imane/env.c
+gcc  -o mini_imane/export.o -c mini_imane/export.c
+gcc  -o mini_imane/libft.o -c mini_imane/libft.c
+gcc  -o mini_imane/main.o -c mini_imane/main.c
+gcc  -o mini_imane/new_split.o -c mini_imane/new_split.c
+gcc  -o mini_imane/unset.o -c mini_imane/unset.c
+gcc  -readline  -o mini -c mini_imane/debugging.o
+make: Leaving directory `/Users/irhesri/Desktop/mini'
+ 
