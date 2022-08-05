@@ -8,7 +8,7 @@
 #include <string.h>
 #include <sys/errno.h>
 #include <dirent.h>
-#include <readline/readline.h> 
+#include <readline/readline.h>
 #include <readline/history.h>
 #include <limits.h>
 #include "../mini_imane/minishell.h"
