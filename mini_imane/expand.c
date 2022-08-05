@@ -44,6 +44,6 @@ char	**split_expand(char *str, int *len)
 	// 	return (is_double_quoted());
 	res = var_expand(str, len);
 	ress = my_split(res, ' ', 0);
-	free (res);
+//	free (res);
 	return (ress);
 }

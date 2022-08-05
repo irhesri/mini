@@ -47,6 +47,19 @@ char    *vr_expand(char *str, int *size)
     return (str);
 }
 
+char    **split_expand(char *str, int *len)
+{
+    char    **ress;
+    char    *res;
+
+    // if (str[1] == 39 || str[1] == '"')
+    //  return (is_double_quoted());
+    res = vr_expand(str, len);
+    ress = my_split(res, ' ', 0);
+    free (res);
+    return (ress);
+}
+
 short   is_special_red(char c)
 {
     return (c == '|' || c == '<' ||c == '>' || c == ' ' || c == ';');
@@ -96,7 +109,7 @@ char *is_double_quoted(char *str, int *size)
 	return (quote_val);
 }
 
-
+/*
 void	valide_name(t_list *env, char *name, char *str, int *i)
 {
 	char	**var;
@@ -185,4 +198,4 @@ int main()
 
 	line = readline("> ");
 	printf("%s\n%d\n", is_double_quoted(line, &i), i);
-}
+}*/

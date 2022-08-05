@@ -21,9 +21,16 @@
 // char	*ft_strjoin(const char *s1, const char *s2);
 int		ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
-void	my_echo(t_pipe *towrite);
-char	*my_pwd(void);
-int		my_cd(t_pipe *path, t_data *data);
-int		my_exit(t_pipe *status);
+void    my_echo(char  **towrite);
+int		my_pwd(void);
+int		my_cd(char  **path);
+int		my_exit(char    **status);
+
+char    *ft_strjoin(char *str1, char *str2);
+char    *vr_expand(char *str, int *size);
+short   is_special_red(char c);
+void    var_exist(char *str, int *pos);
+char    *is_quoted(char *str, int *len, char c);
+char *is_double_quoted(char *str, int *size);
 
 #endif
