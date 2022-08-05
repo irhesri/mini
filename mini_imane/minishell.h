@@ -4,6 +4,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
 #include <readline/readline.h>
 // # include "../mini_saida/h.h"
 
@@ -23,9 +24,8 @@ typedef struct s_list
 typedef struct s_redirection
 {
 	int		fd;
-	int		pipe_id;
+	int		mode;
 	char	*name;
-	short	type;
 }	t_redirection;
 
 typedef struct s_pipe
@@ -33,27 +33,26 @@ typedef struct s_pipe
 	int		n;
 	int		pipe_id;
 	char	**arg;
-	char	*last_arg;
+	t_list	*input;
+	t_list	*output;
 }	t_pipe;
 
 typedef struct s_data
 {
+	char	*last_arg;
 	char	**envp;
 	t_list	*env;
 	t_list	*exp;
-	t_list	*red;
 	t_list	*pipes;
-	// t_list	*output;
 }	t_data;
 
 // INITIALISATION		---->		call it at the begining of the program
 void	init_env(t_data *data, char **envp);			
 
 //	PARSE
-char	*var_expand(t_list *env, char *str, int *len);
-char	*my_getenv(t_list *env, char *str);
-// char	**expand(t_list *env, char *str, int *len, short b);
-char	**split_expand(t_list *env, char *str, int *len);
+char	*var_expand(char *str, int *size);
+char	*my_getenv(char *str);
+char	**split_expand(char *str, int *len);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
@@ -68,7 +67,7 @@ char	*ft_strjoin(char *str1, char *str2);
 char	**array_realloc(char **arr, char *str, short b);
 
 //	BUILTINS
-void	env(t_list *env);
+void	env(void);
 void	export(t_data *data, char **arg);
 void	unset(t_data *data, char **arg);
 
@@ -93,11 +92,23 @@ short	is_alphabet(char c);
 // WORKING ON PARSING
 void	parse_time(t_data *data, char *str);
 void	init_data(t_data *data, char *str);
+// t_pipe	*new_pipe(t_data *data);
+
+void	empty_pipes(t_list *pipes_lst);
+void	free_all(t_data *data);
+void	my_free(void **content);
+
 
 
 // DEBUGGING
 void	print_2D(char **arr);
 // void	print_2D(char **arr, int n);
-void	print_pipes(t_list *pipes);
+void	print_pipes(t_data *data, t_list *pipes);
+void	empty_pipes(t_list *pipes_lst);
+void	print_list(t_list *lst);
+
+// GLOBALS
+char	*get_last(char *last, int b);
+t_list	*get_env(t_list *env);
 
 #endif

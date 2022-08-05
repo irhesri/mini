@@ -4,8 +4,8 @@ short	is_special(char *c)
 {
 	if (*c == 39)
 		return (1);
-	// if (*c == 34)
-	// 	return (2);
+	if (*c == 34)
+		return (2);
 	if (*c == '$')
 		return (3);
 	if (*c == '|')
@@ -33,43 +33,61 @@ char	*is_quoted(t_pipe *pipe, char *str, int *len)
 }
 
 
-t_pipe	*new_pipe(t_data *data)
+t_pipe	*new_pipe(t_data *data, short b)
 {
 	t_pipe		*pipe;
 	static int	id;
 
+	if (b)
+		id = 0;
 	pipe = malloc(sizeof(t_pipe));
 	pipe->pipe_id = id++;
 	pipe->arg = NULL;
-	pipe->last_arg = NULL;
 	pipe->n = 0;
+	pipe->input = malloc(sizeof(t_list));
+	(pipe->input)->head = NULL;
+	pipe->output = malloc(sizeof(t_list));
+	(pipe->output)->head = NULL;
 	add_node(data->pipes, (data->pipes)->last, pipe);
 	return (pipe);
 }
 
-char	*new_argument(t_pipe *pipe, char **res2, char *res, short b)
+char	*new_argument(t_data *data, t_pipe *pipe, char **res2, char *res)
 {
-	if (b == 1)
+	char	**tmp;
+
+	if (res2)
 	{
-		pipe->arg = array_realloc(pipe->arg, res, -1);
-		if (res)
-			pipe->last_arg = res;
-		pipe->n++;
-		res = NULL;
+		tmp = res2;
+		res = free_join(res, *res2, 0);
+		while (*res2 && *(res2 + 1))
+		{
+			pipe->n++;
+			pipe->arg = array_realloc(pipe->arg, res, -1);
+			res = *(++res2);
+		}
+		free (tmp);
 	}
-	else if (b == 2 && res2)
+	else if (res)
 	{
-		// res = free_join(res, *res2, 0);
-		// while (*res2 && *(res2 + 1))
-		// {
-		// 	// pipe->arg = array_realloc(pipe->arg, res, -1);
-		// 	res = *(++res2);
-		// }
-		// free (res2);
+		if (res && !*res)
+		{
+			free (res);
+			return (NULL);
+		}
+		pipe->arg = array_realloc(pipe->arg, res, -1);
+		pipe->n++;
+		if (pipe->pipe_id == 0 && res)
+			get_last(my_strdup(res, '\0'), 1);
+		else
+			get_last(NULL, 1);
+		res = NULL;
 	}
 	return (res);
 }
 
+
+//	EMPTY PIPES.
 void	parse_time(t_data *data, char *str)
 {
 	int		i;
@@ -77,12 +95,10 @@ void	parse_time(t_data *data, char *str)
 	int		tmp;
 	t_pipe	*pipe;
 	char	*res;
-	char	**res2;
 
 	i = 0;
-	pipe = new_pipe(data);
+	pipe = new_pipe(data, 1);
 	res = NULL;
-	res2 = NULL;
 	while (str[i])
 	{
 		len = 0;
@@ -95,18 +111,17 @@ void	parse_time(t_data *data, char *str)
 			while (str[i] && !is_special(str + i))
 				i++;
 			res = free_join(res, my_strdup(str + tmp, str[i]), 0);
-			tmp = -1;
 		}
 		else if (tmp == 1)
 			res = free_join(res, is_quoted(pipe, str + i + 1, &len), 0);
 		// else if (tmp == 2)
-		// 	res2 = is_double_quoted();
+		// 	res = free_join(res, is_double_quoted(), 0);
 		else if (tmp == 3)
-			res = new_argument(pipe, split_expand(data->env, str + i, &len), res, 2);
+			res = new_argument(data, pipe, split_expand(str + i, &len), res);
 		else if (tmp == 4)
 		{
-			res = new_argument(pipe, NULL, res, 1);
-			pipe = new_pipe(data);
+			res = new_argument(data, pipe, NULL, res);
+			pipe = new_pipe(data, 0);
 			i++;
 			continue ;
 		}
@@ -114,19 +129,27 @@ void	parse_time(t_data *data, char *str)
 		// 	len += (is_redirection() + 1 + (tmp % 2));
 		i += len;
 		if (!str[i] || is_special(str + i) > 3)
-			res = new_argument(pipe, NULL, res, 1);
+			res = new_argument(data, pipe, NULL, res);
 	}
-	
 }
 
 void	init_data(t_data *data, char *str)
 {
-	data->red = malloc(sizeof(t_list));
-	(data->red)->head = NULL;
-	(data->red)->last = NULL;
 	data->pipes = malloc(sizeof(t_list));
 	(data->pipes)->head = NULL;
 	(data->pipes)->last = NULL;
-	(data->pipes)->last = NULL;
-	parse_time (data, str);
+	data->last_arg = NULL;
+	data->env = malloc(sizeof(t_list));
+	data->exp = malloc(sizeof(t_list));
+	(data->env)->head = NULL;
+	(data->env)->last = NULL;
+	(data->exp)->head = NULL;
+	(data->exp)->last = NULL;
 }
+
+// O_RDONLY 
+// O_TRUNC
+// O_APPEND
+
+
+// is_redirection(t_list *input, t_list *output, t_list *env, short type)

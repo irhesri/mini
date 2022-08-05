@@ -50,31 +50,33 @@ int	main(int ac, char **av, char **envp)
 	char	*str;
 	int	i = 0;
 	t_data *data;
-
+	
+	t_list	*e;
 
 	data = malloc(sizeof(t_data));
-	init_env(data, envp);
-	update_envp(data);
-
-
-	// arg = malloc(sizeof(char *) * ac);
-	// av++;
-	// while (*av)
-	// {
-	// 	arg[i++] = my_strdup(*av, '\0');
-	// 	av++;
-	// }
-	str = readline("-->");
 	init_data(data, str);
-	t_node	*tmp;
-	tmp = (data->pipes)->head;
-	// while (tmp)
-	// {
-		print_2D((char **)(((t_pipe *)(tmp->content))->arg));
-		// tmp=tmp->next;
-	// }
-	// printf("%s - %s\n", my_strdup(av[1], '\0'), var_expand(data->env, my_strdup(av[1], '\0'), &i));
-	print_pipes(data->pipes);
+	init_env(data, envp);
+	get_env(data->env);
+	while (1)
+	{
+		str = readline("---->  ");
+		parse_time (data, str);
+		print_pipes(data, data->pipes);
+		free (str);
+		export(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
+		// unset(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
+		// print_list(data->exp);
+		export(data, NULL);
+		empty_pipes(data->pipes);
+	}
 
+	// e = data->env;
+	// free_all(data);
+	data = NULL;
+	// while (1);
+	// {
+	// 	;
+	// }
+	
 	
 }
