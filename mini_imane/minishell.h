@@ -22,19 +22,19 @@ typedef struct s_list
 
 typedef struct s_redirection
 {
-	int		fd;
-	int		pipe_id;
-	char	*name;
-	short	type;
-}	t_redirection;
+    int        fd;
+    int        mode;
+    char    *name;
+}    t_redirection;
 
 typedef struct s_pipe
 {
-	int		n;
-	int		pipe_id;
-	char	**arg;
-	char	*last_arg;
-}	t_pipe;
+    int        n;
+    int        pipe_id;
+    char    **arg;
+    t_list    *input;
+    t_list    *output;
+}    t_pipe;
 
 typedef struct s_data
 {

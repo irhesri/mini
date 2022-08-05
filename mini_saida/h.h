@@ -13,8 +13,8 @@
 #include <limits.h>
 #include "../mini_imane/minishell.h"
 
-int		code_err = 0;
-const char	*s = "?";
+//int		code_err = 0;
+//const char	*s = "?";
 
 // char    **ft_split(char const *s, char c);	// new_split b = 0
 // size_t  ft_strlen(const char *s);	// my_size
