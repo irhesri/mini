@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../mini_imane/minishell.h"
 
 short	is_special(char *c)
 {
@@ -29,18 +29,18 @@ short	is_special(char *c)
 	return (b);
 }
 	
-char	*is_quoted(t_pipe *pipe, char *str, int *len)
-{
-	char	*res;
-	int		i;
+// char	*is_quoted(t_pipe *pipe, char *str, int *len)
+// {
+// 	char	*res;
+// 	int		i;
 
-	i = 1;
-	res = my_strdup(str, 39);
-	(*len) = my_size(NULL, res) + 1;
-	if (str[*len])
-		(*len)++;
-	return (res);
-}
+// 	i = 1;
+// 	res = my_strdup(str, 39);
+// 	(*len) = my_size(NULL, res) + 1;
+// 	if (str[*len])
+// 		(*len)++;
+// 	return (res);
+// }
 
 
 t_pipe	*new_pipe(t_data *data, short b)
@@ -124,9 +124,9 @@ void	parse_time(t_data *data, char *str)
 			res = free_join(res, my_strdup(str + tmp, str[i]), 0);
 		}
 		else if (tmp == 1)
-			res = free_join(res, is_quoted(pipe, str + i + 1, &len), 0);
-		// else if (tmp == 2)
-		// 	res = free_join(res, is_double_quoted(), 0);
+			res = free_join(res, is_quoted(str + i + 1, &len, 39), 0);
+		else if (tmp == 2)
+		 	res = free_join(res, is_double_quoted(str + i + 1, &len), 0);
 		else if (tmp == 3)
 			res = new_argument(data, pipe, split_expand(str + i, &len), res);
 		else if (tmp == 4)
@@ -136,12 +136,16 @@ void	parse_time(t_data *data, char *str)
 			i++;
 			continue ;
 		}
-		// else if (tmp > 5)
-		// 	len += (is_redirection() + 1 + (tmp % 2));
+		else if (tmp > 5)
+		{
+		 	len += (is_redirection(pipe->input, pipe->output, str + i + 1 + (tmp % 2), tmp) );
+			printf("tmp ===> %d\n", tmp);
+		}
 		i += len;
 		if (!str[i] || is_special(str + i) > 3)
 			res = new_argument(data, pipe, NULL, res);
 	}
+	printf("res => %s\n", res);
 }
 
 

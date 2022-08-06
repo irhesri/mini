@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../mini_imane/minishell.h"
 
 // update **envp for excve if envp is null
 void	update_envp(t_data *data)

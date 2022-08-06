@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../mini_imane/minishell.h"
 
 t_list	*get_env(t_list *env)
 {

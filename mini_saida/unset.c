@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../mini_imane/minishell.h"
 
 static int	is_special(char c)
 {		

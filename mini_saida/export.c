@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../mini_imane/minishell.h"
 //	prints enviroment variables 
 static short	export_print(t_list *exp)
 {

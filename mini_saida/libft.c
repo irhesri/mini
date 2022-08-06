@@ -1,4 +1,4 @@
-#include "h.h"
+#include "../mini_imane/minishell.h"
 
 int	ft_strncmp(char *str1, char *str2, size_t n)
 {

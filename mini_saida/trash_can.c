@@ -1,5 +1,5 @@
 // void	empty_pipes(t_list *pipes_lst)
-#include "minishell.h"
+#include "../mini_imane/minishell.h"
 
 void	free_red_list(t_list *lst)
 {
