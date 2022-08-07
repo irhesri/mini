@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 
-void	init_data(t_data *data, char *str)
+void	init_data(t_data *data)
 {
 	t_list	*lst;
 

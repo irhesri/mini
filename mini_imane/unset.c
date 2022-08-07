@@ -87,7 +87,6 @@ t_node	*getenv_node(t_node *head, char *str)
 // doesn't unset _
 void	unset(t_data *data, char **arg)
 {
-	int		j;
 	char	*tmp;
 	t_node	*node;
 

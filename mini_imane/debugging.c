@@ -15,6 +15,7 @@ void	print_pipes(t_data *data, t_list *pipes)
 	t_node	*tmp;
 	
 	tmp = pipes->head;
+	printf("NUMBER OF PIPES : %d\n", data->nbr_pipes);
 	while (tmp)
 	{
 		printf("--------->pipe id :\n%d\n", ((t_pipe *)(tmp->content))->pipe_id);
@@ -24,7 +25,6 @@ void	print_pipes(t_data *data, t_list *pipes)
 		printf("****************************\n");
 		tmp=tmp->next;
 	}
-	
 }
 
 void	print_list(t_list *lst)

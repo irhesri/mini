@@ -50,7 +50,6 @@ void	free_list(t_list *lst)
 {
 	t_node	*node;
 	t_node	*tmp;
-	char	*str;
 
 	node = lst->head;
 	while (node)
@@ -65,18 +64,10 @@ void	free_list(t_list *lst)
 
 void	free_all(t_data *data)
 {
-	char	**arr;
-
 	empty_pipes(data->pipes);
 	free (data->pipes);
 	// free_list(data->env);
 	free_list(get_exp(NULL));
 	free (data->envp);
 	free (data);
-}
-
-void	my_free(void	**content)
-{
-	free (*content);
-	(*content) = NULL;
 }

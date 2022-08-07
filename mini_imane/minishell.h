@@ -50,13 +50,14 @@ typedef struct s_data
 
 // INITIALISATION		---->		call it at the begining of the program
 void	init_env(t_data *data, char **envp);			
-void	init_data(t_data *data, char *str);
+void	init_data(t_data *data);
 void	parse_time(t_data *data, char *str);
 
 //	PARSE
 char	*var_expand(char *str, int *size);
 char	*my_getenv(char *str);
 char	**split_expand(char *str, int *len);
+char	*is_quoted(char *str, int *len, char c);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
@@ -99,7 +100,7 @@ void	my_free(void **content);
 // GLOBALS
 char	*get_last(char *last, int b);
 t_list	*get_env(t_list *env);
-// t_list	*get_exp(t_list *exp);
+t_list	*get_exp(t_list *exp);
 
 // DEBUGGING
 void	print_2D(char **arr);

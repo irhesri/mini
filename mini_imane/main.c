@@ -46,24 +46,20 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	char	**arg;
 	char	*str;
-	int	i = 0;
 	t_data *data;
-	
-	t_list	*e;
 
 	data = malloc(sizeof(t_data));
-	init_data(data, str);
+	init_data(data);
 	init_env(data, envp);
 	// get_env(data->env);
 	while (1)
 	{
 		str = readline("---->  ");
 		parse_time (data, str);
-		// print_pipes(data, data->pipes);
+		print_pipes(data, data->pipes);
 		free (str);
-		builtins_call(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
+		// builtins_call(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
 		empty_pipes(data->pipes);
 	}
 
