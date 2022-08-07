@@ -85,7 +85,7 @@ char	**array_realloc(char **arr, char *str, short b)
 
 	if (!str)
 		return (arr);
-	size = my_size(arr, NULL) + 1;
+	size = my_size(arr, NULL) + 2;
 	res = malloc(sizeof(char *) * (size + 1));
 	i = b;
 	j = -1;

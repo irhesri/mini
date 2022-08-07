@@ -37,6 +37,8 @@ t_pipe	*new_pipe(t_data *data, short b)
 	if (b)
 		id = 0;
 	data->nbr_pipes = id;
+	if (id != 0)
+		get_last(NULL, 1);
 	pipe = malloc(sizeof(t_pipe));
 	pipe->pipe_id = id++;
 	pipe->arg = NULL;
@@ -113,6 +115,10 @@ char *is_double_quoted(char *str, int *size)
 	return (quote_val);
 }
 
+void	parse_functions_call()
+{
+	
+}
 
 //	EMPTY PIPES.
 void	parse_time(t_data *data, char *str)
@@ -149,13 +155,14 @@ void	parse_time(t_data *data, char *str)
 			pipe = new_pipe(data, 0);
 			continue;
 		}
-		// else if (tmp > 5)
-			// (is_redirection() + i + (tmp % 2));
+		else if (tmp > 5 && ++i)
+		{
+			i += (tmp % 2);
+			// is_redirection();			
+		}
 		if (!str[i] || is_special(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
 	}
-	if (data->nbr_pipes != 0)
-		get_last(NULL, 1);
 }
 
 

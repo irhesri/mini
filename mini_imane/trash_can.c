@@ -46,7 +46,7 @@ void	empty_pipes(t_list *pipes_lst)
 	}
 }
 
-void	free_list(t_list *lst)
+void	free_list(t_list *lst, short b)
 {
 	t_node	*node;
 	t_node	*tmp;
@@ -55,7 +55,8 @@ void	free_list(t_list *lst)
 	while (node)
 	{
 		tmp = node->next;
-		free(node->content);
+		if (b)
+			free(node->content);
 		free (node);
 		node = tmp;
 	}
@@ -66,8 +67,9 @@ void	free_all(t_data *data)
 {
 	empty_pipes(data->pipes);
 	free (data->pipes);
-	// free_list(data->env);
-	free_list(get_exp(NULL));
 	free (data->envp);
+	delete_node(get_env(NULL), getenv_node((get_env(NULL))->head, "_"));
+	free_list(get_exp(NULL), 1);
+	free_list(get_env(NULL), 0);
 	free (data);
 }

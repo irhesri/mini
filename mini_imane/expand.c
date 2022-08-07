@@ -34,7 +34,8 @@ char	**split_expand(char *str, int *len)
 	char	*res;
 
 	res = var_expand(str, len);
-	ress = my_split(res, ' ', 0);
+	ress = multichar_split(res, " \n\t");
+	// ress = my_split(res, ' ', 0);
 	free (res);
 	return (ress);
 }
