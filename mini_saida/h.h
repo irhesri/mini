@@ -31,6 +31,7 @@ char    *vr_expand(char *str, int *size);
 short   is_special_red(char c);
 void    var_exist(char *str, int *pos);
 char    *is_quoted(char *str, int *len, char c);
+char	*is_double_quoted(char *str, int *size);
 //int is_redirection(t_list *input, t_list *output,  char *str, short type);
 
 #endif

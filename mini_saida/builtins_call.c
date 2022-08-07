@@ -18,10 +18,10 @@ void	builtins_call(t_data *data, char **arg)
 	if (!ptr[0])
 	{
 		ptr[0] = print_arg;
-		// ptr[1] = echo;
-		// ptr[2] = pwd;
-		// ptr[3] = cd;
-		// ptr[4] = exit;
+		ptr[1] = echo;
+		ptr[2] = pwd;
+		ptr[3] = cd;
+		ptr[4] = exit;
 		ptr[5] = env;
 		ptr[6] = export;
 		ptr[7] = unset;

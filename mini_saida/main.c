@@ -59,7 +59,8 @@ int	main(int ac, char **av, char **envp)
 	// get_env(data->env);
 	while (1)
 	{
-		str = readline("---->  ");
+		str = readline(">  ");
+		add_history(str);
 		parse_time (data, str);
 		// print_pipes(data, data->pipes);
 		free (str);
