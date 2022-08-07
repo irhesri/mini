@@ -6,7 +6,6 @@ char	*var_expand(char *str, int *size)
 	char	c;
 	char	*res;
 
-	// (*size)++;
 	res = str + (*size);
 	if (is_digit(str[(*size)]) || str[*size] == '$')
 	{

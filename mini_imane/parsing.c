@@ -59,28 +59,23 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 		res = free_join(res, *res2, 0);
 		while (*res2 && *(res2 + 1))
 		{
-			pipe->n++;
 			pipe->arg = array_realloc(pipe->arg, res, -1);
+			pipe->n++;
 			res = *(++res2);
 		}
 		free (tmp);
+		return (res);
 	}
+	if (res && !*res)
+		free (res);
 	else if (res)
 	{
-		if (res && !*res)
-		{
-			free (res);
-			return (NULL);
-		}
 		pipe->arg = array_realloc(pipe->arg, res, -1);
 		pipe->n++;
-		if (pipe->pipe_id == 0 && res)
+		if (pipe->pipe_id == 0)
 			get_last(my_strdup(res, '\0'), 1);
-		else
-			get_last(NULL, 1);
-		res = NULL;
 	}
-	return (res);
+	return (NULL);
 }
 
 void	var_exist(char *str, int *pos)
@@ -159,6 +154,8 @@ void	parse_time(t_data *data, char *str)
 		if (!str[i] || is_special(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
 	}
+	if (data->nbr_pipes != 0)
+		get_last(NULL, 1);
 }
 
 

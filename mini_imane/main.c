@@ -57,9 +57,9 @@ int	main(int ac, char **av, char **envp)
 	{
 		str = readline("---->  ");
 		parse_time (data, str);
-		print_pipes(data, data->pipes);
+		// print_pipes(data, data->pipes);
 		free (str);
-		// builtins_call(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
+		builtins_call(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
 		empty_pipes(data->pipes);
 	}
 
