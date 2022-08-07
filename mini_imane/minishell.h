@@ -106,4 +106,12 @@ void	print_2D(char **arr);
 void	print_pipes(t_data *data, t_list *pipes);
 void	print_list(t_list *lst);
 
+
+//mini_saida
+void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
+void    my_echo(char  **towrite);
+void    m_pwd(void);
+void    my_cd(char  **path);
+void    my_exit(char    **status);
+
 #endif
