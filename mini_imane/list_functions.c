@@ -6,11 +6,11 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:31 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/07 21:10:32 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	add_front(t_list *lst, t_node *new)
 {

@@ -6,12 +6,12 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/07 21:10:53 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // void	empty_pipes(t_list *pipes_lst)
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_red_list(t_list *lst)
 {
