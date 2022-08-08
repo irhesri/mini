@@ -1,4 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   functions.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/07 21:10:16 by irhesri           #+#    #+#             */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 // returns arr size if str NULL
 // returns str size if arr NULL
@@ -85,7 +97,7 @@ char	**array_realloc(char **arr, char *str, short b)
 
 	if (!str)
 		return (arr);
-	size = my_size(arr, NULL) + 1;
+	size = my_size(arr, NULL) + 2;
 	res = malloc(sizeof(char *) * (size + 1));
 	i = b;
 	j = -1;

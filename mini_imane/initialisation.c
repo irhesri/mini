@@ -1,7 +1,19 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 
-void	init_data(t_data *data, char *str)
+void	init_data(t_data *data)
 {
 	t_list	*lst;
 
@@ -18,12 +30,14 @@ void	init_data(t_data *data, char *str)
 	lst->last = NULL;
 	lst->size = 0;
 	get_exp(lst);
+	data->envp = NULL;
 }
 
 // initialise enviroment and export list
 void	init_env(t_data *data, char **envp)
 {
 	char	*str;
+	char	**arr;
 
 	while (envp && *envp)
 	{
@@ -35,10 +49,11 @@ void	init_env(t_data *data, char **envp)
 		}
 		envp++;
 	}
-	str = my_strdup("OLDPWD", '\0');
-	add_node(get_exp(NULL), get_position((get_exp(NULL))->head, str), str);
+	arr = array_realloc(NULL, "OLDPWD", 0);
+	unset(data, arr);
+	export(data, arr);
+	free (arr);
 	str = my_strdup("_=/usr/bin/env", '\0');
 	add_node(get_env(NULL), (get_env(NULL))->last, str);
-	data->envp = NULL;
 	update_envp(data);
 }

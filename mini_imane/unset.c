@@ -1,4 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/07 21:10:55 by irhesri           #+#    #+#             */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 static int	is_special(char c)
 {		
@@ -87,7 +99,6 @@ t_node	*getenv_node(t_node *head, char *str)
 // doesn't unset _
 void	unset(t_data *data, char **arg)
 {
-	int		j;
 	char	*tmp;
 	t_node	*node;
 

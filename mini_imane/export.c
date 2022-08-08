@@ -1,4 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/07 21:10:13 by irhesri           #+#    #+#             */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 //	prints enviroment variables 
 static short	export_print(t_list *exp)
 {
@@ -68,7 +80,7 @@ void	update_var(t_data *data, t_node *node, char *str, int i)
 }
 
 // add a new variable
-void	new_var(t_data *data, char *str, int i)
+void	new_var(char *str, int i)
 {
 	if (i != -1 && str[i - 1] == '\0')
 		str = ft_strjoin(str, str + i);
@@ -84,7 +96,6 @@ void	new_var(t_data *data, char *str, int i)
 void	export(t_data *data, char **arg)
 {
 	int		i;
-	int		j;
 	t_node	*node;
 
 	if ((!arg || !*arg) && export_print(get_exp(NULL)))
@@ -101,7 +112,7 @@ void	export(t_data *data, char **arg)
 			continue ;
 		node = getenv_node((get_exp(NULL))->head, *arg);
 		if (!node)
-			new_var(data, *arg, i);
+			new_var(*arg, i);
 		else if (i != -1)
 			update_var(data, node, *arg, i);
 		arg++;

@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   trash_can.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // void	empty_pipes(t_list *pipes_lst)
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_red_list(t_list *lst)
 {
@@ -46,17 +58,17 @@ void	empty_pipes(t_list *pipes_lst)
 	}
 }
 
-void	free_list(t_list *lst)
+void	free_list(t_list *lst, short b)
 {
 	t_node	*node;
 	t_node	*tmp;
-	char	*str;
 
 	node = lst->head;
 	while (node)
 	{
 		tmp = node->next;
-		free(node->content);
+		if (b)
+			free(node->content);
 		free (node);
 		node = tmp;
 	}
@@ -65,18 +77,11 @@ void	free_list(t_list *lst)
 
 void	free_all(t_data *data)
 {
-	char	**arr;
-
 	empty_pipes(data->pipes);
 	free (data->pipes);
-	// free_list(data->env);
-	free_list(get_exp(NULL));
 	free (data->envp);
+	delete_node(get_env(NULL), getenv_node((get_env(NULL))->head, "_"));
+	free_list(get_exp(NULL), 1);
+	free_list(get_env(NULL), 0);
 	free (data);
-}
-
-void	my_free(void	**content)
-{
-	free (*content);
-	(*content) = NULL;
 }

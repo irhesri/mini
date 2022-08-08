@@ -1,4 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debugging.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/07 21:10:00 by irhesri           #+#    #+#             */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 void	print_2D(char **arr)
 {
@@ -15,16 +27,16 @@ void	print_pipes(t_data *data, t_list *pipes)
 	t_node	*tmp;
 	
 	tmp = pipes->head;
+	printf("NUMBER OF PIPES : %d\n", data->nbr_pipes);
 	while (tmp)
 	{
 		printf("--------->pipe id :\n%d\n", ((t_pipe *)(tmp->content))->pipe_id);
 		printf("--------->arguments [%d]:\n", ((t_pipe *)(tmp->content))->n);
 		print_2D(((t_pipe *)(tmp->content))->arg);
-		printf("--------->last argument :\n%s\n", get_last(NULL, 0));
 		printf("****************************\n");
 		tmp=tmp->next;
 	}
-	
+	printf("--------->last argument :\n%s\n", get_last(NULL, 0));
 }
 
 void	print_list(t_list *lst)

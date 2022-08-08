@@ -1,49 +1,58 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
+/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// expand one variable only without joining
+#include "../minishell.h"
+
+// expand variable without splitting
 char	*var_expand(char *str, int *size)
 {
-	int		i;
 	char	c;
 	char	*res;
-	t_node	*node;
 
-	res = str;
-	(*size) = 1;
+	res = str + (*size);
 	if (is_digit(str[(*size)]) || str[*size] == '$')
 	{
-		c = str[++(*size)];
-		str[(*size)] = '\0';
-		str = my_strdup(str, '\0');
-		res[(*size)] = c;
+		str = free_join("$", my_strdup(str + (*size), str[(*size)]), 2);
 		return (str);
 	}
+	if (!str[(*size)])
+		return (my_strdup("$", '\0'));
 	while (str[(*size)] && (is_digit(str[(*size)]) || is_alphabet(str[(*size)]) || str[(*size)] == '_'))
 		(*size)++;
-	if ((*size) == 1 && !str[(*size)])
-		return (my_strdup("$", '\0'));
-	if ((*size) == 2 && str[(*size) - 1] == '_')
-		return (my_strdup(get_last(NULL, 0), '\0'));
-	else if ((*size) == 1)
-		return (NULL);
 	c = str[(*size)];
 	str[(*size)] = '\0';
-	str = my_getenv(str + 1);
-	res[(*size)] = c;
-	return (str);
+	if (!ft_strncmp(res, "_", 2))
+		res = my_strdup(get_last(NULL, 0), '\0');
+	else
+		res = my_getenv(res);
+	str[(*size)] = c;
+	return (res);
 }
 
-// expand
-// split if b == 1
+// expand and split
 char	**split_expand(char *str, int *len)
 {
 	char	**ress;
 	char	*res;
 
-	// if (str[1] == 39 || str[1] == '"')
-	// 	return (is_double_quoted());
 	res = var_expand(str, len);
+	str = res;
+	while (*str)
+	{
+		if (*str == '\t' || *str == '\n')
+			*str = ' ';
+		str++;
+	}
 	ress = my_split(res, ' ', 0);
-//	free (res);
+	free (res);
 	return (ress);
 }
