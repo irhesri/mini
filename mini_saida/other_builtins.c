@@ -16,7 +16,7 @@ int check_option(char **str, int *option)
         while(str[i][j] && str[i][j] == 'n')
             j++;
     }
-    *option = (!str[i - 1][j] && j > 1) || i > 1;
+    *option = (i > 0 && !str[i - 1][j] && j > 1) || i > 1;
     if (i && (str[i - 1][j] || j == 1))
         i--;
     return (i);
@@ -93,17 +93,19 @@ void	my_exit(char	**status)
 {
 	long long nb;
 
-	if (!status[1])
+	if (!status[0])
 		exit(0);
-	nb = ft_atoi(status[1]);
-	if (status[2])
+	nb = ft_atoi(status[0]);
+	if (status[1])
 	{
 		//retest this case : exit param1 param2 ..
 		printf("sben-chi: exit: too many arguments\n");
 	//	code_err = 1;
 	}
+	printf("here\n");
 	printf("exit\n");//test => child process
 	exit(nb);
 }
 
 /*----------------END_EXIT----------------*/
+

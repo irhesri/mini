@@ -83,36 +83,6 @@ void	var_exist(char *str, int *pos)
 	while (str[*pos] && str[*pos] != 34 && str[*pos] != '$')
 		(*pos)++;
 }
-/*
-char *is_double_quoted(char *str, int *size)
-{
-	char	*quote_val;
-	char	*var;
-	int		pos;
-	int		i;
-
-	pos = 0;
-	quote_val = NULL;
-	while (str[pos] && str[pos] != 34)
-	{
-		i = pos;
-		var_exist(str, &pos);
-		if (str[pos] == '$')
-		{
-			var = var_expand(str + pos, size);
-			quote_val = free_join(quote_val, my_strdup(&str[i], str[pos]), 0);
-			quote_val = free_join(quote_val, var, 1);
-			pos += *size;
-		}
-		else
-			quote_val = free_join(quote_val, my_strdup(&str[i], str[pos]), 0);
-	}
-	*size = pos + 1;
-	if (str[*size])
-		(*size)++;
-	return (quote_val);
-}*/
-
 
 //	EMPTY PIPES.
 void	parse_time(t_data *data, char *str)
