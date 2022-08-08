@@ -1,38 +1,31 @@
-#include "minishell.h"
+#include "../mini_imane/minishell.h"
 
 // expand one variable only without joining
 char	*var_expand(char *str, int *size)
 {
-	int		i;
 	char	c;
 	char	*res;
-	t_node	*node;
 
-	res = str;
-	(*size) = 1;
+	// (*size)++;
+	res = str + (*size);
 	if (is_digit(str[(*size)]) || str[*size] == '$')
 	{
-		c = str[++(*size)];
-		str[(*size)] = '\0';
-		str = my_strdup(str, '\0');
-		res[(*size)] = c;
+		str = free_join("$", my_strdup(str + (*size), str[(*size)]), 2);
 		return (str);
 	}
+	if (!str[(*size)])
+		return (my_strdup("$", '\0'));
 	while (str[(*size)] && (is_digit(str[(*size)]) || is_alphabet(str[(*size)]) || str[(*size)] == '_'))
 		(*size)++;
-	if ((*size) == 1 && !str[(*size)])
-		return (my_strdup("$", '\0'));
-	if ((*size) == 2 && str[(*size) - 1] == '_')
-		return (my_strdup(get_last(NULL, 0), '\0'));
-	else if ((*size) == 1)
-		return (NULL);
 	c = str[(*size)];
 	str[(*size)] = '\0';
-	str = my_getenv(str + 1);
-	res[(*size)] = c;
-	return (str);
+	if (!ft_strncmp(res, "_", 2))
+		res = my_strdup(get_last(NULL, 0), '\0');
+	else
+		res = my_getenv(res);
+	str[(*size)] = c;
+	return (res);
 }
-
 // expand
 // split if b == 1
 char	**split_expand(char *str, int *len)

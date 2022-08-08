@@ -1,92 +1,136 @@
 #include "h.h"
 
-void    valide_name(t_list *env, char *name, char *str, int *i)
+char	*normal_chars(char *str, int *i, short b)
+{
+	int	j;
+
+	j = *i;
+	while (str[*i] && !is_special_red(str[*i]) && str[*i] != 39 && str[*i] != 34)
+	{
+		if (!b && str[*i] == '$') 
+			break ;
+		(*i)++;	
+	}
+	return (my_strdup(&str[j], str[(*i)]));
+}
+
+void	ft_error(char *str, char **name, int *i)
+{
+	*name = free_join(*name, normal_chars(str, i, 1), 0);
+	printf ("$: %s: ambiguous redirect\n", *name);
+	free(*name);
+	*name = NULL;
+
+}
+
+int	here_doc_case(char *str, t_redirection *red, int *i)
+{
+	while (str[*i] && !is_special_red(str[*i]))
+	{
+		if (str[*i] && (str[*i] == 34 || str[*i] == 39) && (*i)++)
+		{
+		    red->fd = -2;
+			red->name = free_join(red->name, is_quoted(str, i, str[*i - 1]), 0);
+		}
+		else
+			red->name = free_join(red->name, normal_chars(str, i, 1), 0);
+	}
+	return (1);
+}
+
+int	valide_name(char **name, char *str, int *i)
 {
     char    **var;
     int     len;
 
     var = NULL;
+	len = 0;
     while (str[*i] && !is_special_red(str[*i]))
     {
-        if (str[*i] == 39)
-            name = free_join(name, is_quoted(str + *i + 1, i, str[*i]), 0);
-        else if (str[*i] == 34)
-            name = free_join(name, is_double_quoted(str + *i + 1, i, str[*i]), 0);
-        else if (str[*i] == '$')
+        if (str[*i] == 39 && ++(*i))
+            *name = free_join(*name, is_quoted(str, i, str[*i - 1]), 0);
+		else if (str[*i] == 34 && ++(*i))
+            *name = free_join(*name, is_double_quoted(str, i), 0);
+        else if (str[*i] == '$' && ++(*i))
         {
-            var = split_expand(env, str, len);
-            if (var + 1)
+            var = split_expand(str, i);
+            if (*(var + 1))
             {
-                printf ("$: <file_name>: ambiguous redirect\n");
-                name = NULL;
-                return ;
+				ft_error(str, name, i);
+				return 0;
             }
-            name = free_join(name, *var, 1);
+            *name = free_join(*name, *var, 1);
         }
-    }
+		else
+			*name = free_join(*name, normal_chars(str, i, 0), 0);
+		*i += len;
+	}
+	return (1);
 }
 
-void    get_name(t_redirection *red, char *str, int *i, short type)
+void	get_name(t_redirection *red, char *str, int *i, short type)
 {
-    char    *name;
+	int	k;
 
-    name = NULL;
-    if (str[*i] && is_special_red(str[*i]) && str[*i] != '#')
+	k = *i + 1;
+	if (str[*i] && (is_special_red(str[*i]) || str[*i] == '#'))
     {
-        printf("$: syntax error near unexpected token `%c'", str[*i]);
-        return ;
+    	printf("$: syntax error near unexpected token `%c'\n", str[*i]);
+		red->name = NULL;
+		return ;//exit
     }
-    if (type == 7)
-    {
-        while (str[*i] && str[*i] != ' ' && !is_special_red(str[*i]))
-        {
-            if (str[*i] && (str[*i] == 34 || str[*i] == 39))
-                red->fd = -2;
-            red->name = free_join(red->name, is_quoted(str + *i + 1, i, str[*i]), 0);
-        }
-    }
-    else
-        valide_name(red->name, str + *i, i);
+	(type == 7) && here_doc_case(str, red, i);
+	if (str[*i] == '$' && !var_expand(str, &k))
+	{
+		ft_error(str, &red->name, i);
+		return ;
+	}
+	(type != 7) && valide_name(&(red->name), str, i);
 }
 
 int mode(short type)
 {
-    if (type == 6)
-        return (O_RDONLY);
-    if (type == 7)
-        return (0);
-    if (type == 8)
-        return (O_TRUNC);
-    if (type == 9)
-        return (O_APPEND)
+	if (type == 6)
+		return (O_RDONLY);
+	if (type == 7)
+		return (0);
+	if (type == 8)
+		return (O_TRUNC);
+	if (type == 9)
+		return (O_APPEND);
+	return (-1);
 }
 
-int is_redirection(t_list *input, t_list *output,  char *str, short type)
+void	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 {
-    t_redirection   red;
-    int             i;
+	t_redirection   *red;
 
-    i = 0;
-    red = malloc(sizeof(t_redirection));
-    if (!red)
-        return (0);
-    red.fd = 0;
-    red.mode = mode(type);
-    while (str[i] && str[i] == ' ')
-        *i++;
-    red.name = get_name(&red, &str[i], &i, type);
-    (type == 6 || type == 7) && add_node(input, input->last, red);
-    (type == 8 || type == 9) && add_node(output, output->last, red);
-    return (i);
+	red = malloc(sizeof(t_redirection));
+	if (!red)
+		return ;
+	red->fd = 0;
+	red->mode = mode(type);
+	red->name = NULL;
+//	printf("%s\n", str);
+	while (str[*i] && str[*i] == ' ')
+		(*i)++;
+	get_name(red, str, i, type);
+	printf("%s $%d\n", red->name, red->fd);
+	if (type == 6 || type == 7)
+		add_node(pipe->input, pipe->input->last, red);
+	else
+		add_node(pipe->output, pipe->output->last, red);
+//	t_redirection *t = pipe->input->last->content;
+//	printf("> %s\n", t->name);
 }
 
-int main()
-{
-	char	*l;
-	while (1)
-	{
-		l = readline(is_redirection(l, 7));
-		add_history(l);
-		printf("", );
-	}
-}
+// int main()
+// {
+// 	char	*l;
+// 	while (1)
+// 	{
+// 		l = readline("> ");
+// 		add_history(l);
+// 		is_redirection(l, 6);
+// 	}
+// }

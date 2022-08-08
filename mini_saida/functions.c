@@ -1,4 +1,4 @@
-#include "h.h"
+#include "../mini_imane/minishell.h"
 
 // returns arr size if str NULL
 // returns str size if arr NULL
@@ -25,6 +25,8 @@ char	*my_strdup(char *str, char c)
 	int		size;
 	char	*new;
 
+	if (!str)
+		return (str);
 	size = -1;
 	if (c != '\0')
 		size = my_search(str, c);
@@ -54,7 +56,7 @@ int	my_search(char *str, char c)
 
 // b == 1 : free(str1)
 // b == 2 : free(str2)
-// b == 3 : free both
+// b == 0 : free both
 char	*free_join(char *str1, char *str2, short b)
 {
 	char	*str;
@@ -92,8 +94,7 @@ char	**array_realloc(char **arr, char *str, short b)
 	i += (b == -1);
 	res[i * (b != 0) + b * (b == 0)] = str;
 	res[++i] = NULL;
-	if (arr)
-		free (arr);
+	free (arr);
 	return (res);
 }
 
