@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 12:26:38 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/11 16:23:18 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <dirent.h>
+# include <sys/stat.h>
+ 
+#include <sys/param.h>
+#include <string.h>
+#include <sys/errno.h>
+#include <dirent.h>
 #include <readline/readline.h>
-// # include "../mini_saida/h.h"
+#include <readline/history.h>
+#include <limits.h>
 
 typedef struct s_node
 {
@@ -44,12 +52,13 @@ typedef struct s_redirection
 // stored in t_list content //
 typedef struct s_pipe
 {
-	int		n;
-	int		pipe_id;
-	char	**arg;
-	t_list	*input;
-	t_list	*output;
-}	t_pipe;
+    int        n;
+    int        fd[2];
+    int        pipe_id;
+    char    	**arg;
+    // short   	 error;
+    t_list    *redirections;
+}    t_pipe;
 
 // ******************** //
 typedef struct s_data
@@ -64,6 +73,7 @@ typedef struct s_data
 void	init_env(t_data *data, char **envp);			
 void	init_data(t_data *data);
 void	parse_time(t_data *data, char *str);
+void	init_files(t_data *data);
 
 //	PARSE
 char	*var_expand(char *str, int *size);
@@ -72,6 +82,9 @@ char	**split_expand(char *str, int *len);
 char	*is_quoted(char *str, int *len, char c);
 char	*new_argument(t_pipe *pipe, char **res2, char *res);
 t_pipe	*new_pipe(t_data *data, short b);
+
+// EXECUTION
+void	not_builtin(t_data *data, char **arg);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
@@ -87,10 +100,10 @@ char	*ft_strjoin(char *str1, char *str2);
 char	**array_realloc(char **arr, char *str, short b);
 
 //	BUILTINS
-void	builtins_call(t_data *data, char **arg);
 void	env(void);
 void	export(t_data *data, char **arg);
 void	unset(t_data *data, char **arg);
+void	commands_call(t_data *data, char **arg);
 
 //	ENV_FUNCTIONS
 void	update_envp(t_data *data);
@@ -125,5 +138,13 @@ void	print_2D(char **arr);
 void	print_pipes(t_data *data, t_list *pipes);
 void	print_list(t_list *lst);
 
+// MINI_SAIDA
+void    echo(char **towrite);
+void    pwd(void);
+void    cd(char    **path);
+void    my_exit(t_data *data, char **status);
+char    **arr_join(char **arr1, char **arr2);
+char    *is_double_quoted(char *str, int *pos);
+void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
 
 #endif
