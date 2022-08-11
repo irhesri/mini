@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:09:53 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/11 12:46:11 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	builtins_call(t_data *data, char **arg)
 		// ptr[1] = echo;
 		// ptr[2] = pwd;
 		// ptr[3] = cd;
-		// ptr[4] = exit;
-		ptr[5] = env;
+		ptr[4] = env;
+		// ptr[5] = exit;
 		ptr[6] = export;
 		ptr[7] = unset;
 	}
@@ -42,7 +42,7 @@ void	builtins_call(t_data *data, char **arg)
 	i = -1;
 	while (!b && arg && ++i < 8)
 		b = !ft_strncmp(call[i], *arg, 10) * (i + 1);
-	if (b > 5 && arg)
+	if (b > 4 && arg)
 		ptr[b](data, arg + 1);
 	else
 		ptr[b](arg + (b != 0));
