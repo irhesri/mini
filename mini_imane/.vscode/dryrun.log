@@ -1,8 +1,0 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/irhesri/Desktop/mini/mini_imane'
-rm -rf a.out a.out.dSYM/ .DS_Store
-git add .
-git commit -m "..."
-git push
-make: Leaving directory `/Users/irhesri/Desktop/mini/mini_imane'
- 
