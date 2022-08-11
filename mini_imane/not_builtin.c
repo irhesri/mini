@@ -6,11 +6,12 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/11 17:10:20 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:51:12 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 short	open_file(char *path, char *command)
 {
 	if (access(path, F_OK) != -1)
@@ -56,6 +57,7 @@ char	*get_path(char *command)
 		while (env_paths && *env_paths)
 		{
 			path = free_join(*env_paths, command, 1);
+			// add / to the join
 			if (open_file(path, *command) == 1)
 			{
 				while (*(++env_paths))
