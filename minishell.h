@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 12:26:38 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/11 13:30:47 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@
 # include <stdio.h>
 # include <fcntl.h>
 #include <readline/readline.h>
-// # include "../mini_saida/h.h"
+
+#include <sys/param.h>
+#include <string.h>
+#include <sys/errno.h>
+#include <dirent.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <limits.h>
 
 typedef struct s_node
 {
@@ -44,12 +51,13 @@ typedef struct s_redirection
 // stored in t_list content //
 typedef struct s_pipe
 {
-	int		n;
-	int		pipe_id;
-	char	**arg;
-	t_list	*input;
-	t_list	*output;
-}	t_pipe;
+    int        n;
+    int        fd[2];
+    int        pipe_id;
+    char    	**arg;
+    // short   	 error;
+    t_list    *redirections;
+}    t_pipe;
 
 // ******************** //
 typedef struct s_data
@@ -64,6 +72,7 @@ typedef struct s_data
 void	init_env(t_data *data, char **envp);			
 void	init_data(t_data *data);
 void	parse_time(t_data *data, char *str);
+void	init_files(t_data *data);
 
 //	PARSE
 char	*var_expand(char *str, int *size);
@@ -125,5 +134,14 @@ void	print_2D(char **arr);
 void	print_pipes(t_data *data, t_list *pipes);
 void	print_list(t_list *lst);
 
+// MINI_SAIDA
+void    echo(char **towrite);
+void    pwd(void);
+void    cd(char    **path);
+void    my_exit(t_data *data, char **status);
+int        ft_atoi(char *str);
+char    **arr_join(char **arr1, char **arr2);
+char    *is_double_quoted(char *str, int *pos);
+void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
 
 #endif
