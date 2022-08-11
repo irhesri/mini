@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:56:37 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/08 13:07:34 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/11 11:49:10 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "h.h"
+#include "../minishell.h"
 
 int	ft_atoi(char *str)
 {
@@ -28,7 +28,6 @@ int	ft_atoi(char *str)
 	str += (*str == '+' || *str == '-');
 	while (*str >= 48 && *str <= 57 && nb < 9223372036854775809ull)
 		nb = (nb * 10) + (*(str++) - 48);
-	printf(">> %lld\n", nb);
 	if ((*str && *str != ' ') || (nb > 9223372036854775807ull && sign > 0)
 		|| (sign < 0 && nb > 9223372036854775808ull))
 	{
