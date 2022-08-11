@@ -1,4 +1,4 @@
-#include "h.h"
+#include "../minishell.h"
 
 char    **arr_join(char **arr1, char **arr2)
 {

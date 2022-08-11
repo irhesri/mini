@@ -1,55 +1,63 @@
-#include "h.h" 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   other_builtins.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
+/*   Updated: 2022/08/11 11:49:25 by sben-chi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-
+#include "../minishell.h" 
 
 /*-------------------ECHO-------------------*/
 
-int check_option(char **str, int *option)
+int	check_option(char **str, int *option)
 {
-    int j;
-    int i;
+	int	j;
+	int	i;
 
-    i = -1;
-    while (str[++i] && str[i][0] == '-')
-    {
-        j = 1;
-        while(str[i][j] && str[i][j] == 'n')
-            j++;
-    }
-    *option = (i > 0 && !str[i - 1][j] && j > 1) || i > 1;
-    if (i && (str[i - 1][j] || j == 1))
-        i--;
-    return (i);
+	i = -1;
+	while (str[++i] && str[i][0] == '-')
+	{
+		j = 1;
+		while (str[i][j] && str[i][j] == 'n')
+			j++;
+	}
+	*option = ((i > 0 && !str[i - 1][j] && j > 1) || i > 1);
+	if (i && (str[i - 1][j] || j == 1))
+		i--;
+	return (i);
 }
 
-void    my_echo(char  **towrite)
+void	my_echo(char **towrite)
 {
-    int     i;
-    int     j;
-    int     option;
+	int	i;
+	int	j;
+	int	option;
 
-    option = 0;
-    i = check_option(towrite, &option);
-    while (towrite[i])
-    {
-        j = -1;
-        while (towrite[i][++j])
-            write(1, &towrite[i][j], 1);
-        i++;
-        towrite[i] && write(1, " ", 1);
-    }
-    !option && write(1, "\n", 1);
+	option = 0;
+	i = check_option(towrite, &option);
+	while (towrite[i])
+	{
+		j = -1;
+		while (towrite[i][++j])
+			write(1, &towrite[i][j], 1);
+		i++;
+		towrite[i] && write(1, " ", 1);
+	}
+	!option && write(1, "\n", 1);
 }
 
 /*-----------------END_ECHO-----------------*/
-
-
 
 /*-------------------PWD-------------------*/
 
 void	my_pwd(void)
 {
-	char *path;
+	char	*path;
 
 	path = malloc(sizeof(char) * MAXPATHLEN);
 	if (!path)
@@ -66,32 +74,26 @@ void	my_pwd(void)
 
 /*-------------------CD-------------------*/
 
-//reimplement
-
 void	my_cd(char	**path)
 {
-	//test if old pwd will change it in envp
-	//test if home unset $pwd & $oldpwd will work normally 
-//	char	**up_pwd;
-	char	*var;
-
-//	var = my_getenv(data->env, "PWD");
-
-	if (!path[1])
-		path[1] = getenv("HOME");// env vr-modif
-	if (chdir(path[1]) < 0)
+	char *t[] = {"cd", "..", NULL};
+	if (!(*path))
+		*path = my_getenv("HOME");// env vr-modifi
+	if (chdir(*path) < 0)
+	{	
+	//	execve("/usr/bin/cd", t, NULL);
 		perror("");
-//	up_pwd[1] = free_join(my_strdup("PWD=", '\0'), my_pwd(), 0);
-//	up_pwd[2] = NULL;
+
+	}
 }
 
 /*------------------END_CD------------------*/
 
 /*------------------EXIT------------------*/
 
-void	my_exit(char	**status)
+void	my_exit(char **status)
 {
-	long long nb;
+	long long	nb;
 
 	if (!status[0])
 		exit(0);
@@ -100,7 +102,8 @@ void	my_exit(char	**status)
 	{
 		//retest this case : exit param1 param2 ..
 		printf("sben-chi: exit: too many arguments\n");
-	//	code_err = 1;
+		return ;
+		//	code_err = 1;
 	}
 	printf("here\n");
 	printf("exit\n");//test => child process
@@ -108,4 +111,3 @@ void	my_exit(char	**status)
 }
 
 /*----------------END_EXIT----------------*/
-
