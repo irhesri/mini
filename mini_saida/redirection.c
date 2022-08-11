@@ -6,11 +6,16 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/11 11:49:40 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/11 12:27:44 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+short	is_special_red(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == ' ' || c == ';');
+}
 
 char	*normal_chars(char *str, int *i, short b)
 {
@@ -37,12 +42,12 @@ void	ft_error(char *str, char **name, int *i)
 
 int	here_doc_case(char *str, t_redirection *red, int *i)
 {
-	red->fd = -1;
+	red->fd = -2;
 	while (str[*i] && !is_special_red(str[*i]))
 	{
 		if (str[*i] && (str[*i] == 34 || str[*i] == 39) && (*i)++)
 		{
-			red->fd = -2;
+			red->fd = -3;
 			red->name = free_join(red->name, is_quoted(str, i, str[*i - 1]), 0);
 		}
 		else

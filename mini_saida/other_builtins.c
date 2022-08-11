@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/11 11:49:25 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:02:36 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_option(char **str, int *option)
 	return (i);
 }
 
-void	my_echo(char **towrite)
+void	echo(char **towrite)
 {
 	int	i;
 	int	j;
@@ -55,7 +55,7 @@ void	my_echo(char **towrite)
 
 /*-------------------PWD-------------------*/
 
-void	my_pwd(void)
+void	pwd(void)
 {
 	char	*path;
 
@@ -74,24 +74,28 @@ void	my_pwd(void)
 
 /*-------------------CD-------------------*/
 
-void	my_cd(char	**path)
+void	cd(char	**path)
 {
-	char *t[] = {"cd", "..", NULL};
+	char	pwd_update[2];
+	
+	pwd_update[0] = my_getenv("");
+	pwd_update[1] = my_getenv();
 	if (!(*path))
+	{
 		*path = my_getenv("HOME");// env vr-modifi
-	if (chdir(*path) < 0)
-	{	
-	//	execve("/usr/bin/cd", t, NULL);
-		perror("");
-
+		if (!path)
+			printf("$: cd: HOME not set");
+		return ;// new_line
 	}
+	if (chdir(*path) < 0)
+		perror("");
 }
 
 /*------------------END_CD------------------*/
 
 /*------------------EXIT------------------*/
 
-void	my_exit(char **status)
+void	my_exit(t_data *data, char **status)
 {
 	long long	nb;
 
