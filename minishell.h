@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-#include <readline/readline.h>
 
 #include <sys/param.h>
 #include <string.h>
