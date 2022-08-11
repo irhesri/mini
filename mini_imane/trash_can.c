@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/11 12:55:07 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	empty_pipes(t_list *pipes_lst)
 		while (args && *args)
 			free (*args++);
 		free (((t_pipe *)(pipe->content))->arg);
-		free_red_list(((t_pipe *)(pipe->content))->input);
-		free_red_list(((t_pipe *)(pipe->content))->output);
+		free_red_list(((t_pipe *)(pipe->content))->redirections);
 		free(pipe->content);
 		free (pipe);
 		pipe = tmp;
@@ -81,7 +80,7 @@ void	free_all(t_data *data)
 	free (data->pipes);
 	free (data->envp);
 	delete_node(get_env(NULL), getenv_node((get_env(NULL))->head, "_"));
-	free_list(get_exp(NULL), 1);
 	free_list(get_env(NULL), 0);
+	free_list(get_exp(NULL), 1);
 	free (data);
 }

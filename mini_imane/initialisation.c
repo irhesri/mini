@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/11 13:26:24 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,63 @@ void	init_env(t_data *data, char **envp)
 	str = my_strdup("_=/usr/bin/env", '\0');
 	add_node(get_env(NULL), (get_env(NULL))->last, str);
 	update_envp(data);
+}
+
+void	open_files(t_pipe *pipe)
+{
+	int				fd;
+	t_node			*lst;
+	t_redirection	*red;
+
+	lst = (pipe->redirections)->head;
+	while (lst)
+	{
+		red = lst->content;
+		if (!red->mode && !red->fd)
+			fd = open(red->name, O_RDONLY);
+		else if (red->mode && !red->fd)
+			fd = open(red->name, O_CREAT | O_WRONLY | red->mode, 0644);
+		else
+			fd = red->fd;
+		pipe->fd[(red->mode != 0)] = fd;
+		if (fd == -1)
+		{
+			perror(red->name);
+			return ;
+		}
+		lst = lst->next;
+	}
+}
+
+void	check_for_here_docs(t_pipe *pipe)
+{
+	t_node			*lst;
+	t_redirection	*red;
+
+	lst = (pipe->redirections)->head;
+	while (lst)
+	{
+		red = lst->content;
+		// if (red->fd < -1)
+		// 	its_here_doc();
+		lst = lst->next;
+	}
+}
+
+void	init_files(t_data *data)
+{
+	t_node	*head;
+
+	head = (data->pipes)->head;
+	while (head)
+	{
+		check_for_here_docs(head->content);
+		head = head->next;
+	}
+	head = (data->pipes)->head;
+	while (head)
+	{
+		open_files(head->content);
+		head = head->next;
+	}
 }
