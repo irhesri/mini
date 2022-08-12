@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/11 11:49:40 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/12 11:49:40 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+short	is_special_red(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == ' ' || c == ';');
+}
 
 char	*normal_chars(char *str, int *i, short b)
 {

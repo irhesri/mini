@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/11 11:49:25 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/12 11:50:15 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	my_cd(char	**path)
 
 /*------------------EXIT------------------*/
 
-void	my_exit(char **status)
+void	my_exit(t_data *data, char **status)
 {
 	long long	nb;
 

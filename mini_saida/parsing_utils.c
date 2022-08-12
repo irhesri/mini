@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:38:24 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/11 11:49:34 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/12 11:49:37 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-short	is_special_red(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == ' ' || c == ';');
-}
 
 char	*is_quoted(char *str, int *len, char c)
 {
