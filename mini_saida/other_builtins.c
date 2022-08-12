@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/11 15:02:36 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:55:39 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,13 @@ int	check_option(char **str, int *option)
 void	echo(char **towrite)
 {
 	int	i;
-	int	j;
 	int	option;
 
 	option = 0;
 	i = check_option(towrite, &option);
 	while (towrite[i])
 	{
-		j = -1;
-		while (towrite[i][++j])
-			write(1, &towrite[i][j], 1);
+		write(1, towrite[i], my_size(NULL, towrite[i]));
 		i++;
 		towrite[i] && write(1, " ", 1);
 	}
@@ -70,25 +67,58 @@ void	pwd(void)
 	printf("%s\n", path);
 }
 
+char	*my_pwd(void)
+{
+	char	*path;
+
+	path = malloc(sizeof(char) * MAXPATHLEN);
+	if (!path)
+		return (NULL);
+	if (!getcwd(path, MAXPATHLEN))
+	{
+		perror("");
+		exit(0);
+	}
+	return (path);
+}
+
 /*-----------------END_PWD-----------------*/
 
 /*-------------------CD-------------------*/
 
-void	cd(char	**path)
+void	cd(t_data *data, char **path)
 {
-	char	pwd_update[2];
-	
-	pwd_update[0] = my_getenv("");
-	pwd_update[1] = my_getenv();
-	if (!(*path))
+	char	*pwd_update[3];
+	char	*temp;
+   
+	temp = NULL;
+	pwd_update[0] = my_getenv("PWD");
+	pwd_update[1] = my_getenv("OLDPWD");
+	pwd_update[2] = NULL;
+	if (!pwd_update[0] && pwd_update[1])
+		pwd_update[1] = my_pwd();
+	temp = (*path);
+	if (!temp)
 	{
-		*path = my_getenv("HOME");// env vr-modifi
-		if (!path)
-			printf("$: cd: HOME not set");
-		return ;// new_line
+		temp = my_getenv("HOME");// env vr-modifi
+	//	printf("%s\n", temp);
+		if (!temp || !(*temp))
+		{
+			!temp && printf("$: cd: HOME not set\n");
+			return ;// new_line
+		}
 	}
-	if (chdir(*path) < 0)
-		perror("");
+	if (chdir(temp) < 0)
+		perror(">>>");
+	if (pwd_update[0] && !pwd_update[1])
+		pwd_update[0] = my_pwd();
+	else if (pwd_update[0] && pwd_update[1])
+	{
+		pwd_update[1] = pwd_update[0];
+		pwd_update[0] = my_pwd();
+	}
+	//join name= + value;
+	//export(data, pwd_update);
 }
 
 /*------------------END_CD------------------*/
@@ -109,7 +139,6 @@ void	my_exit(t_data *data, char **status)
 		return ;
 		//	code_err = 1;
 	}
-	printf("here\n");
 	printf("exit\n");//test => child process
 	exit(nb);
 }

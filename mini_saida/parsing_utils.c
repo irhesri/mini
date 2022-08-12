@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:38:24 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/11 13:20:26 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/12 17:01:59 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*is_double_quoted(char *str, int *pos)
 	int		i;
 
 	quote_val = NULL;
+	if ((!str[*pos] || str[*pos] == 34) && ++(*pos))
+		quote_val = my_strdup("", '\0');
 	while (str[*pos] && str[*pos] != 34)
 	{
 		i = *pos;
