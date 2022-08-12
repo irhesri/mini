@@ -127,6 +127,7 @@ void	empty_pipes(t_list *pipes_lst);
 void	free_all(t_data *data);
 void	my_free(void **content);
 void	free_list(t_list *lst, short b);
+void	free_arr(char **arr);
 
 // GLOBALS
 char	*get_last(char *last, int b);
