@@ -1,23 +1,29 @@
-#include "h.h"
-#include <fcntl.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/08 13:38:24 by sben-chi          #+#    #+#             */
+/*   Updated: 2022/08/12 11:49:37 by irhesri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-short   is_special_red(char c)
+#include "../minishell.h"
+
+char	*is_quoted(char *str, int *len, char c)
 {
-    return (c == '|' || c == '<' ||c == '>' || c == ' ' || c == ';');
+	char	*res;
+
+	res = my_strdup(&str[*len], c);
+	(*len) += my_size(NULL, res);
+	if (str[*len])
+		(*len)++;
+	return (res);
 }
 
-char    *is_quoted(char *str, int *len, char c)
-{
-    char    *res;
-
-    res = my_strdup(&str[*len], c);
-    (*len) += my_size(NULL, res);
-    if (str[*len])
-        (*len)++;
-    return (res);
-}
-
-char *is_double_quoted(char *str, int *pos)
+char	*is_double_quoted(char *str, int *pos)
 {
 	char	*quote_val;
 	char	*var;
@@ -39,6 +45,5 @@ char *is_double_quoted(char *str, int *pos)
 			quote_val = free_join(quote_val, my_strdup(&str[i], str[*pos]), 0);
 	}
 	(str[*pos] == 34) && (*pos)++;
-//	printf("|__%s__%c__|\n", quote_val, str[*pos]);
 	return (quote_val);
 }
