@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/11 13:47:55 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 15:50:07 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		str = readline("---->  ");
+		add_history(str);
+		if (!*str)
+			continue ;
+		if (!str)
+			exit (0);
 		parse_time (data, str);
 		print_pipes(data, data->pipes);
 		free (str);

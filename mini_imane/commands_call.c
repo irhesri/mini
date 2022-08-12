@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:09:53 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 11:54:22 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 14:32:24 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	commands_call(t_data *data, char **arg)
 		// ptr[3] = exit;
 		// ptr[4] = cd;
 		ptr[5] = env;
-		// ptr[6] = echo;
+		ptr[6] = echo;
 		// ptr[7] = pwd;
 	}
 	b = 0;

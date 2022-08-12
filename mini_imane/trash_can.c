@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/11 12:55:07 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 17:06:55 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,11 @@ void	free_all(t_data *data)
 	free_list(get_env(NULL), 0);
 	free_list(get_exp(NULL), 1);
 	free (data);
+}
+
+void	free_arr(char **arr)
+{
+	while (arr && *arr)
+		free (*arr++);
+	free (arr);	
 }
