@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/12 11:49:40 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 17:23:54 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	ft_error(char *str, char **name, int *i)
 
 int	here_doc_case(char *str, t_redirection *red, int *i)
 {
-	red->fd = -1;
+	red->fd = -2;
 	while (str[*i] && !is_special_red(str[*i]))
 	{
 		if (str[*i] && (str[*i] == 34 || str[*i] == 39) && (*i)++)
 		{
-			red->fd = -2;
+			red->fd = -3;
 			red->name = free_join(red->name, is_quoted(str, i, str[*i - 1]), 0);
 		}
 		else

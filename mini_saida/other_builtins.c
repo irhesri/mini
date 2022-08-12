@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/12 11:50:15 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 17:23:27 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,17 @@ int	check_option(char **str, int *option)
 	return (i);
 }
 
-void	my_echo(char **towrite)
+void	echo(char **towrite)
 {
 	int	i;
-	int	j;
 	int	option;
 
 	option = 0;
 	i = check_option(towrite, &option);
 	while (towrite[i])
 	{
-		j = -1;
-		while (towrite[i][++j])
-			write(1, &towrite[i][j], 1);
-		i++;
-		towrite[i] && write(1, " ", 1);
+		write(1, towrite[i], my_size(NULL, towrite[i]));
+		towrite[++i] && write(1, " ", 1);
 	}
 	!option && write(1, "\n", 1);
 }
@@ -55,7 +51,7 @@ void	my_echo(char **towrite)
 
 /*-------------------PWD-------------------*/
 
-void	my_pwd(void)
+void	pwd(void)
 {
 	char	*path;
 
@@ -70,21 +66,58 @@ void	my_pwd(void)
 	printf("%s\n", path);
 }
 
+char	*my_pwd(void)
+{
+	char	*path;
+
+	path = malloc(sizeof(char) * MAXPATHLEN);
+	if (!path)
+		return (NULL);
+	if (!getcwd(path, MAXPATHLEN))
+	{
+		perror("");
+		exit(0);
+	}
+	return (path);
+}
+
 /*-----------------END_PWD-----------------*/
 
 /*-------------------CD-------------------*/
 
-void	my_cd(char	**path)
+void	cd(t_data *data, char **path)
 {
-	char *t[] = {"cd", "..", NULL};
-	if (!(*path))
-		*path = my_getenv("HOME");// env vr-modifi
-	if (chdir(*path) < 0)
-	{	
-	//	execve("/usr/bin/cd", t, NULL);
-		perror("");
-
+	char	*pwd_update[3];
+	char	*temp;
+   
+	temp = NULL;
+	pwd_update[0] = my_getenv("PWD");
+	pwd_update[1] = my_getenv("OLDPWD");
+	pwd_update[2] = NULL;
+	if (!pwd_update[0] && pwd_update[1])
+		pwd_update[1] = my_pwd();
+	temp = (*path);
+	if (!temp)
+	{
+		temp = my_getenv("HOME");// env vr-modifi
+	//	printf("%s\n", temp);
+		if (!temp || !(*temp))
+		{
+			!temp && printf("$: cd: HOME not set\n");
+			return ;// new_line
+		}
 	}
+	if (chdir(temp) < 0)
+		perror(">>>");
+	if (pwd_update[0] && !pwd_update[1])
+		pwd_update[0] = my_pwd();
+	else if (pwd_update[0] && pwd_update[1])
+	{
+		pwd_update[1] = pwd_update[0];
+		pwd_update[0] = my_pwd();
+	}
+	//join name= + value;
+	//export(data, pwd_update);
 }
 
 /*------------------END_CD------------------*/
@@ -105,7 +138,6 @@ void	my_exit(t_data *data, char **status)
 		return ;
 		//	code_err = 1;
 	}
-	printf("here\n");
 	printf("exit\n");//test => child process
 	exit(nb);
 }

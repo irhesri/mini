@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:38:24 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/12 11:49:37 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 17:23:36 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*is_double_quoted(char *str, int *pos)
 	int		i;
 
 	quote_val = NULL;
+	if ((!str[*pos] || str[*pos] == 34) && ++(*pos))
+		quote_val = my_strdup("", '\0');
 	while (str[*pos] && str[*pos] != 34)
 	{
 		i = *pos;
