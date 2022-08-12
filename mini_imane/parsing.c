@@ -6,13 +6,13 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/11 13:18:53 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 15:36:04 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-short	is_special(char *c)
+short	is_limiter(char *c)
 {
 	int			i;
 	short		b;
@@ -66,8 +66,6 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 		free (tmp);
 		return (res);
 	}
-	if (res && !*res)
-		free (res);
 	else if (res)
 	{
 		pipe->arg = array_realloc(pipe->arg, res, -1);
@@ -83,7 +81,7 @@ char	*parse_time_2(char *str, char *res, int *i, int tmp)
 	if (!tmp)
 	{
 		tmp = *i;
-		while (str[*i] && !is_special(str + *i))
+		while (str[*i] && !is_limiter(str + *i))
 			(*i)++;
 		res = free_join(res, my_strdup(str + tmp, str[*i]), 0);
 	}
@@ -109,14 +107,14 @@ void	parse_time(t_data *data, char *str)
 	{
 		while (str[i] == ' ')
 			i++;
-		tmp = is_special(str + i);
+		tmp = is_limiter(str + i);
 		if (tmp < 3)
 			res = parse_time_2(str, res, &i, tmp);
 		else if (tmp == 3 && ++i)
 			res = new_argument(pipe, split_expand(str, &i), res);
 		else if (tmp > 5)
 			is_redirection(pipe, str, &i, tmp);
-		if (tmp == 4 || !str[i] || is_special(str + i) > 3)
+		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
 		if (tmp == 4 && ++i)
 			pipe = new_pipe(data, 0);

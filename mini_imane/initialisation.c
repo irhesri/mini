@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/11 13:26:24 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 15:24:46 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	init_env(t_data *data, char **envp)
 	free (arr);
 	str = my_strdup("_=/usr/bin/env", '\0');
 	add_node(get_env(NULL), (get_env(NULL))->last, str);
+	get_last(NULL, 1);
 	update_envp(data);
 }
 

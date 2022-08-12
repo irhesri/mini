@@ -6,12 +6,11 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:38:24 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/12 17:01:59 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/12 17:23:36 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 char	*is_quoted(char *str, int *len, char c)
 {

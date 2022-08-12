@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/11 13:30:47 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 11:46:53 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-
+# include <dirent.h>
+# include <sys/stat.h>
+ 
 #include <sys/param.h>
 #include <string.h>
 #include <sys/errno.h>
@@ -81,6 +83,9 @@ char	*is_quoted(char *str, int *len, char c);
 char	*new_argument(t_pipe *pipe, char **res2, char *res);
 t_pipe	*new_pipe(t_data *data, short b);
 
+// EXECUTION
+void	not_builtin(t_data *data, char **arg);
+
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
 void	delete_node(t_list *lst, t_node *to_delete);
@@ -95,10 +100,10 @@ char	*ft_strjoin(char *str1, char *str2);
 char	**array_realloc(char **arr, char *str, short b);
 
 //	BUILTINS
-void	builtins_call(t_data *data, char **arg);
 void	env(void);
 void	export(t_data *data, char **arg);
 void	unset(t_data *data, char **arg);
+void	commands_call(t_data *data, char **arg);
 
 //	ENV_FUNCTIONS
 void	update_envp(t_data *data);
@@ -122,6 +127,7 @@ void	empty_pipes(t_list *pipes_lst);
 void	free_all(t_data *data);
 void	my_free(void **content);
 void	free_list(t_list *lst, short b);
+void	free_arr(char **arr);
 
 // GLOBALS
 char	*get_last(char *last, int b);
