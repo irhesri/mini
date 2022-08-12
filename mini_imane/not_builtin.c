@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 16:53:33 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/12 17:05:32 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,26 @@ char	*first_check(char *command)
 	return (NULL);
 }
 
+char	*check_in_env(char **env_paths, char *command)
+{
+	char	*path;
+	
+	while (env_paths && *env_paths)
+	{
+		if (**env_paths)
+			path = ft_strjoin(*env_paths, command);
+		else
+			path = ft_strjoin(".", command);
+		if (open_file(path, *command) == 1)	
+		{
+			free_arr(env_paths);	
+			return (path);
+		}
+		free (path);
+	}
+	return (NULL);
+}
+
 char	*get_path(char *command)
 {
 	char		*path;
@@ -60,19 +80,9 @@ char	*get_path(char *command)
 		free(path);
 		if (!env_paths && open_file(command, command) == 1)
 			return (command);
-		while (env_paths && *env_paths)
-		{
-			if (**env_paths)
-				path = ft_strjoin(*env_paths, command);
-			else
-				path = ft_strjoin(".", command);
-			if (open_file(path, *command) == 1)
-			{
-				free_arr(env_paths);	
-				return (path);
-			}
-			free (path);
-		}
+		path = check_in_env(env_paths, command);
+		if (path)
+			return (path);
 		free_arr(env_paths);	
 	}
 	// bash: command: No such file or directory
