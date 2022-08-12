@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/12 16:55:39 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/12 17:15:50 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	echo(char **towrite)
 	while (towrite[i])
 	{
 		write(1, towrite[i], my_size(NULL, towrite[i]));
-		i++;
-		towrite[i] && write(1, " ", 1);
+		towrite[++i] && write(1, " ", 1);
 	}
 	!option && write(1, "\n", 1);
 }
