@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 15:36:04 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/20 11:24:11 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-short	is_limiter(char *c)
+short is_limiter(char *c)
 {
-	int			i;
-	short		b;
+	int i;
+	short b;
 	static char s[10] = "\'\"$| <<>";
 
+	if (*c == '\0')
+		return (-1);
 	b = 0;
 	i = -1;
 	while (!b && ++i < 8)
@@ -27,10 +29,10 @@ short	is_limiter(char *c)
 	return (b);
 }
 
-t_pipe	*new_pipe(t_data *data, short b)
+t_pipe *new_pipe(t_data *data, short b)
 {
-	t_pipe		*pipe;
-	static int	id;
+	t_pipe *pipe;
+	static int id;
 
 	if (b)
 		id = 0;
@@ -49,9 +51,9 @@ t_pipe	*new_pipe(t_data *data, short b)
 	return (pipe);
 }
 
-char	*new_argument(t_pipe *pipe, char **res2, char *res)
+char *new_argument(t_pipe *pipe, char **res2, char *res)
 {
-	char	**tmp;
+	char **tmp;
 
 	if (res2)
 	{
@@ -63,7 +65,7 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 			pipe->n++;
 			res = *(++res2);
 		}
-		free (tmp);
+		free(tmp);
 		return (res);
 	}
 	else if (res)
@@ -76,7 +78,7 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 	return (NULL);
 }
 
-char	*parse_time_2(char *str, char *res, int *i, int tmp)
+char *parse_time_2(char *str, char *res, int *i, int tmp)
 {
 	if (!tmp)
 	{
@@ -93,12 +95,12 @@ char	*parse_time_2(char *str, char *res, int *i, int tmp)
 }
 
 //	EMPTY PIPES.
-void	parse_time(t_data *data, char *str)
+void parse_time(t_data *data, char *str)
 {
-	int		i;
-	int		tmp;
-	t_pipe	*pipe;
-	char	*res;
+	int i;
+	int tmp;
+	t_pipe *pipe;
+	char *res;
 
 	i = 0;
 	pipe = new_pipe(data, 1);
@@ -112,7 +114,7 @@ void	parse_time(t_data *data, char *str)
 			res = parse_time_2(str, res, &i, tmp);
 		else if (tmp == 3 && ++i)
 			res = new_argument(pipe, split_expand(str, &i), res);
-		else if (tmp > 5)
+		else if (tmp > 5 && ++i)
 			is_redirection(pipe, str, &i, tmp);
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
@@ -120,5 +122,3 @@ void	parse_time(t_data *data, char *str)
 			pipe = new_pipe(data, 0);
 	}
 }
-
-

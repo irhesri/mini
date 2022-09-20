@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 15:14:16 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:10:21 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ char	*var_expand(char *str, int *size)
 		str = free_join("$", res, 2);
 		return (str);
 	}
+	if (str[(*size)] == '?' && ++(*size))
+		return (ft_itoa(get_errno(-1)));
 	if (!str[(*size)] || is_limiter(str + (*size)))
 		return (my_strdup("$", '\0'));
-	while (str[(*size)] && (is_digit(str[(*size)]) || is_alphabet(str[(*size)]) || str[(*size)] == '_'))
+	while (str[(*size)] && (is_digit(str[(*size)])
+			|| is_alphabet(str[(*size)]) || str[(*size)] == '_'))
 		(*size)++;
 	c = str[(*size)];
 	str[(*size)] = '\0';

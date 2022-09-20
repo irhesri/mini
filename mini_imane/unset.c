@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:55 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/31 13:36:32 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_special(char c)
 {		
-	return (!(is_digit(c) || is_alphabet(c) 
+	return (!(is_digit(c) || is_alphabet(c)
 			|| (c == '+') || (c == '_')));
 }
 
@@ -25,6 +25,7 @@ short	env_regex(char *str, short b)
 {
 	int			i;
 	int			error;
+	char		*tmp;
 	const char	*set[2];
 
 	i = -1;
@@ -34,14 +35,16 @@ short	env_regex(char *str, short b)
 		if (b && str[i] == '=')
 			break ;
 		error = ((!b && str[i] == '+')
-			|| (b && str[i] == '+' && str[i + 1] != '=')
-			|| is_special(str[i]));
+				|| (b && str[i] == '+' && str[i + 1] != '=')
+				|| is_special(str[i]));
 	}
 	if (error)
 	{
-		set[0] = "unset";
-		set[1] = "export";
-		printf("minishell: %s: `%s': not a valid identifier\n", set[b], str);
+		set[0] = "unset: `";
+		set[1] = "export: `";
+		tmp = ft_strjoin((char *)set[b], str);
+		print_error(tmp, "': not a valid identifier\n");
+		free(tmp);
 	}
 	return (error);
 }

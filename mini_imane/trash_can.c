@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trash_can.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 17:06:55 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/05 14:05:51 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ void	free_all(t_data *data)
 
 void	free_arr(char **arr)
 {
+	char	**tmp;
+
+	tmp = arr;
 	while (arr && *arr)
 		free (*arr++);
-	free (arr);	
+	free (tmp);
 }

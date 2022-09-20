@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:13 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/31 13:42:17 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 //	prints enviroment variables 
 static short	export_print(t_list *exp)
 {
@@ -62,7 +63,8 @@ void	update_var(t_data *data, t_node *node, char *str, int i)
 	char	*tmp;
 
 	if (str[i - 1] == '\0')
-		str = ft_strjoin(node->content, str + i + (my_search(node->content, '=') != -1));
+		str = ft_strjoin(node->content,
+				str + i + (my_search(node->content, '=') != -1));
 	else
 		str = my_strdup(str, '\0');
 	tmp = node->content;

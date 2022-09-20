@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/31 13:50:33 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	update_envp(t_data *data)
 {
 	int		i;
 	t_node	*head;
-	
+
 	if (data->envp)
 		return ;
 	data->envp = malloc(sizeof(char **) * (get_env(NULL))->size);
@@ -50,6 +50,7 @@ char	*my_getenv(char *str)
 // print enviroment variables (env)
 void	env(void)
 {
+	char	*str;
 	t_node	*tmp;
 	t_list	*env;
 
@@ -57,7 +58,9 @@ void	env(void)
 	tmp = env->head;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		str = ft_strjoin(tmp->content, "\n");
+		ft_putstr(str);
+		free (str);
 		tmp = tmp->next;
 	}
 }

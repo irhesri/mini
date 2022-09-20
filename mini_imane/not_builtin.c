@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   not_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 17:05:32 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/20 13:14:26 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ short	open_file(char *path, char *command)
 		{
 			if (access(path, R_OK) != -1)
 				return (1);
-			// bash: ./command: Permission denied
+			command = ft_strjoin("./", command);
+			print_error(command, ": Permission denied\n");
+			free (command);
 			exit (126);
 		}
-		// bash: command: Permission denied
+		print_error(command, ": Permission denied\n");
 		exit (126);
 	}
 	return (127);
@@ -32,11 +34,11 @@ short	open_file(char *path, char *command)
 char	*first_check(char *command)
 {
 	struct stat	file_mode;
-	
+
 	stat(command, &file_mode);
-	if (file_mode.st_mode == S_IFDIR)
+	if (S_ISDIR(file_mode.st_mode)) //check in mac
 	{
-		// bash: command: is a directory
+		print_error(command, ": is a directory\n");
 		exit(126);
 	}
 	if (my_search(command, '/') != -1 && open_file(command, command) == 1)
@@ -47,20 +49,25 @@ char	*first_check(char *command)
 char	*check_in_env(char **env_paths, char *command)
 {
 	char	*path;
-	
-	while (env_paths && *env_paths)
+	char	**paths;
+
+	paths = env_paths;
+	command = ft_strjoin("/", command);
+	while (paths && *paths)
 	{
-		if (**env_paths)
-			path = ft_strjoin(*env_paths, command);
+		if (**paths)
+			path = ft_strjoin(*paths, command);
 		else
 			path = ft_strjoin(".", command);
-		if (open_file(path, *command) == 1)	
+		if (open_file(path, command + 1) == 1)
 		{
-			free_arr(env_paths);	
+			free (command);
 			return (path);
-		}
+		}	
 		free (path);
+		paths++;
 	}
+	free (command);
 	return (NULL);
 }
 
@@ -69,23 +76,22 @@ char	*get_path(char *command)
 	char		*path;
 	char		**env_paths;
 
-	path = first_check(command);
-	if (path)
-		return (path);
+	// path = first_check(command);
+	// if (path)
+	// 	return (path);
 	if (my_search(command, '/') == -1 && *command)
 	{
-		command = ft_strjoin("/", command);
-		path = my_getenv(command);
+		path = my_getenv("PATH");
 		env_paths = my_split(path, ':', 1);
 		free(path);
 		if (!env_paths && open_file(command, command) == 1)
 			return (command);
 		path = check_in_env(env_paths, command);
+		free_arr(env_paths);
 		if (path)
 			return (path);
-		free_arr(env_paths);	
 	}
-	// bash: command: No such file or directory
+	print_error(command, ": No such file or directory\n");
 	exit (127);
 }
 
@@ -98,6 +104,7 @@ void	not_builtin(t_data *data, char **arg)
 		path = get_path(*arg);
 		update_envp(data);
 		execve(path, arg, data->envp);
-		perror(*arg);
+		perror("execve");
+		exit (errno);
 	}
 }
