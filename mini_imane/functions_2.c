@@ -6,12 +6,13 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/09/23 22:20:39 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 23:34:35 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// bash name: str1str2
 void	print_error(char *str1, char *str2)
 {
 	char	*str;

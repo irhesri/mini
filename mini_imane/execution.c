@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/09/23 22:20:14 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 23:47:55 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ void	commands_call(t_data *data, char **arg)
 		ptr[0] = not_builtin;
 		ptr[1] = export;
 		ptr[2] = unset;
-		ptr[3] = exit;
+		ptr[3] = my_exit;
 		ptr[4] = cd;
 		ptr[5] = env;
 		ptr[6] = echo;
 		ptr[7] = pwd;
 	}
+	if (!arg || !*arg)
+		return ;
 	b = is_builtin(*arg);
 	if (b < 5 && arg)
 		ptr[b](data, arg + (b != 0));
@@ -82,7 +84,7 @@ void	one_command_line(t_data *data, t_pipe *content, int *fd)
 {
 	pid_t	id;
 
-	if (is_builtin(*(content->arg)))
+	if (content->arg && *content->arg && is_builtin(*(content->arg)))
 	{
 		if (content->fd[0] < 0 || content->fd[1] < 0)
 		{

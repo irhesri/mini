@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/05 14:14:28 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 23:35:05 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	open_files(t_pipe *pipe)
 		pipe->fd[(red->mode != 0)] = fd;
 		if (fd == -1)
 		{
-			perror(red->name);
+			perror(get_bash_name(NULL));
 			return ;
 		}
 		lst = lst->next;

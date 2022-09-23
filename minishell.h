@@ -72,8 +72,9 @@ typedef struct s_data
 // INITIALISATION		---->		call it at the begining of the program
 void	init_env(t_data *data, char **envp);			
 void	init_data(t_data *data);
-void	parse_time(t_data *data, char *str);
 void	init_files(t_data *data);
+short	parse_time(t_data *data, char *str);
+
 
 //	PARSE
 char	*var_expand(char *str, int *size);

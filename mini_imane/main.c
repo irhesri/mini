@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 20:24:04 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 23:34:39 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ int	main(int ac, char **av, char **envp)
 		}
 		if (!str)
 			exit (0);
-		parse_time (data, str);
-		init_files(data);
+		if (!parse_time (data, str))
+		{
+			init_files(data);
+			run_commands(data, data->pipes);
+		}
+		else
+			get_errno(1);
 		// print_pipes(data, data->pipes);
 		// commands_call(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
-		get_errno(0);
-		run_commands(data, data->pipes);
 		// red_test(data->pipes);
 		empty_pipes(data->pipes);
 		free (str);

@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/09/05 14:55:14 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 23:48:31 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,11 @@ void	my_exit(t_data *data, char **status)
 	if (!status[0])
 		exit(0);
 	nb = ft_atoi(status[0]);
+	get_errno(nb);
 	if (status[1])
 	{
+		get_errno(1);
+
 		//retest this case : exit param1 param2 ..
 		printf("sben-chi: exit: too many arguments\n");
 		return ;

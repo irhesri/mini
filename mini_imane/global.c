@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 22:22:02 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 23:29:51 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_bash_name(char *str)
 {
 	static char	*name;
 
-	if (!name)
+	if (!name && str)
 		name = str;
 	return (name);
 }

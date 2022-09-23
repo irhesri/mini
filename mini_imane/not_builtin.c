@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/20 13:14:26 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 23:36:01 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ char	*get_path(char *command)
 	char		*path;
 	char		**env_paths;
 
-	// path = first_check(command);
-	// if (path)
-	// 	return (path);
+	path = first_check(command);
+	if (path)
+		return (path);
 	if (my_search(command, '/') == -1 && *command)
 	{
 		path = my_getenv("PATH");
@@ -104,7 +104,7 @@ void	not_builtin(t_data *data, char **arg)
 		path = get_path(*arg);
 		update_envp(data);
 		execve(path, arg, data->envp);
-		perror("execve");
+		perror(get_bash_name(NULL));
 		exit (errno);
 	}
 }

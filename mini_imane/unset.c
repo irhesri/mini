@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:55 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 22:04:48 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 22:39:59 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ short	env_regex(char *str, short b)
 	const char	*set[2];
 
 	i = -1;
-	error = (*str == '+' || *str == '=' || is_digit(*str));
+	error = (!*str || *str == '+' || *str == '=' || is_digit(*str));
 	while (!error && str[++i])
 	{
 		if (b && str[i] == '=')
