@@ -145,6 +145,7 @@ t_list	*get_exp(t_list *exp);
 void	print_2D(char **arr);
 void	print_pipes(t_data *data, t_list *pipes);
 void	print_list(t_list *lst);
+void	print_arg(t_data *data, char **arg);
 
 // MINI_SAIDA
 void    echo(char **towrite);
