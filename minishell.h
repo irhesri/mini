@@ -81,7 +81,6 @@ char	*my_getenv(char *str);
 char	**split_expand(char *str, int *len);
 char	*is_quoted(char *str, int *len, char c);
 char	*new_argument(t_pipe *pipe, char **res2, char *res);
-short	is_limiter(char *c);
 t_pipe	*new_pipe(t_data *data, short b);
 
 // EXECUTION
@@ -100,6 +99,7 @@ char	*ft_itoa(int n);
 
 // FUNCTIONS
 
+int	my_dup2(int *newfd, int oldfd);
 char	**array_realloc(char **arr, char *str, short b);
 void	print_error(char *str1, char *str2);
 short	ft_putstr(char *str);
@@ -124,8 +124,9 @@ size_t	my_size(char **arr, char *str);
 
 // MAKE IT READABLE
 short	is_digit(char c);
-short	is_alphabet(char c);
+short	is_alphanum(char c);
 short	is_builtin(char *arg);
+short	is_limiter(char *c);
 
 // TRASH CAN
 void	empty_pipes(t_list *pipes_lst);

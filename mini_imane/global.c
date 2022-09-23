@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/05 14:39:27 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 22:22:02 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*get_bash_name(char *str)
 int	get_errno(int n)
 {
 	static int	error;
-	
+
 	if (n >= 0)
 		error = n % 256;
-	return (error);	
+	return (error);
 }

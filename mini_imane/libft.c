@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:28 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/05 14:36:46 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 21:04:15 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,47 +42,8 @@ char	*ft_strjoin(char *str1, char *str2)
 	return (res);
 }
 
-short	is_digit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-short	is_alphabet(char c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-}
-
 short	ft_putstr(char *str)
 {
 	write(1, str, my_size(NULL, str));
 	return (1);
-}
-
-int	int_size(int n)
-{
-	int	i;
-
-	i = 0;
-	while (!i || n)
-	{
-		i++;
-		n /= 10;
-	}
-	return (i);
-}
-
-char	*ft_itoa(int n)
-{
-	int		size;
-	char	*str;
-
-	size = int_size(n);
-	str = malloc(size + 1);
-	str[size] = '\0';
-	while (--size >= 0)
-	{
-		str[size] = n % 10 + 48;
-		n /= 10;
-	}
-	return (str);
 }

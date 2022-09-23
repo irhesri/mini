@@ -1,0 +1,16 @@
+env				3					done
+execution		full				done
+expand			3					done
+export			full				done
+functions_2		3					done
+functions		full				done
+global			full				done
+initialisation	full
+is_fuctions		4					done
+libft			3					done
+list_functions	3					done
+not_builtin		full
+parsing			4					done
+trash_can		full				done
+unset			4					done
+main			----				----

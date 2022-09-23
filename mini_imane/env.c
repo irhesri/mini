@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 17:33:26 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 21:50:37 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,6 @@ void	update_envp(t_data *data)
 		data->envp[++i] = head->content;
 		head = head->next;
 	}
-}
-
-// get enviroment variable data
-char	*my_getenv(char *str)
-{
-	int		i;
-	t_list	*env;
-	t_node	*node;
-
-	env = get_env(NULL);
-	node = getenv_node(env->head, str);
-	if (!node)
-		return (NULL);
-	str = (char *)node->content;
-	i = my_search(str, '=');
-	str = my_strdup(str + i + 1, '\0');
-	return (str);
 }
 
 // print enviroment variables (env)

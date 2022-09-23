@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:16 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/31 13:49:56 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 22:21:25 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,46 +66,41 @@ int	my_search(char *str, char c)
 	return (i);
 }
 
-// b == 1 : free(str1)
-// b == 2 : free(str2)
-// b == 0 : free both
-char	*free_join(char *str1, char *str2, short b)
+// does dup2 work
+// close *newfd
+// assign -1 to *newfd
+int	my_dup2(int *newfd, int oldfd)
 {
-	char	*str;
-
-	if (!str2)
-		return (str1);
-	if (!str1)
-		return (str2);
-	str = ft_strjoin(str1, str2);
-	if (!b || b == 1)
-		free (str1);
-	if (!b || b == 2)
-		free (str2);
-	return (str);
+	if (*newfd < 0)
+		return (-1);
+	if (dup2(*newfd, oldfd) == -1)
+		return (-1);
+	close(*newfd);
+	(*newfd) = -1;
+	return (1);
 }
 
-// b == 0 add str in the beginning of arr
-// b == -1 add str in the end of arr
-// i free arr
-char	**array_realloc(char **arr, char *str, short b)
+// exit status itoa
+char	*ft_itoa(int n)
 {
-	char	**res;
-	size_t	size;
-	int		i;
-	int		j;
+	int		tmp;
+	int		size;
+	char	*str;
 
-	if (!str)
-		return (arr);
-	size = my_size(arr, NULL) + 2;
-	res = malloc(sizeof(char *) * (size + 1));
-	i = b;
-	j = -1;
-	while (arr && arr[++j])
-		res[++i] = arr[j];
-	i += (b == -1);
-	res[i * (b != 0) + b * (b == 0)] = str;
-	res[++i] = NULL;
-	free (arr);
-	return (res);
+	n %= 256;
+	tmp = n;
+	size = 0;
+	while (!size || tmp)
+	{
+		size++;
+		tmp /= 10;
+	}
+	str = malloc(size + 1);
+	str[size] = '\0';
+	while (--size >= 0)
+	{
+		str[size] = n % 10 + 48;
+		n /= 10;
+	}
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:55 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 17:39:26 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 22:04:48 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_special(char c)
 {		
-	return (!(is_digit(c) || is_alphabet(c)
+	return (!(is_alphanum(c)
 			|| (c == '+') || (c == '_')));
 }
 
@@ -48,35 +48,6 @@ short	env_regex(char *str, short b)
 		free(tmp);
 	}
 	return (error);
-}
-
-// delete node to_delete 
-// get to_delete using getenv_node() function
-void	delete_node(t_list *lst, t_node *to_delete)
-{
-	t_node	*tmp;
-	t_node	*head;
-
-	if (!lst->head || !to_delete)
-		return ;
-	lst->size--;
-	if (lst->head == to_delete)
-	{
-		tmp = lst->head;
-		lst->head = lst->head->next;
-		if (!lst->head)
-			lst->last = NULL;
-		free (tmp);
-		return ;
-	}
-	head = lst->head;
-	while (head->next != to_delete)
-		head = head->next;
-	tmp = head->next;
-	head->next = tmp->next;
-	if (!tmp->next)
-		lst->last = head;
-	free (tmp);
 }
 
 // like getenv() except that it returns pointer to a node

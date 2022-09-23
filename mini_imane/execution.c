@@ -6,41 +6,33 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/09/23 20:25:11 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 22:20:14 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	wait_for_children(pid_t id)
+void	commands_call(t_data *data, char **arg)
 {
-	int		n;
-	int		status;
-	pid_t	pid;
+	short		b;
+	static void	(*ptr[8])();
 
-	while (1)
+	if (!ptr[0])
 	{
-		pid = waitpid(-1, &status, 0);
-		if (pid < 0)
-			break ;
-		if (WIFEXITED(status))
-			n = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			n = 128 + WTERMSIG(status);
-		if (id == pid)
-			get_errno(n);
+		ptr[0] = not_builtin;
+		ptr[1] = export;
+		ptr[2] = unset;
+		ptr[3] = exit;
+		ptr[4] = cd;
+		ptr[5] = env;
+		ptr[6] = echo;
+		ptr[7] = pwd;
 	}
-}
-
-int	my_dup2(int *newfd, int oldfd)
-{
-	if (*newfd < 0)
-		return (-1);
-	if (dup2(*newfd, oldfd) == -1)
-		return (-1);
-	close(*newfd);
-	(*newfd) = -1;
-	return (1);
+	b = is_builtin(*arg);
+	if (b < 5 && arg)
+		ptr[b](data, arg + (b != 0));
+	else
+		ptr[b](arg + 1);
 }
 
 pid_t	start_child(t_data *data, t_pipe *content, int *p)
@@ -64,6 +56,26 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 		exit(get_errno(-1));
 	}
 	return (id);
+}
+
+void	wait_for_children(pid_t id)
+{
+	int		n;
+	int		status;
+	pid_t	pid;
+
+	while (1)
+	{
+		pid = waitpid(-1, &status, 0);
+		if (pid < 0)
+			break ;
+		if (WIFEXITED(status))
+			n = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			n = 128 + WTERMSIG(status);
+		if (id == pid)
+			get_errno(n);
+	}
 }
 
 void	one_command_line(t_data *data, t_pipe *content, int *fd)

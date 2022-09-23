@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_call.c                                    :+:      :+:    :+:   */
+/*   is_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/07 21:09:53 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 18:38:17 by imane            ###   ########.fr       */
+/*   Created: 2022/09/23 20:39:35 by imane             #+#    #+#             */
+/*   Updated: 2022/09/23 22:23:19 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+short	is_digit(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+short	is_alphanum(char c)
+{
+	return (is_digit(c) || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
 
 short	is_builtin(char *arg)
 {
@@ -26,25 +36,19 @@ short	is_builtin(char *arg)
 	return (b);
 }
 
-void	commands_call(t_data *data, char **arg)
+short	is_limiter(char *c)
 {
+	int			i;
 	short		b;
-	static void	(*ptr[8])();
+	static char	s[10] = "\'\"$| <<>";
 
-	if (!ptr[0])
-	{
-		ptr[0] = not_builtin;
-		ptr[1] = export;
-		ptr[2] = unset;
-		ptr[3] = exit;
-		ptr[4] = cd;
-		ptr[5] = env;
-		ptr[6] = echo;
-		ptr[7] = pwd;
-	}
-	b = is_builtin(*arg);
-	if (b < 5 && arg)
-		ptr[b](data, arg + (b != 0));
-	else
-		ptr[b](arg + 1);
+	if (*c == '\0')
+		return (-1);
+	b = 0;
+	i = -1;
+	while (!b && ++i < 8)
+		b = (s[i] == *c) * (i + 1);
+	if (b > 4)
+		return (b + (*(c + 1) == *c));
+	return (b);
 }
