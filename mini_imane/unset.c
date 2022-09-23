@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:55 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/31 13:36:32 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 17:39:26 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ short	env_regex(char *str, short b)
 	{
 		set[0] = "unset: `";
 		set[1] = "export: `";
+		get_errno(1);
 		tmp = ft_strjoin((char *)set[b], str);
 		print_error(tmp, "': not a valid identifier\n");
 		free(tmp);

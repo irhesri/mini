@@ -6,11 +6,10 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/05 14:05:51 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/20 13:21:43 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// void	empty_pipes(t_list *pipes_lst)
 #include "../minishell.h"
 
 void	free_red_list(t_list *lst)

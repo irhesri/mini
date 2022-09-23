@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:13 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/31 13:42:17 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 17:39:08 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static short	export_print(t_list *exp)
 		write(1, "\n", 1);
 		tmp = tmp->next;
 	}
+	get_errno(0);
 	return (1);
 }
 

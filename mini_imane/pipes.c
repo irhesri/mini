@@ -6,17 +6,17 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/09/20 12:57:23 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 17:48:06 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	wait_for_children(pid_t id)
+void wait_for_children(pid_t id)
 {
-	int		n;
-	int		status;
-	pid_t	pid;
+	int n;
+	int status;
+	pid_t pid;
 
 	while (1)
 	{
@@ -32,17 +32,17 @@ void	wait_for_children(pid_t id)
 	}
 }
 
-pid_t	run_command(t_data *data, t_pipe *content, int *p)
+pid_t run_command(t_data *data, t_pipe *content, int *p)
 {
-	char		**command;
-	char		*path;
-	pid_t		id;
+	char	**command;
+	char	*path;
+	pid_t	id;
 
 	id = fork();
 	if (!id)
 	{
 		if (content->fd[0] < 0 || content->fd[1] < 0)
-			exit (1);
+			exit(1);
 		if (content->fd[0] != 0)
 		{
 			if (p[0])
@@ -66,14 +66,14 @@ pid_t	run_command(t_data *data, t_pipe *content, int *p)
 			close(p[1]);
 		}
 		commands_call(data, content->arg);
-		exit (get_errno(0));
+		exit(get_errno(-1));
 	}
 	return (id);
 }
 
-void	run_in_parent(t_data *data, t_pipe *content)
+void run_in_parent(t_data *data, t_pipe *content)
 {
-	if (content->fd[0] < 0 || content->fd[1] < 0)
+	if ((content->fd[0] < 0 || content->fd[1] < 0) && get_errno(1))
 		return ;
 	if (content->fd[0] != 0)
 	{
@@ -90,19 +90,20 @@ void	run_in_parent(t_data *data, t_pipe *content)
 	commands_call(data, content->arg);
 }
 
-void	run_commands(t_data *data, t_list *pipes)
+void run_commands(t_data *data, t_list *pipes)
 {
-	int		p1[2];
-	int		p2[2];
-	int		c;
-	pid_t	id;
-	t_node	*head;
+	int p1[2];
+	int p2[2];
+	int c;
+	pid_t id;
+	t_node *head;
 
+	get_errno(0);
 	head = pipes->head;
 	if (data->nbr_pipes == 0 && is_builtin(*(((t_pipe *)(head->content))->arg)))
 	{
 		run_in_parent(data, head->content);
-		return ;		
+		return;
 	}
 	c = 0;
 	while (head)

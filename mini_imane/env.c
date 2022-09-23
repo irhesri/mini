@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/31 13:50:33 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/23 17:33:26 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	env(void)
 	t_node	*tmp;
 	t_list	*env;
 
+	get_errno(0);
 	env = get_env(NULL);
 	tmp = env->head;
 	while (tmp)
