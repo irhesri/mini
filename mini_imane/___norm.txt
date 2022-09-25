@@ -1,11 +1,11 @@
 env				3					done
-execution		full				done
+execution		full	-			done
 expand			3					done
 export			full				done
-functions_2		3					done
+functions_2		4					done
 functions		full				done
 global			full				done
-initialisation	full
+initialisation	full	-
 is_fuctions		4					done
 libft			3					done
 list_functions	3					done

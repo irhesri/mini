@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 23:36:01 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/25 15:22:56 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ short	open_file(char *path, char *command)
 			command = ft_strjoin("./", command);
 			print_error(command, ": Permission denied\n");
 			free (command);
-			exit (126);
+			free_exit (NULL, 126);
 		}
 		print_error(command, ": Permission denied\n");
-		exit (126);
+		free_exit (NULL, 126);
 	}
 	return (127);
 }
@@ -39,7 +39,7 @@ char	*first_check(char *command)
 	if (S_ISDIR(file_mode.st_mode)) //check in mac
 	{
 		print_error(command, ": is a directory\n");
-		exit(126);
+		free_exit (NULL, 126);
 	}
 	if (my_search(command, '/') != -1 && open_file(command, command) == 1)
 		return (command);
@@ -92,7 +92,7 @@ char	*get_path(char *command)
 			return (path);
 	}
 	print_error(command, ": No such file or directory\n");
-	exit (127);
+	free_exit (NULL, 127);
 }
 
 void	not_builtin(t_data *data, char **arg)
@@ -104,7 +104,8 @@ void	not_builtin(t_data *data, char **arg)
 		path = get_path(*arg);
 		update_envp(data);
 		execve(path, arg, data->envp);
+		free(path);
 		perror(get_bash_name(NULL));
-		exit (errno);
+		free_exit (NULL, errno);
 	}
 }

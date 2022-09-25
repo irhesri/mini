@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 21:50:37 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/25 15:14:51 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	update_envp(t_data *data)
 
 	if (data->envp)
 		return ;
-	data->envp = malloc(sizeof(char **) * (get_env(NULL))->size);
+	data->envp = malloc(sizeof(char **) * ((get_env(NULL))->size + 1));
 	head = (get_env(NULL))->head;
 	i = -1;
 	while (head)
@@ -28,6 +28,7 @@ void	update_envp(t_data *data)
 		data->envp[++i] = head->content;
 		head = head->next;
 	}
+	data->envp[++i] = NULL;
 }
 
 // print enviroment variables (env)

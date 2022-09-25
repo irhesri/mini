@@ -52,12 +52,11 @@ typedef struct s_redirection
 // stored in t_list content //
 typedef struct s_pipe
 {
-    int        n;
-    int        fd[2];
-    int        pipe_id;
-    char    	**arg;
-    // short   	 error;
-    t_list    *redirections;
+    int		n;
+    int		fd[2];
+    int		pipe_id;
+    char	**arg;
+    t_list	*redirections;
 }    t_pipe;
 
 // ******************** //
@@ -99,8 +98,8 @@ char	*ft_strjoin(char *str1, char *str2);
 char	*ft_itoa(int n);
 
 // FUNCTIONS
-
-int	my_dup2(int *newfd, int oldfd);
+void	free_exit(t_data *data, short err);
+int		my_dup2(int *newfd, int oldfd);
 char	**array_realloc(char **arr, char *str, short b);
 void	print_error(char *str1, char *str2);
 short	ft_putstr(char *str);

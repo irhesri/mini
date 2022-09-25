@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/09/23 23:34:35 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/24 14:35:18 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,19 @@ char	*free_join(char *str1, char *str2, short b)
 	if (!b || b == 2)
 		free (str2);
 	return (str);
+}
+
+// frees everything before exiting with err
+// just send NULL as first argument
+void	free_exit(t_data *data, short err)
+{
+	static t_data	*d;
+	
+	if (!d)
+	{
+		d = data;
+		return ;
+	}
+	free_all(d);
+	exit(err);
 }

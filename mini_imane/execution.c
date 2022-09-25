@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/09/23 23:47:55 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/25 15:33:43 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 	id = fork();
 	if (!id)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (content->fd[0] < 0 || content->fd[1] < 0)
-			exit(1);
+			free_exit(data, 1);
 		if (p && p[0] > 0)
 			close (p[0]);
 		if (content->fd[0] != 0)
@@ -55,7 +57,7 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 		if (content->fd[1] != 1)
 			my_dup2(content->fd + 1, STDOUT_FILENO);
 		commands_call(data, content->arg);
-		exit(get_errno(-1));
+		free_exit(data, get_errno(-1));
 	}
 	return (id);
 }
@@ -63,6 +65,7 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 void	wait_for_children(pid_t id)
 {
 	int		n;
+	int		i;
 	int		status;
 	pid_t	pid;
 
@@ -82,7 +85,7 @@ void	wait_for_children(pid_t id)
 
 void	one_command_line(t_data *data, t_pipe *content, int *fd)
 {
-	pid_t	id;
+	pid_t	pid;
 
 	if (content->arg && *content->arg && is_builtin(*(content->arg)))
 	{
@@ -101,8 +104,8 @@ void	one_command_line(t_data *data, t_pipe *content, int *fd)
 	}
 	else
 	{
-		id = start_child(data, content, NULL);
-		wait_for_children(id);
+		pid = start_child(data, content, NULL);
+		wait_for_children(pid);
 	}
 }
 
@@ -110,7 +113,7 @@ void	run_commands(t_data *data, t_list *pipes)
 {
 	int		p[2];
 	int		fd[2];
-	pid_t	id;
+	pid_t	pid;
 	t_node	*head;
 
 	fd[0] = dup(STDIN_FILENO);
@@ -127,10 +130,10 @@ void	run_commands(t_data *data, t_list *pipes)
 		if (((t_pipe *)head->content)->pipe_id != data->nbr_pipes)
 			pipe(p);
 		my_dup2(p + 1, STDOUT_FILENO);
-		id = start_child(data, head->content, p);
+		pid = start_child(data, head->content, p);
 		my_dup2(p, STDIN_FILENO);
 		head = head->next;
 	}
-	wait_for_children(id);
+	wait_for_children(pid);
 	my_dup2(fd, STDIN_FILENO);
 }

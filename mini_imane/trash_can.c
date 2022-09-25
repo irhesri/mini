@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/20 13:21:43 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/25 15:08:15 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_red_list(t_list *lst)
 		tmp = node->next;
 		file = node->content;
 		free(file->name);
-		if (file->fd > 0)
+		if (file->fd > 1)
 			close (file->fd);
 		free (file);
 		free (node);
@@ -65,7 +65,7 @@ void	free_list(t_list *lst, short b)
 	while (node)
 	{
 		tmp = node->next;
-		if (b)
+		if (b || !ft_strncmp(node->content, "_=", 2))
 			free(node->content);
 		free (node);
 		node = tmp;
@@ -78,7 +78,6 @@ void	free_all(t_data *data)
 	empty_pipes(data->pipes);
 	free (data->pipes);
 	free (data->envp);
-	delete_node(get_env(NULL), getenv_node((get_env(NULL))->head, "_"));
 	free_list(get_env(NULL), 0);
 	free_list(get_exp(NULL), 1);
 	free (data);
