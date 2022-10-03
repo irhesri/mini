@@ -1,0 +1,41 @@
+#include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+void	sig_hand(int signum)
+{
+	sigset_t	sig;
+	sigaddset(&sig, signum);
+	sigemptyset(&sig);
+	printf("signal num %d\n", signum);
+}
+
+int main()
+{
+	int 	fd[2];
+	char	*line;
+
+/*	pipe(fd);
+	if (!fork())
+	{
+		while(1)
+		{
+			if (catch_sig())
+				exit(0);
+			line = readline("> ");
+			printf("your line : %s\n", line);
+		}
+	}
+	wait(NULL);
+	printf("success>>>\n");*/
+	char	*t;
+	signal(SIGINT, sig_hand);
+	for(int i = 0; i < 6; i++)
+	{
+		t = readline("> ");
+		printf("your line : %s\n", t);
+	}	
+	printf("%d\n", SIGINT);
+}

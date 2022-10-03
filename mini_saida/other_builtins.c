@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/12 17:23:27 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/08/13 12:33:32 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*my_pwd(void)
 
 /*-------------------CD-------------------*/
 
-void	cd(t_data *data, char **path)
+void	cd(char **path)
 {
 	char	*pwd_update[3];
 	char	*temp;
