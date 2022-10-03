@@ -142,11 +142,12 @@ void	print_list(t_list *lst);
 // MINI_SAIDA
 void    echo(char **towrite);
 void    pwd(void);
-void    cd(char    **path);
+void    cd(t_data *data, char    **path);
 void    my_exit(t_data *data, char **status);
 int        ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 char    *is_double_quoted(char *str, int *pos);
 void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
+short	is_limiter(char *c);
 
 #endif

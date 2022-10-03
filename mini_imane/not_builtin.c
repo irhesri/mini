@@ -54,7 +54,7 @@ char	*check_in_env(char **env_paths, char *command)
 			path = ft_strjoin(*env_paths, command);
 		else
 			path = ft_strjoin(".", command);
-		if (open_file(path, *command) == 1)	
+		if (open_file(path, command) == 1)	
 		{
 			free_arr(env_paths);	
 			return (path);

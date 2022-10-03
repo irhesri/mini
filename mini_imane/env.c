@@ -57,7 +57,7 @@ void	env(void)
 	tmp = env->head;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		printf("%s\n", (char *)tmp->content);
 		tmp = tmp->next;
 	}
 }
