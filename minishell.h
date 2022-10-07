@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 11:46:53 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/28 17:35:30 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,6 @@ int        ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 char    *is_double_quoted(char *str, int *pos);
 void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
+short	is_limiter(char *c);
 
 #endif

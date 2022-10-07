@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_call.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:09:53 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 14:32:24 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/08/13 12:34:09 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	commands_call(t_data *data, char **arg)
 
 	if (!ptr[0])
 	{
-		ptr[0] = not_builtin;
+		//ptr[0] = not_builtin;
 		ptr[1] = export;
 		ptr[2] = unset;
 		// ptr[3] = exit;
