@@ -13,12 +13,30 @@ void handle_sigint(int sig)
         exit (1);
 }
 
+int    chr_rp_var(char *line, int fd)
+{
+    int     i;
+    // char    c;
+    char    *var;
+
+    i = -1;
+    while(line[++i])
+    {
+        if (line[i] == '$')
+        {
+            var = var_expand(line, &i);
+            write(fd, var, strlen(var));
+        }
+        else
+            write(fd, &line[i], 1);
+    }
+    return (1);
+}
+
 void    heredoc(t_pipe *data, t_redirection *n)
 {
 	char    *line;
     int status;
-    struct sigaction act;
-    act.sa_handler = handle_sigint;
    
 	pipe(data->fd);
     pid = fork();
@@ -32,8 +50,8 @@ void    heredoc(t_pipe *data, t_redirection *n)
 			line = readline("> ");
 			if (!strcmp(line, n->name) || !(*line))
 				break ;
-		//	data->fd == -3 && chr_rp_var();
-			write(data->fd[1], line, strlen(line));
+			data->fd == -2 && chr_rp_var(line, data->fd[1]);
+			data->fd && write(data->fd[1], line, strlen(line));
 			free(line);
 			line = NULL;
 		}
@@ -44,7 +62,7 @@ void    heredoc(t_pipe *data, t_redirection *n)
     if (WIFEXITED(status) && (WEXITSTATUS(status) == 1))
     {
         close (data->fd[0]);
-        rl_on_new_line ();
+        // rl_on_new_line ();
     }
     else
         close(data->fd[1]);
