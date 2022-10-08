@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 12:32:15 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:58:10 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 		return (1);
 	}
 	(type != 7) && valide_name(&(red->name), str, i);
+	return (0);
 }
 
 void	is_redirection(t_pipe *pipe, char *str, int *i, short type)

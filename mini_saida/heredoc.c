@@ -1,7 +1,4 @@
 #include "../minishell.h"
-#include <string.h>
-#include <sys/wait.h>
-#include <signal.h>
 
 pid_t pid = -2;
 
@@ -29,7 +26,7 @@ short	chr_rp_var(char *line, int fd)
 		if (line[i] == '$')
 		{
 			var = var_expand(line, &i);
-			write(fd, var, strlen(var));
+			write(fd, var, my_size(NULL, var));
 			free(var);
 		}
 		else
@@ -51,10 +48,10 @@ short    heredoc(int fd, t_redirection *data)
 		while (1)
 		{
 			line = readline("> ");
-			if (!strcmp(line, data->name, my_size(NULL, line) + 1))
+			if (!ft_strncmp(line, data->name, my_size(NULL, line) + 1))
 				break ;
-			data->fd == -2 && chr_rp_var(line, fd[1]);
-			data->fd == -3 && write(fd, line, my_size(line));
+			data->fd == -2 && chr_rp_var(line, fd);
+			data->fd == -3 && write(fd, line, my_size(NULL,line));
 			free(line);
 			line = NULL;
 		}

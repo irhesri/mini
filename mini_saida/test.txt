@@ -34,7 +34,7 @@ int main()
 	char *line;
 	int	fd[2];
 
-	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigint);
 	while (1)
 	{
 		line = readline("$$ ");

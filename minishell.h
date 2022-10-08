@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 12:18:57 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 09:22:46 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,6 @@ char    *is_double_quoted(char *str, int *pos);
 void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
 short	is_limiter(char *c);
 void	handle_sigint(int sig);
-short	heredoc(int *fd, char name/*t_pipe *data, t_redirection *n*/);
+void    heredoc(int fd, t_redirection *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 11:28:24 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:59:12 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*my_pwd(void)
 
 /*-------------------CD-------------------*/
 
-/*void	cd(char **path)
+void    cd(t_data *data, char **path)
 {
 	char	*pwd_update[3];
 	char	*temp;
@@ -119,7 +119,7 @@ char	*my_pwd(void)
 	}
 	//join name= + value;
 	//export(data, pwd_update);
-}*/
+}
 
 /*------------------END_CD------------------*/
 
