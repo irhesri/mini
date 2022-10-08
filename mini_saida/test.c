@@ -29,7 +29,7 @@ int main()
 	}
 }*/
 
-int main()
+/*int main()
 {
 	char *line;
 	int	fd[2];
@@ -40,10 +40,10 @@ int main()
 	{
 		line = readline("$$ ");
 	//	if (line[0] == 'h')
-	//			heredoc(fd, 'h');
+	//		heredoc(fd, 'h');
 	//	line = malloc(6);
 	//	read(fd[0], line, 5);
 		add_history(line);
 	//	printf("your line: %s\n", line);
 	}
-}
+}*/

@@ -39,19 +39,21 @@ short    heredoc(int fd, t_redirection *data)
 {
 	char    *line;
 	int status;
+	int	len;
 
 	pid = fork();
-	signal(SIGINT, handle_sigint);
 	if (!pid)
 	{   
 		signal(SIGINT, handle_sigint);
 		while (1)
 		{
 			line = readline("> ");
-			if (!ft_strncmp(line, data->name, my_size(NULL, line) + 1))
+			len = my_size(NULL,line);
+			if (!line || !ft_strncmp(line, data->name, my_size(NULL, line) + 1))
 				break ;
 			data->fd == -2 && chr_rp_var(line, fd);
 			data->fd == -3 && write(fd, line, my_size(NULL,line));
+			write(fd, "\n", 1);
 			free(line);
 			line = NULL;
 		}
