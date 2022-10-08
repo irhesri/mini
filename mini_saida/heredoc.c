@@ -17,7 +17,7 @@ void handle_sigint(int sig)
 	rl_redisplay();	
 }
 
-int    chr_rp_var(char *line, int fd)
+short	chr_rp_var(char *line, int fd)
 {
 	int     i;
 	// char    c;
@@ -36,39 +36,33 @@ int    chr_rp_var(char *line, int fd)
 			write(fd, &line[i], 1);
 	}
 	return (1);
-}+
+}
 
-void    heredoc(int *fd, char name/*t_pipe *data, t_redirection *n*/)
+short    heredoc(int fd, t_redirection *data)
 {
 	char    *line;
 	int status;
 
-	pipe(fd);
 	pid = fork();
 	signal(SIGINT, handle_sigint);
 	if (!pid)
 	{   
-		close(fd[0]);
 		signal(SIGINT, handle_sigint);
 		while (1)
 		{
 			line = readline("> ");
-			if (!strcmp(line, &name) )//|| !(*line))
+			if (!strcmp(line, data->name, my_size(NULL, line) + 1))
 				break ;
 			data->fd == -2 && chr_rp_var(line, fd[1]);
-			write(fd[1], line, strlen(line));
+			data->fd == -3 && write(fd, line, my_size(line));
 			free(line);
 			line = NULL;
 		}
-		close(fd[1]);
+		close(fd);
 		exit(0);
 	}
 	wait(&status);
 	if (WIFEXITED(status) && (WEXITSTATUS(status) == 1))
-	{
-		close(fd[1]);
-		close(fd[0]);
-	}
-	else
-		close(fd[1]);
+		return (1);
+	return (0);
 }

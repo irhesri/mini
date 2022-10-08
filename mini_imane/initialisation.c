@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/07 23:05:04 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/08 11:33:33 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	open_files(t_pipe *pipe)
 // 		if (red->fd < -1)
 // 		{
 // 			pipe(p);
-// 			its_here_doc(red, p[1]);
+// 			heredoc(fd[1], red);
 // 			close(p[1]);
 // 			red->fd = p[0];
 // 		}
