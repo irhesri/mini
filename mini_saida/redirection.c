@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 12:58:10 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:35:42 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,10 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 	return (0);
 }
 
-void	is_redirection(t_pipe *pipe, char *str, int *i, short type)
+short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 {
 	t_redirection	*red;
+	short			exit_val;
 
 	red = malloc(sizeof(t_redirection));
 	if (!red)
@@ -119,6 +120,7 @@ void	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 	red->name = NULL;
 	while (str[*i] && str[*i] == ' ')
 		(*i)++;
-	get_name(red, str, i, type);
+	exit_val = get_name(red, str, i, type);
 	add_node(pipe->redirections, pipe->redirections->last, red);
+	return (exit_val);
 }
