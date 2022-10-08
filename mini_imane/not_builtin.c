@@ -48,6 +48,7 @@
 // {
 // 	char	*path;
 	
+<<<<<<< HEAD
 // 	while (env_paths && *env_paths)
 // 	{
 // 		if (**env_paths)
@@ -63,6 +64,23 @@
 // 	}
 // 	return (NULL);
 // }
+=======
+	while (env_paths && *env_paths)
+	{
+		if (**env_paths)
+			path = ft_strjoin(*env_paths, command);
+		else
+			path = ft_strjoin(".", command);
+		if (open_file(path, command) == 1)	
+		{
+			free_arr(env_paths);	
+			return (path);
+		}
+		free (path);
+	}
+	return (NULL);
+}
+>>>>>>> 885dbf00214b6e49c3cd8c7eff0930fd730c3cfc
 
 // char	*get_path(char *command)
 // {
