@@ -27,6 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+#include <signal.h>
 
 typedef struct s_node
 {
@@ -168,6 +169,6 @@ char    *is_double_quoted(char *str, int *pos);
 void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
 short	is_limiter(char *c);
 void	handle_sigint(int sig);
-void    heredoc(int fd, t_redirection *data);
+short    heredoc(int fd, t_redirection *data);
 
 #endif
