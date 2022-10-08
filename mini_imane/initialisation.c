@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/07 23:05:04 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/08 15:42:30 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,37 +88,46 @@ void	open_files(t_pipe *pipe)
 	}
 }
 
-// void	check_for_here_docs(t_pipe *pip)
-// {
-// 	int				p[2];
-// 	t_node			*lst;
-// 	t_redirection	*red;
+short	check_for_here_docs(t_pipe *pip)
+{
+	int				error;
+	int				p[2];
+	t_node			*lst;
+	t_redirection	*red;
 
-// 	lst = (pip->redirections)->head;
-// 	while (lst)
-// 	{
-// 		red = lst->content;
-// 		if (red->fd < -1)
-// 		{
-// 			pipe(p);
-// 			its_here_doc(red, p[1]);
-// 			close(p[1]);
-// 			red->fd = p[0];
-// 		}
-// 		lst = lst->next;
-// 	}
-// }
+	lst = (pip->redirections)->head;
+	while (lst)
+	{
+		red = lst->content;
+		if (red->fd < -1)
+		{
+			pipe(p);
+			error = heredoc(p[1], red);
+			close(p[1]);
+			if (error)
+			{
+				red->fd = -1;
+				close (p[0]);
+				return (error);
+			}
+			red->fd = p[0];
+		}
+		lst = lst->next;
+	}
+	return (0);
+}
 
 void	init_files(t_data *data)
 {
 	t_node	*head;
 
-	// head = (data->pipes)->head;
-	// while (head)
-	// {
-	// 	check_for_here_docs(head->content);
-	// 	head = head->next;
-	// }
+	head = (data->pipes)->head;
+	while (head)
+	{
+		if (check_for_here_docs(head->content))
+			return ;
+		head = head->next;
+	}
 	head = (data->pipes)->head;
 	while (head)
 	{

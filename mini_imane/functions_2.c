@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 00:45:03 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/08 15:44:03 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*free_join(char *str1, char *str2, short b)
 void	free_exit(t_data *data, short err)
 {
 	static t_data	*d;
-	
+
 	if (!d)
 	{
 		d = data;
@@ -86,7 +86,6 @@ void	free_exit(t_data *data, short err)
 
 long long	my_atoi(char *str)
 {
-	char				*error;
 	unsigned long long	n;
 
 	n = 0;

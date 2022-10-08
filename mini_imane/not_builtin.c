@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   not_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/25 15:47:52 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/08 12:20:55 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ char	*first_check(char *command)
 	struct stat	file_mode;
 
 	stat(command, &file_mode);
-	if (S_ISDIR(file_mode.st_mode)) //check in mac
+	if (S_ISDIR(file_mode.st_mode))
 	{
 		print_error(command, ": is a directory\n");
 		free_exit (NULL, 126);
 	}
 	if (my_search(command, '/') != -1 && open_file(command, command) == 1)
-		return (command);
+		return (my_strdup(command, '\0'));
 	return (NULL);
 }
 
@@ -85,7 +85,7 @@ char	*get_path(char *command)
 		env_paths = my_split(path, ':', 1);
 		free(path);
 		if (!env_paths && open_file(command, command) == 1)
-			return (command);
+			return (ft_strjoin("./", command));
 		path = check_in_env(env_paths, command);
 		free_arr(env_paths);
 		if (path)

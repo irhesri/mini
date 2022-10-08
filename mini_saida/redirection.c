@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/08/12 17:23:54 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:39:45 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	valide_name(char **name, char *str, int *i)
 	return (1);
 }
 
-void	get_name(t_redirection *red, char *str, int *i, short type)
+short	get_name(t_redirection *red, char *str, int *i, short type)
 {
 	int	k;
 
@@ -94,30 +94,33 @@ void	get_name(t_redirection *red, char *str, int *i, short type)
 	{
 		printf("$: syntax error near unexpected token `%c'\n", str[*i]);
 		red->name = NULL;
-		return ;//exit
+		return (258);//exit
 	}
 	(type == 7) && here_doc_case(str, red, i);
 	if (str[*i] == '$' && !var_expand(str, &k))
 	{
 		ft_error(str, &red->name, i);
-		return ;
+		return (1);
 	}
 	(type != 7) && valide_name(&(red->name), str, i);
+	return (0);
 }
 
-void	is_redirection(t_pipe *pipe, char *str, int *i, short type)
+short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 {
 	t_redirection	*red;
+	short			exit_val;
 
 	red = malloc(sizeof(t_redirection));
 	if (!red)
-		return ;
+		exit (1);
 	(*i) += (type % 2);
 	red->fd = 0;
 	red->mode = (((type == 8) * O_TRUNC) + ((type == 9) * O_APPEND));
 	red->name = NULL;
 	while (str[*i] && str[*i] == ' ')
 		(*i)++;
-	get_name(red, str, i, type);
+	exit_val = get_name(red, str, i, type);
 	add_node(pipe->redirections, pipe->redirections->last, red);
+	return (exit_val);
 }

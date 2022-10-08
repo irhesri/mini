@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/07 23:26:22 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/08 15:41:29 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	read_line(t_data *data)
 {
 	char	*str;
-	
+
 	while (1)
 	{
 		str = readline("---->  ");
+		if (!str)
+			free_exit (data, get_errno(-1));
 		if (!*str)
 		{
 			free (str);
-			continue;
+			continue ;
 		}
-		if (!str)
-			free_exit (data, get_errno(-1));
 		my_add_history(data, str);
 		if (!parse_time (data, str))
 		{
@@ -38,48 +38,26 @@ void	read_line(t_data *data)
 		empty_pipes(data->pipes);
 		free (str);
 	}
-
 }
 
-void	sig_handler(int sig)
-{
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
+// initialise bash name
+// initialise data
+// initialise env
+// initialise data in free exit
+// start
 int	main(int ac, char **av, char **envp)
 {
-	t_data *data;
-	char *str;
+	t_data	*data;
 
-	data = malloc(sizeof(t_data));
-	// initialise data
-	init_data(data);
-	// initialise env
-	init_env(data, envp);
-	//initialise bash name
 	get_bash_name("our_bash");
-	// initialise data in free exit
+	if (ac > 1 || av[1])
+		exit(print_error("Too many arguments\n", NULL));
+	data = malloc(sizeof(t_data));
+	init_data(data);
+	init_env(data, envp);
 	free_exit(data, 0);
-	// start
-
-	 
 	rl_clear_history();
 	read_line(data);
 	free_exit(data, get_errno(-1));
+	return (0);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	*str;
-// 	t_data *data;
-
-// 	data = malloc(sizeof(t_data));
-// 	init_data(data);
-// 	init_env(data, envp);
-// 	// free_all(data);
-// 	// print_list(get_env(NULL));
-// 	export (data, NULL);
-// }
-

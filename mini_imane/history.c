@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 17:34:04 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 01:02:51 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/08 15:43:46 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	my_add_history(t_data *data, char *str)
 
 short	display_history(t_data *data)
 {
-	static int	i;
-	static char	*j_history;
+	static char		*j_history;
+	static size_t	i;
 
 	if (!data)
 	{
@@ -80,6 +80,6 @@ void	history(t_data *data, char **arg)
 		print_error("history: too many arguments\n", NULL);
 		return ;
 	}
-	if (!(n >= data->history_lines && display_history(data)) && n > 0)
+	if (!(n >= (long long)data->history_lines && display_history(data)) && n > 0)
 		display_some_history(data, n);
 }
