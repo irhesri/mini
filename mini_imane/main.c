@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 15:53:20 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/08 16:24:32 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	read_line(t_data *data)
 		if (!parse_time (data, str))
 		{
 			get_errno(0);
-			init_files(data);
-			run_commands(data, data->pipes);
+			if (!init_files(data))
+				run_commands(data, data->pipes);
 		}
 		else
 			get_errno(1);

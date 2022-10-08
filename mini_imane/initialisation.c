@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 15:42:30 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/08 16:58:47 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ void	open_files(t_pipe *pipe)
 		else
 			fd = red->fd;
 		pipe->fd[(red->mode != 0)] = fd;
-		if (fd == -1)
+		if (fd < 0)
 		{
-			perror(get_bash_name(NULL));
+			if (fd == -1)
+				print_error(red->name, ": No such file or directory\n");
 			return ;
 		}
 		lst = lst->next;
@@ -99,14 +100,13 @@ short	check_for_here_docs(t_pipe *pip)
 	while (lst)
 	{
 		red = lst->content;
-		if (red->fd < -1)
+		if (red->fd < -1 && red->fd > -4)
 		{
 			pipe(p);
 			error = heredoc(p[1], red);
 			close(p[1]);
 			if (error)
 			{
-				red->fd = -1;
 				close (p[0]);
 				return (error);
 			}
@@ -117,7 +117,7 @@ short	check_for_here_docs(t_pipe *pip)
 	return (0);
 }
 
-void	init_files(t_data *data)
+short	init_files(t_data *data)
 {
 	t_node	*head;
 
@@ -125,7 +125,7 @@ void	init_files(t_data *data)
 	while (head)
 	{
 		if (check_for_here_docs(head->content))
-			return ;
+			return (1);
 		head = head->next;
 	}
 	head = (data->pipes)->head;
@@ -134,4 +134,5 @@ void	init_files(t_data *data)
 		open_files(head->content);
 		head = head->next;
 	}
+	return (0);
 }
