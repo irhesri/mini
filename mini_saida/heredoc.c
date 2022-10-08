@@ -62,3 +62,4 @@ short    heredoc(int fd, t_redirection *data)
 	if (WIFEXITED(status) && (WEXITSTATUS(status) == 1))
 		return (1);
 	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 15:41:06 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 16:31:34 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 	if (str[*i] == '$' && !var_expand(str, &k))
 	{
 		ft_error(str, &red->name, i);
+		red->fd = -1;
 		return (1);
 	}
 	(type != 7) && valide_name(&(red->name), str, i);
