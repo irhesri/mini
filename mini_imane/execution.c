@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 15:53:38 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/08 16:52:38 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	wait_for_children(pid_t id)
 		if (id == pid)
 			get_errno(n);
 	}
+	signal(SIGINT, handle_sigint);
 }
 
 void	one_command_line(t_data *data, t_pipe *content, int *fd)
@@ -134,6 +135,5 @@ void	run_commands(t_data *data, t_list *pipes)
 		head = head->next;
 	}
 	wait_for_children(pid);
-	signal(SIGINT, handle_sigint);
 	my_dup2(fd, STDIN_FILENO);
 }

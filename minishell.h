@@ -75,7 +75,7 @@ typedef struct s_data
 // INITIALISATION		---->		call it at the begining of the program
 void	init_env(t_data *data, char **envp);			
 void	init_data(t_data *data);
-void	init_files(t_data *data);
+short	init_files(t_data *data);
 short	parse_time(t_data *data, char *str);
 
 
@@ -160,7 +160,7 @@ void    my_exit(t_data *data, char **status);
 int        ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 char    *is_double_quoted(char *str, int *pos);
-void    is_redirection(t_pipe *pipe, char *str, int *i, short type);
+short    is_redirection(t_pipe *pipe, char *str, int *i, short type);
 short	is_limiter(char *c);
 void	handle_sigint(int sig);
 short    heredoc(int fd, t_redirection *data);
