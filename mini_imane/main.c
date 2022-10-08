@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/25 15:30:45 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/07 23:26:22 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	read_line(t_data *data)
 		if (!*str)
 		{
 			free (str);
-			continue; ;
+			continue;
 		}
 		if (!str)
 			free_exit (data, get_errno(-1));
-		add_history(str);
+		my_add_history(data, str);
 		if (!parse_time (data, str))
 		{
 			get_errno(0);
@@ -51,6 +51,7 @@ void	sig_handler(int sig)
 int	main(int ac, char **av, char **envp)
 {
 	t_data *data;
+	char *str;
 
 	data = malloc(sizeof(t_data));
 	// initialise data
@@ -62,8 +63,9 @@ int	main(int ac, char **av, char **envp)
 	// initialise data in free exit
 	free_exit(data, 0);
 	// start
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+
+	 
+	rl_clear_history();
 	read_line(data);
 	free_exit(data, get_errno(-1));
 }

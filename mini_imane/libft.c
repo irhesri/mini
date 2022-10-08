@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:28 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/24 14:32:22 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/26 14:15:57 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ char	*ft_strjoin(char *str1, char *str2)
 	res = malloc(my_size(NULL, str1) + my_size(NULL, str2) + 1);
 	if (!res)
 		free_exit (NULL, ft_putstr("allocation error\n"));
-	while (*str1)
+	while (str1 && *str1)
 		res[++i] = *str1++;
-	while (*str2)
+	while (str2 && *str2)
 		res[++i] = *str2++;
 	res[++i] = '\0';
 	return (res);

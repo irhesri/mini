@@ -16,7 +16,7 @@ NORME = ./mini_imane/commands_call.c ./mini_imane/expand.c ./mini_imane/global.c
 CC = gcc
 
 all:
-	gcc ./mini_imane/*.c ./mini_saida/*.c -lreadline -g -fsanitize=address
+	gcc ./mini_imane/*.c ./mini_saida/*.c -lreadline -ltermcap -g -fsanitize=address
 
 $(NAME): $(SRC:.c=.o) $(lib:.c=.o)
 	$(CC)  -lreadline $(CFLAGS) -o $@ -c $<

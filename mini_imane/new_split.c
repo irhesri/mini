@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:46:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/24 14:32:35 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/25 15:48:19 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static short	my_error(char **str, int n)
 	free (str);
 	write(1, "allocation error\n", 17);
 	free_exit (NULL, 1);
+	return (0);
 }
 
 static void	add_back(t_struct **lst, int n)

@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/25 15:08:15 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/07 23:56:52 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	free_all(t_data *data)
 	free (data->envp);
 	free_list(get_env(NULL), 0);
 	free_list(get_exp(NULL), 1);
+	display_history(NULL);
+	free_arr(data->history);
 	free (data);
 }
 

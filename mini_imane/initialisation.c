@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/25 14:46:48 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/07 23:05:04 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	init_data(t_data *data)
 	lst->size = 0;
 	get_exp(lst);
 	data->envp = NULL;
+	data->history = NULL;
+	data->history_size = 0;
+	data->history_lines = 0;
 }
 
 // initialise enviroment and export list

@@ -63,8 +63,11 @@ typedef struct s_pipe
 typedef struct s_data
 {
 	int		nbr_pipes;
-	short	here_doc_nbr;
 	char	**envp;
+	char	**history;
+	short	here_doc_nbr;
+	size_t	history_size;
+	size_t	history_lines;
 	t_list	*pipes;
 }	t_data;
 
@@ -101,7 +104,7 @@ char	*ft_itoa(int n);
 void	free_exit(t_data *data, short err);
 int		my_dup2(int *newfd, int oldfd);
 char	**array_realloc(char **arr, char *str, short b);
-void	print_error(char *str1, char *str2);
+short	print_error(char *str1, char *str2);
 short	ft_putstr(char *str);
 
 //	BUILTINS
@@ -110,6 +113,11 @@ void	export(t_data *data, char **arg);
 void	unset(t_data *data, char **arg);
 void	commands_call(t_data *data, char **arg);
 
+// HISTORY
+void	history(t_data *data, char **arg);
+void	my_add_history(t_data *data, char *str);
+short	display_history(t_data *data);
+
 //	ENV_FUNCTIONS
 void	update_envp(t_data *data);
 short	env_regex(char *str, short b);
@@ -117,10 +125,11 @@ t_node	*getenv_node(t_node *head, char *str);
 t_node	*get_position(t_node *head, char *str);
 
 // NEW LIBFT
-char	**my_split(char *str, char c, short b/*, int *len*/);
-char	*my_strdup(char *str, char c);
-char	*free_join(char *str1, char *str2, short b);
-size_t	my_size(char **arr, char *str);
+char		**my_split(char *str, char c, short b/*, int *len*/);
+char		*my_strdup(char *str, char c);
+char		*free_join(char *str1, char *str2, short b);
+size_t		my_size(char **arr, char *str);
+long long	my_atoi(char *str);
 
 // MAKE IT READABLE
 short	is_digit(char c);

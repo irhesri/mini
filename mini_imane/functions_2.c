@@ -6,14 +6,14 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/09/24 14:35:18 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/08 00:45:03 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // bash name: str1str2
-void	print_error(char *str1, char *str2)
+short	print_error(char *str1, char *str2)
 {
 	char	*str;
 
@@ -22,6 +22,7 @@ void	print_error(char *str1, char *str2)
 	str = free_join(str, str1, 0);
 	ft_putstr(str);
 	free (str);
+	return (1);
 }
 
 // b == 0 add str in the beginning of arr
@@ -81,4 +82,21 @@ void	free_exit(t_data *data, short err)
 	}
 	free_all(d);
 	exit(err);
+}
+
+long long	my_atoi(char *str)
+{
+	char				*error;
+	unsigned long long	n;
+
+	n = 0;
+	if (*str == '-')
+		return (-2);
+	if (*str == '+')
+		str++;
+	while (is_digit(*str) && n < LLONG_MAX)
+		n = n * 10 + *str++ - 48;
+	if (*str || n > LLONG_MAX)
+		return (-1);
+	return (n);
 }

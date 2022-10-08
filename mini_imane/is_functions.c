@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:39:35 by imane             #+#    #+#             */
-/*   Updated: 2022/09/23 22:23:19 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/26 13:31:59 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ short	is_builtin(char *arg)
 {
 	short		i;
 	short		b;
-	static char	*call[8] = {"export", "unset", "exit", "cd",
-		"env", "echo", "pwd"};
+	static char	*call[9] = {"export", "unset", "exit", "cd",
+		"history", "env", "echo", "pwd"};
 
 	i = -1;
 	b = 0;
-	while (arg && !b && ++i < 8)
+	while (arg && !b && ++i < 9)
 		b = !ft_strncmp(call[i], arg, 10) * (i + 1);
 	return (b);
 }

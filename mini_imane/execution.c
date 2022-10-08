@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/09/25 15:33:43 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/07 22:23:14 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	commands_call(t_data *data, char **arg)
 {
 	short		b;
-	static void	(*ptr[8])();
+	static void	(*ptr[9])();
 
 	if (!ptr[0])
 	{
@@ -24,14 +24,15 @@ void	commands_call(t_data *data, char **arg)
 		ptr[2] = unset;
 		ptr[3] = my_exit;
 		ptr[4] = cd;
-		ptr[5] = env;
-		ptr[6] = echo;
-		ptr[7] = pwd;
+		ptr[5] = history;
+		ptr[6] = env;
+		ptr[7] = echo;
+		ptr[8] = pwd;
 	}
 	if (!arg || !*arg)
 		return ;
 	b = is_builtin(*arg);
-	if (b < 5 && arg)
+	if (b < 6 && arg)
 		ptr[b](data, arg + (b != 0));
 	else
 		ptr[b](arg + 1);
@@ -39,8 +40,6 @@ void	commands_call(t_data *data, char **arg)
 
 pid_t	start_child(t_data *data, t_pipe *content, int *p)
 {
-	char	**command;
-	char	*path;
 	pid_t	id;
 
 	id = fork();
@@ -65,7 +64,6 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 void	wait_for_children(pid_t id)
 {
 	int		n;
-	int		i;
 	int		status;
 	pid_t	pid;
 

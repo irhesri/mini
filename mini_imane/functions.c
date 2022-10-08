@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:16 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 22:21:25 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/07 23:51:15 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,12 @@ int	my_dup2(int *newfd, int oldfd)
 	return (1);
 }
 
-// exit status itoa
 char	*ft_itoa(int n)
 {
 	int		tmp;
 	int		size;
 	char	*str;
 
-	n %= 256;
 	tmp = n;
 	size = 0;
 	while (!size || tmp)

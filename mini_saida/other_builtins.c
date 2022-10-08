@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:40:46 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/09/23 23:48:31 by imane            ###   ########.fr       */
+/*   Updated: 2022/08/12 17:23:27 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,8 @@ void	my_exit(t_data *data, char **status)
 	if (!status[0])
 		exit(0);
 	nb = ft_atoi(status[0]);
-	get_errno(nb);
 	if (status[1])
 	{
-		get_errno(1);
-
 		//retest this case : exit param1 param2 ..
 		printf("sben-chi: exit: too many arguments\n");
 		return ;

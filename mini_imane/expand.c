@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 22:19:42 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/26 13:50:01 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*special_cases(char *str, int *size)
 		return (str);
 	}
 	if (str[(*size)] == '?' && ++(*size))
-		return (ft_itoa(get_errno(-1)));
+		return (ft_itoa(get_errno(-1) % 256));
 	if (is_limiter(str + (*size)))
 		return (my_strdup("$", '\0'));
 	return (NULL);

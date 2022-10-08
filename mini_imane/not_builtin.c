@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/25 15:22:56 by imane            ###   ########.fr       */
+/*   Updated: 2022/09/25 15:47:52 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	*get_path(char *command)
 	}
 	print_error(command, ": No such file or directory\n");
 	free_exit (NULL, 127);
+	return (NULL);
 }
 
 void	not_builtin(t_data *data, char **arg)
