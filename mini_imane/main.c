@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 15:41:29 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:53:20 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	main(int ac, char **av, char **envp)
 	init_data(data);
 	init_env(data, envp);
 	free_exit(data, 0);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigint);
 	rl_clear_history();
 	read_line(data);
 	free_exit(data, get_errno(-1));
