@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 15:24:46 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/07 23:05:04 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 void	init_data(t_data *data)
 {
@@ -31,6 +30,9 @@ void	init_data(t_data *data)
 	lst->size = 0;
 	get_exp(lst);
 	data->envp = NULL;
+	data->history = NULL;
+	data->history_size = 0;
+	data->history_lines = 0;
 }
 
 // initialise enviroment and export list
@@ -45,7 +47,8 @@ void	init_env(t_data *data, char **envp)
 		{
 			str = my_strdup(*envp, '\0');
 			add_node(get_env(NULL), (get_env(NULL))->last, str);
-			add_node(get_exp(NULL), get_position((get_exp(NULL))->head, *envp), str);
+			add_node(get_exp(NULL),
+				get_position((get_exp(NULL))->head, *envp), str);
 		}
 		envp++;
 	}
@@ -78,38 +81,44 @@ void	open_files(t_pipe *pipe)
 		pipe->fd[(red->mode != 0)] = fd;
 		if (fd == -1)
 		{
-			perror(red->name);
+			perror(get_bash_name(NULL));
 			return ;
 		}
 		lst = lst->next;
 	}
 }
 
-void	check_for_here_docs(t_pipe *pipe)
-{
-	t_node			*lst;
-	t_redirection	*red;
+// void	check_for_here_docs(t_pipe *pip)
+// {
+// 	int				p[2];
+// 	t_node			*lst;
+// 	t_redirection	*red;
 
-	lst = (pipe->redirections)->head;
-	while (lst)
-	{
-		red = lst->content;
-		// if (red->fd < -1)
-		// 	its_here_doc();
-		lst = lst->next;
-	}
-}
+// 	lst = (pip->redirections)->head;
+// 	while (lst)
+// 	{
+// 		red = lst->content;
+// 		if (red->fd < -1)
+// 		{
+// 			pipe(p);
+// 			its_here_doc(red, p[1]);
+// 			close(p[1]);
+// 			red->fd = p[0];
+// 		}
+// 		lst = lst->next;
+// 	}
+// }
 
 void	init_files(t_data *data)
 {
 	t_node	*head;
 
-	head = (data->pipes)->head;
-	while (head)
-	{
-		check_for_here_docs(head->content);
-		head = head->next;
-	}
+	// head = (data->pipes)->head;
+	// while (head)
+	// {
+	// 	check_for_here_docs(head->content);
+	// 	head = head->next;
+	// }
 	head = (data->pipes)->head;
 	while (head)
 	{

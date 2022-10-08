@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/28 17:31:57 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 11:16:47 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-short	is_limiter(char *c)
-{
-	int			i;
-	short		b;
-	static char s[10] = "\'\"$| <<>";
-
-	b = 0;
-	i = -1;
-	while (!b && ++i < 8)
-		b = (s[i] == *c) * (i + 1);
-	if (b > 4)
-		return (b + (*(c + 1) == *c));
-	return (b);
-}
 
 t_pipe	*new_pipe(t_data *data, short b)
 {
@@ -63,7 +48,7 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 			pipe->n++;
 			res = *(++res2);
 		}
-		free (tmp);
+		free(tmp);
 		return (res);
 	}
 	else if (res)
@@ -93,12 +78,12 @@ char	*parse_time_2(char *str, char *res, int *i, int tmp)
 }
 
 //	EMPTY PIPES.
-void	parse_time(t_data *data, char *str)
+short	parse_time(t_data *data, char *str)
 {
 	int		i;
 	int		tmp;
-	t_pipe	*pipe;
 	char	*res;
+	t_pipe	*pipe;
 
 	i = 0;
 	pipe = new_pipe(data, 1);
@@ -112,13 +97,26 @@ void	parse_time(t_data *data, char *str)
 			res = parse_time_2(str, res, &i, tmp);
 		else if (tmp == 3 && ++i)
 			res = new_argument(pipe, split_expand(str, &i), res);
-		else if (tmp > 5)
+		else if (tmp > 5 && ++i)
 			is_redirection(pipe, str, &i, tmp);
+		// else if (tmp > 5 && ++i && is_redirection(pipe, str, &i, tmp))
+		// 	return(1) ;
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
 		if (tmp == 4 && ++i)
+		{
+			if (!pipe->arg && !(pipe->redirections)->head)
+			{
+				print_error("syntax error near unexpected token `", "|'\n");
+				return (1);
+			}
 			pipe = new_pipe(data, 0);
+		}
 	}
+	if (!pipe->arg && !(pipe->redirections)->head)
+	{
+		print_error("syntax error near unexpected token `", "|'\n");
+		return (1);
+	}
+	return (0);
 }
-
-

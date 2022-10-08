@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:31 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/23 21:50:24 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,33 @@ void	add_node(t_list *lst, t_node *pos, void *content)
 	pos->next = new;
 	if (!new->next)
 		lst->last = new;
+}
+
+// delete node to_delete 
+// get to_delete using getenv_node() function
+void	delete_node(t_list *lst, t_node *to_delete)
+{
+	t_node	*tmp;
+	t_node	*head;
+
+	if (!lst->head || !to_delete)
+		return ;
+	lst->size--;
+	if (lst->head == to_delete)
+	{
+		tmp = lst->head;
+		lst->head = lst->head->next;
+		if (!lst->head)
+			lst->last = NULL;
+		free (tmp);
+		return ;
+	}
+	head = lst->head;
+	while (head->next != to_delete)
+		head = head->next;
+	tmp = head->next;
+	head->next = tmp->next;
+	if (!tmp->next)
+		lst->last = head;
+	free (tmp);
 }

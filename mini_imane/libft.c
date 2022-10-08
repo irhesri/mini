@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:28 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 15:03:23 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/26 14:15:57 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,17 @@ char	*ft_strjoin(char *str1, char *str2)
 	i = -1;
 	res = malloc(my_size(NULL, str1) + my_size(NULL, str2) + 1);
 	if (!res)
-		exit(printf("allocation error\n"));
-	while (*str1)
+		free_exit (NULL, ft_putstr("allocation error\n"));
+	while (str1 && *str1)
 		res[++i] = *str1++;
-	while (*str2)
+	while (str2 && *str2)
 		res[++i] = *str2++;
 	res[++i] = '\0';
 	return (res);
+}
+
+short	ft_putstr(char *str)
+{
+	write(1, str, my_size(NULL, str));
+	return (1);
 }

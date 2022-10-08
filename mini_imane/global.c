@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/23 23:29:51 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_list	*get_env(t_list *env)
 {
-	static t_list *g_env;
+	static t_list	*g_env;
 
 	if (!g_env)
 		g_env = env;
@@ -23,7 +23,7 @@ t_list	*get_env(t_list *env)
 
 t_list	*get_exp(t_list *exp)
 {
-	static t_list *g_exp;
+	static t_list	*g_exp;
 
 	if (!g_exp)
 		g_exp = exp;
@@ -32,7 +32,7 @@ t_list	*get_exp(t_list *exp)
 
 char	*get_last(char *last, int b)
 {
-	static char *g_last;
+	static char	*g_last;
 
 	if (b)
 	{
@@ -40,4 +40,22 @@ char	*get_last(char *last, int b)
 		g_last = last;
 	}
 	return (g_last);
+}
+
+char	*get_bash_name(char *str)
+{
+	static char	*name;
+
+	if (!name && str)
+		name = str;
+	return (name);
+}
+
+int	get_errno(int n)
+{
+	static int	error;
+
+	if (n >= 0)
+		error = n % 256;
+	return (error);
 }

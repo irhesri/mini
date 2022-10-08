@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:46:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/25 15:48:19 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static short	my_error(char **str, int n)
 		free (str[i++]);
 	free (str);
 	write(1, "allocation error\n", 17);
-	exit (1);
+	free_exit (NULL, 1);
+	return (0);
 }
 
 static void	add_back(t_struct **lst, int n)
@@ -104,7 +105,7 @@ static	char	**fill(t_struct *size, char *str, char c, short b)
 
 // b == 1 python split
 // len == size of the array
-char	**my_split(char *str, char c, short b/*, int *len*/)
+char	**my_split(char *str, char c, short b)
 {
 	t_struct	*size;
 	t_struct	*tmp;
@@ -116,8 +117,6 @@ char	**my_split(char *str, char c, short b/*, int *len*/)
 		str++;
 	size = get_size(str, c, b);
 	words = fill(size, str, c, b);
-	/*if (len)
-		*len = size->data;*/
 	while (size)
 	{
 		tmp = size->next;
