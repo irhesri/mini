@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:55 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/23 22:39:59 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_special(char c)
 {		
-	return (!(is_digit(c) || is_alphabet(c) 
+	return (!(is_alphanum(c)
 			|| (c == '+') || (c == '_')));
 }
 
@@ -25,54 +25,29 @@ short	env_regex(char *str, short b)
 {
 	int			i;
 	int			error;
+	char		*tmp;
 	const char	*set[2];
 
 	i = -1;
-	error = (*str == '+' || *str == '=' || is_digit(*str));
+	error = (!*str || *str == '+' || *str == '=' || is_digit(*str));
 	while (!error && str[++i])
 	{
 		if (b && str[i] == '=')
 			break ;
 		error = ((!b && str[i] == '+')
-			|| (b && str[i] == '+' && str[i + 1] != '=')
-			|| is_special(str[i]));
+				|| (b && str[i] == '+' && str[i + 1] != '=')
+				|| is_special(str[i]));
 	}
 	if (error)
 	{
-		set[0] = "unset";
-		set[1] = "export";
-		printf("minishell: %s: `%s': not a valid identifier\n", set[b], str);
+		set[0] = "unset: `";
+		set[1] = "export: `";
+		get_errno(1);
+		tmp = ft_strjoin((char *)set[b], str);
+		print_error(tmp, "': not a valid identifier\n");
+		free(tmp);
 	}
 	return (error);
-}
-
-// delete node to_delete 
-// get to_delete using getenv_node() function
-void	delete_node(t_list *lst, t_node *to_delete)
-{
-	t_node	*tmp;
-	t_node	*head;
-
-	if (!lst->head || !to_delete)
-		return ;
-	lst->size--;
-	if (lst->head == to_delete)
-	{
-		tmp = lst->head;
-		lst->head = lst->head->next;
-		if (!lst->head)
-			lst->last = NULL;
-		free (tmp);
-		return ;
-	}
-	head = lst->head;
-	while (head->next != to_delete)
-		head = head->next;
-	tmp = head->next;
-	head->next = tmp->next;
-	if (!tmp->next)
-		lst->last = head;
-	free (tmp);
 }
 
 // like getenv() except that it returns pointer to a node

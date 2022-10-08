@@ -1017,7 +1017,7 @@
             "parentId": "page",
             "childIndex": 66,
             "point": [
-              301.6,
+              266.57,
               65.53
             ],
             "rotation": 0,
@@ -1037,7 +1037,7 @@
                 "id": "end",
                 "index": 1,
                 "point": [
-                  148.71,
+                  170.82,
                   0
                 ],
                 "canBind": true,
@@ -1047,7 +1047,7 @@
                 "id": "bend",
                 "index": 2,
                 "point": [
-                  74.36,
+                  85.41,
                   40.47
                 ]
               }
@@ -1076,7 +1076,7 @@
             "parentId": "page",
             "childIndex": 65,
             "point": [
-              265.89,
+              242.25,
               63.95
             ],
             "rotation": 0,
@@ -1086,7 +1086,7 @@
                 "id": "start",
                 "index": 0,
                 "point": [
-                  0.65,
+                  0,
                   82.52
                 ],
                 "canBind": true,
@@ -1096,7 +1096,7 @@
                 "id": "end",
                 "index": 1,
                 "point": [
-                  0,
+                  13.63,
                   0
                 ],
                 "canBind": true,
@@ -1106,7 +1106,7 @@
                 "id": "bend",
                 "index": 2,
                 "point": [
-                  0.33,
+                  6.82,
                   41.26
                 ]
               }
@@ -1135,7 +1135,7 @@
             "parentId": "page",
             "childIndex": 64,
             "point": [
-              32.48,
+              27.93,
               61.37
             ],
             "rotation": 0,
@@ -1145,7 +1145,7 @@
                 "id": "start",
                 "index": 0,
                 "point": [
-                  191.46,
+                  185.07,
                   85.1
                 ],
                 "canBind": true,
@@ -1165,7 +1165,7 @@
                 "id": "bend",
                 "index": 2,
                 "point": [
-                  95.73,
+                  92.54,
                   42.55
                 ]
               }

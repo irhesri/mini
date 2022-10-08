@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/08 13:02:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/25 15:14:51 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	update_envp(t_data *data)
 {
 	int		i;
 	t_node	*head;
-	
+
 	if (data->envp)
 		return ;
-	data->envp = malloc(sizeof(char **) * (get_env(NULL))->size);
+	data->envp = malloc(sizeof(char **) * ((get_env(NULL))->size + 1));
 	head = (get_env(NULL))->head;
 	i = -1;
 	while (head)
@@ -28,36 +28,24 @@ void	update_envp(t_data *data)
 		data->envp[++i] = head->content;
 		head = head->next;
 	}
-}
-
-// get enviroment variable data
-char	*my_getenv(char *str)
-{
-	int		i;
-	t_list	*env;
-	t_node	*node;
-
-	env = get_env(NULL);
-	node = getenv_node(env->head, str);
-	if (!node)
-		return (NULL);
-	str = (char *)node->content;
-	i = my_search(str, '=');
-	str = my_strdup(str + i + 1, '\0');
-	return (str);
+	data->envp[++i] = NULL;
 }
 
 // print enviroment variables (env)
 void	env(void)
 {
+	char	*str;
 	t_node	*tmp;
 	t_list	*env;
 
+	get_errno(0);
 	env = get_env(NULL);
 	tmp = env->head;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		str = ft_strjoin(tmp->content, "\n");
+		ft_putstr(str);
+		free (str);
 		tmp = tmp->next;
 	}
 }

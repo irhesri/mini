@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   trash_can.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 17:06:55 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/07 23:56:52 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// void	empty_pipes(t_list *pipes_lst)
 #include "../minishell.h"
 
 void	free_red_list(t_list *lst)
@@ -25,7 +24,7 @@ void	free_red_list(t_list *lst)
 		tmp = node->next;
 		file = node->content;
 		free(file->name);
-		if (file->fd > 0)
+		if (file->fd > 1)
 			close (file->fd);
 		free (file);
 		free (node);
@@ -66,7 +65,7 @@ void	free_list(t_list *lst, short b)
 	while (node)
 	{
 		tmp = node->next;
-		if (b)
+		if (b || !ft_strncmp(node->content, "_=", 2))
 			free(node->content);
 		free (node);
 		node = tmp;
@@ -79,15 +78,19 @@ void	free_all(t_data *data)
 	empty_pipes(data->pipes);
 	free (data->pipes);
 	free (data->envp);
-	delete_node(get_env(NULL), getenv_node((get_env(NULL))->head, "_"));
 	free_list(get_env(NULL), 0);
 	free_list(get_exp(NULL), 1);
+	display_history(NULL);
+	free_arr(data->history);
 	free (data);
 }
 
 void	free_arr(char **arr)
 {
+	char	**tmp;
+
+	tmp = arr;
 	while (arr && *arr)
 		free (*arr++);
-	free (arr);	
+	free (tmp);
 }

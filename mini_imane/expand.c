@@ -3,22 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 15:14:16 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/09/26 13:50:01 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// expand variable without splitting
-char	*var_expand(char *str, int *size)
+// get enviroment variable data
+char	*my_getenv(char *str)
 {
-	char	c;
+	int		i;
+	t_list	*env;
+	t_node	*node;
+
+	env = get_env(NULL);
+	node = getenv_node(env->head, str);
+	if (!node)
+		return (NULL);
+	str = (char *)node->content;
+	i = my_search(str, '=');
+	str = my_strdup(str + i + 1, '\0');
+	return (str);
+}
+
+static char	*special_cases(char *str, int *size)
+{
 	char	*res;
 
-	res = str + (*size);
 	if (is_digit(str[(*size)]) || str[*size] == '$')
 	{
 		res = malloc(2);
@@ -27,9 +41,24 @@ char	*var_expand(char *str, int *size)
 		str = free_join("$", res, 2);
 		return (str);
 	}
-	if (!str[(*size)] || is_limiter(str + (*size)))
+	if (str[(*size)] == '?' && ++(*size))
+		return (ft_itoa(get_errno(-1) % 256));
+	if (is_limiter(str + (*size)))
 		return (my_strdup("$", '\0'));
-	while (str[(*size)] && (is_digit(str[(*size)]) || is_alphabet(str[(*size)]) || str[(*size)] == '_'))
+	return (NULL);
+}
+
+// expand variable without splitting
+char	*var_expand(char *str, int *size)
+{
+	char	c;
+	char	*res;
+
+	res = special_cases(str, size);
+	if (res)
+		return (res);
+	res = str + (*size);
+	while (str[(*size)] && (is_alphanum(str[(*size)]) || str[(*size)] == '_'))
 		(*size)++;
 	c = str[(*size)];
 	str[(*size)] = '\0';

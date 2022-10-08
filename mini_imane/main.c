@@ -3,38 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/08/12 15:50:07 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/07 23:26:22 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	read_line(t_data *data)
 {
 	char	*str;
-	t_data *data;
-
-	data = malloc(sizeof(t_data));
-	init_data(data);
-	init_env(data, envp);
-	// get_env(data->env);
+	
 	while (1)
 	{
 		str = readline("---->  ");
-		add_history(str);
 		if (!*str)
-			continue ;
+		{
+			free (str);
+			continue;
+		}
 		if (!str)
-			exit (0);
-		parse_time (data, str);
-		print_pipes(data, data->pipes);
-		free (str);
-		commands_call(data, ((t_pipe *)(((data->pipes)->head)->content))->arg);
+			free_exit (data, get_errno(-1));
+		my_add_history(data, str);
+		if (!parse_time (data, str))
+		{
+			get_errno(0);
+			init_files(data);
+			run_commands(data, data->pipes);
+		}
+		else
+			get_errno(1);
 		empty_pipes(data->pipes);
+		free (str);
 	}
+
+}
+
+void	sig_handler(int sig)
+{
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	t_data *data;
+	char *str;
+
+	data = malloc(sizeof(t_data));
+	// initialise data
+	init_data(data);
+	// initialise env
+	init_env(data, envp);
+	//initialise bash name
+	get_bash_name("our_bash");
+	// initialise data in free exit
+	free_exit(data, 0);
+	// start
+
+	 
+	rl_clear_history();
+	read_line(data);
+	free_exit(data, get_errno(-1));
 }
 
 // int	main(int ac, char **av, char **envp)
