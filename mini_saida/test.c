@@ -34,12 +34,13 @@ int main()
 	char *line;
 	int	fd[2];
 
-	signal(SIGQUIT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	while (1)
 	{
 		line = readline("$$ ");
-		if (line[0] == 'h')
-				heredoc(fd, 'h');
+	//	if (line[0] == 'h')
+	//			heredoc(fd, 'h');
 	//	line = malloc(6);
 	//	read(fd[0], line, 5);
 		add_history(line);

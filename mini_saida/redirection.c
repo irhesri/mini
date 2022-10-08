@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 15:35:42 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:41:06 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 
 	red = malloc(sizeof(t_redirection));
 	if (!red)
-		return ;
+		exit(1);
 	(*i) += (type % 2);
 	red->fd = 0;
 	red->mode = (((type == 8) * O_TRUNC) + ((type == 9) * O_APPEND));
