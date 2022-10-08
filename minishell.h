@@ -27,7 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
-#include <signal.h>
+# include <signal.h>
 
 typedef struct s_node
 {
@@ -151,12 +151,6 @@ char	*get_last(char *last, int b);
 char	*get_bash_name(char *str);
 t_list	*get_env(t_list *env);
 t_list	*get_exp(t_list *exp);
-
-// DEBUGGING
-void	print_2D(char **arr);
-void	print_pipes(t_data *data, t_list *pipes);
-void	print_list(t_list *lst);
-void	print_arg(t_data *data, char **arg);
 
 // MINI_SAIDA
 void    echo(char **towrite);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 15:33:26 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:53:38 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	wait_for_children(pid_t id)
 	int		status;
 	pid_t	pid;
 
+	signal(SIGINT, SIG_IGN);
 	while (1)
 	{
 		pid = waitpid(-1, &status, 0);
@@ -133,5 +134,6 @@ void	run_commands(t_data *data, t_list *pipes)
 		head = head->next;
 	}
 	wait_for_children(pid);
+	signal(SIGINT, handle_sigint);
 	my_dup2(fd, STDIN_FILENO);
 }

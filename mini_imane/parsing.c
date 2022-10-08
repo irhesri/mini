@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 15:33:55 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:51:55 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ char	*parse_time_2(char *str, char *res, int *i, int tmp)
 	return (res);
 }
 
+short	check_syntax_error(t_pipe *pipe)
+{
+	if (!pipe->arg && !(pipe->redirections)->head)
+		return (print_error("syntax error near unexpected token `|'\n", NULL));
+	return (0);
+}
+
 //	EMPTY PIPES.
 short	parse_time(t_data *data, char *str)
 {
@@ -90,33 +97,21 @@ short	parse_time(t_data *data, char *str)
 	res = NULL;
 	while (str[i])
 	{
-		while (str[i] == ' ')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		tmp = is_limiter(str + i);
 		if (tmp < 3)
 			res = parse_time_2(str, res, &i, tmp);
 		else if (tmp == 3 && ++i)
 			res = new_argument(pipe, split_expand(str, &i), res);
-		else if (tmp > 5 && ++i)
-			is_redirection(pipe, str, &i, tmp);
-		// else if (tmp > 5 && ++i && is_redirection(pipe, str, &i, tmp))
-		// 	return(1) ;
+		else if (tmp > 5 && ++i && (is_redirection(pipe, str, &i, tmp) == 258))
+			return (1);
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
+		else if (tmp == 4 && check_syntax_error(pipe))
+			return (1);
 		if (tmp == 4 && ++i)
-		{
-			if (!pipe->arg && !(pipe->redirections)->head)
-			{
-				print_error("syntax error near unexpected token `", "|'\n");
-				return (1);
-			}
 			pipe = new_pipe(data, 0);
-		}
 	}
-	if (!pipe->arg && !(pipe->redirections)->head)
-	{
-		print_error("syntax error near unexpected token `", "|'\n");
-		return (1);
-	}
-	return (0);
+	return (check_syntax_error(pipe));
 }
