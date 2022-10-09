@@ -38,5 +38,5 @@ int	main()
 	get_function(1);
 	get_function(2);
 	get_function(3);
-	// get_function(0);
+	get_function(0);
 }

@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/09 13:33:04 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:43:38 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	wait_for_children(pid_t id)
 			get_errno(n);
 	}
 	signal(SIGINT, handle_sigint);
-	
 }
 
 void	one_command_line(t_data *data, t_pipe *content, int *fd)

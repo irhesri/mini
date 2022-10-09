@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/09 19:01:21 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:42:06 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ short    heredoc(int fd, t_redirection *red)
 			write(fd, "\n", 1);
 			free(line);
 			line = NULL;
+			write(fd, "\n", 1);
 		}
 		close(fd);
 		exit(0);

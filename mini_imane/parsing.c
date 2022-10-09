@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 15:51:55 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/09 18:11:18 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_pipe	*new_pipe(t_data *data, short b)
 	if (b)
 		id = 0;
 	data->nbr_pipes = id;
-	if (id != 0)
-		get_last(NULL, 1);
 	pipe = malloc(sizeof(t_pipe));
 	pipe->pipe_id = id++;
 	pipe->arg = NULL;
@@ -55,8 +53,6 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 	{
 		pipe->arg = array_realloc(pipe->arg, res, -1);
 		pipe->n++;
-		if (pipe->pipe_id == 0)
-			get_last(my_strdup(res, '\0'), 1);
 	}
 	return (NULL);
 }
@@ -77,11 +73,16 @@ char	*parse_time_2(char *str, char *res, int *i, int tmp)
 	return (res);
 }
 
-short	check_syntax_error(t_pipe *pipe)
+t_pipe	*add_pipe(t_data *data, t_pipe *pipe, short b)
 {
-	if (!pipe->arg && !(pipe->redirections)->head)
-		return (print_error("syntax error near unexpected token `|'\n", NULL));
-	return (0);
+	if (pipe && !pipe->arg && !(pipe->redirections)->head)
+	{
+		print_error("syntax error near unexpected token `|'\n", NULL);
+		return (NULL);
+	}
+	if (b)
+		return (new_pipe(data, 0));
+	return (pipe);
 }
 
 //	EMPTY PIPES.
@@ -95,7 +96,7 @@ short	parse_time(t_data *data, char *str)
 	i = 0;
 	pipe = new_pipe(data, 1);
 	res = NULL;
-	while (str[i])
+	while (str[i] && pipe)
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
@@ -108,10 +109,8 @@ short	parse_time(t_data *data, char *str)
 			return (1);
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
-		else if (tmp == 4 && check_syntax_error(pipe))
-			return (1);
 		if (tmp == 4 && ++i)
-			pipe = new_pipe(data, 0);
+			pipe = add_pipe(data, pipe, 1);
 	}
-	return (check_syntax_error(pipe));
+	return (!add_pipe(data, pipe, 0));
 }

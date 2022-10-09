@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 17:34:04 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 15:43:46 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/08 16:46:19 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	history(t_data *data, char **arg)
 		print_error("history: too many arguments\n", NULL);
 		return ;
 	}
-	if (!(n >= (long long)data->history_lines && display_history(data)) && n > 0)
+	if (!(n >= (long long)data->history_lines
+			&& display_history(data)) && n > 0)
 		display_some_history(data, n);
 }
