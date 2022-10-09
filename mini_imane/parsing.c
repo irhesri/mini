@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 19:44:08 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/09 18:11:18 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_pipe	*new_pipe(t_data *data, short b)
 	if (b)
 		id = 0;
 	data->nbr_pipes = id;
-	if (id != 0)
-		get_last(NULL, 1);
 	pipe = malloc(sizeof(t_pipe));
 	pipe->pipe_id = id++;
 	pipe->arg = NULL;
@@ -55,8 +53,6 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 	{
 		pipe->arg = array_realloc(pipe->arg, res, -1);
 		pipe->n++;
-		// if (pipe->pipe_id == 0)
-		// 	get_last(my_strdup(res, '\0'), 1);
 	}
 	return (NULL);
 }
