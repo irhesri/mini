@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 15:42:30 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/09 12:01:14 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ short	check_for_here_docs(t_pipe *pip)
 	return (0);
 }
 
-void	init_files(t_data *data)
+short	init_files(t_data *data)
 {
 	t_node	*head;
 
@@ -125,7 +125,7 @@ void	init_files(t_data *data)
 	while (head)
 	{
 		if (check_for_here_docs(head->content))
-			return ;
+			return 1;
 		head = head->next;
 	}
 	head = (data->pipes)->head;
@@ -134,4 +134,5 @@ void	init_files(t_data *data)
 		open_files(head->content);
 		head = head->next;
 	}
+	return 0;
 }

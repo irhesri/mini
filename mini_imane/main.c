@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 16:08:11 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:55:09 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	read_line(t_data *data)
 		if (!parse_time (data, str))
 		{
 			get_errno(0);
-			init_files(data);
-			run_commands(data, data->pipes);
+			if (!init_files(data))
+				run_commands(data, data->pipes);
 		}
 		else
 			get_errno(1);
@@ -59,7 +59,7 @@ int	main(int ac, char **av, char **envp)
 	init_env(data, envp);
 	free_exit(data, 0);
 	signal(SIGINT, handle_sigint);
-	//signal(SIGQUIT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	rl_clear_history();
 	read_line(data);
 	free_exit(data, get_errno(-1));

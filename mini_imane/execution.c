@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 16:26:43 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:33:04 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	wait_for_children(pid_t id)
 	int		status;
 	pid_t	pid;
 
+	signal(SIGINT, SIG_IGN);
 	while (1)
 	{
 		pid = waitpid(-1, &status, 0);
@@ -75,10 +76,15 @@ void	wait_for_children(pid_t id)
 		if (WIFEXITED(status))
 			n = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		// {
 			n = 128 + WTERMSIG(status);
+		// 	write(1, "\n", 1);
+		// }
 		if (id == pid)
 			get_errno(n);
 	}
+	signal(SIGINT, handle_sigint);
+	
 }
 
 void	one_command_line(t_data *data, t_pipe *content, int *fd)
