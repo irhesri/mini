@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 16:24:32 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/09 13:21:07 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **envp)
 
 	get_bash_name("our_bash");
 	if (ac > 1 || av[1])
-		exit(print_error("Too many arguments\n", NULL));
+		exit(print_error("Too manyj arguments\n", NULL));
 	data = malloc(sizeof(t_data));
 	init_data(data);
 	init_env(data, envp);
