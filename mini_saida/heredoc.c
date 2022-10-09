@@ -48,12 +48,13 @@ short    heredoc(int fd, t_redirection *data)
 		while (1)
 		{
 			line = readline("> ");
-			if (!ft_strncmp(line, data->name, my_size(NULL, line) + 1))
+			if (!line || !ft_strncmp(line, data->name, my_size(NULL, line) + 1))
 				break ;
 			data->fd == -2 && chr_rp_var(line, fd);
 			data->fd == -3 && write(fd, line, my_size(NULL,line));
 			free(line);
 			line = NULL;
+			write(fd, "\n", 1);
 		}
 		close(fd);
 		exit(0);
