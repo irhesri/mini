@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:46:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/25 15:48:19 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/10 13:12:13 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static short	my_error(char **str, int n)
 		free (str[i++]);
 	free (str);
 	write(1, "allocation error\n", 17);
-	free_exit (NULL, 1);
+	exit (1);
 	return (0);
 }
 

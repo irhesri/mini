@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/09 18:13:02 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/10 13:20:46 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	read_line(t_data *data)
 
 	str = readline("---->  ");
 	if (!str)
-		free_exit (data, get_errno(-1));
+		exit (get_errno(-1));
 	if (!*str)
 	{
 		free (str);
@@ -52,7 +52,6 @@ void	read_line(t_data *data)
 // initialise bash name
 // initialise data
 // initialise env
-// initialise data in free exit
 // start
 int	main(int ac, char **av, char **envp)
 {
@@ -64,12 +63,10 @@ int	main(int ac, char **av, char **envp)
 	data = malloc(sizeof(t_data));
 	init_data(data);
 	init_env(data, envp);
-	free_exit(data, 0);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigint);
 	rl_clear_history();
 	while (1)
 		read_line(data);
-	free_exit(data, get_errno(-1));
-	return (0);
+	exit(get_errno(-1));
 }

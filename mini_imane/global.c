@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 23:29:51 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/10 13:08:13 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int	get_errno(int n)
 	static int	error;
 
 	if (n >= 0)
-		error = n % 256;
+		error = n;
 	return (error);
 }

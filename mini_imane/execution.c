@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/10 10:55:58 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:10:13 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (content->fd[0] < 0 || content->fd[1] < 0)
-			free_exit(data, 1);
+			exit(1);
 		if (p && p[0] > 0)
 			close (p[0]);
 		if (content->fd[0] != 0)
@@ -56,7 +56,7 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 		if (content->fd[1] != 1)
 			my_dup2(content->fd + 1, STDOUT_FILENO);
 		commands_call(data, content->arg);
-		free_exit(data, get_errno(-1));
+		exit(get_errno(-1));
 	}
 	return (id);
 }
