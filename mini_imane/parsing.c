@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 10:57:33 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:11:17 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_pipe	*new_pipe(t_data *data, short b)
 	if (b)
 		id = 0;
 	data->nbr_pipes = id;
-	if (id != 0)
-		get_last(NULL, 1);
 	pipe = malloc(sizeof(t_pipe));
 	pipe->pipe_id = id++;
 	pipe->arg = NULL;
