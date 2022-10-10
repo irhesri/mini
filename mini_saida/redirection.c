@@ -3,46 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 15:51:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/10 14:30:42 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-short	is_special_red(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == ' ' || c == ';');
-}
-
-char	*normal_chars(char *str, int *i, short b)
-{
-	int	j;
-
-	j = *i;
-	while (str[*i] && !is_special_red(str[*i])
-		&& str[*i] != 39 && str[*i] != 34)
-	{
-		if (!b && str[*i] == '$')
-			break ;
-		(*i)++;
-	}
-	return (my_strdup(&str[j], str[(*i)]));
-}
-
-void	ft_error(char *str, char **name, int *i)
-{
-	*name = free_join(*name, normal_chars(str, i, 1), 0);
-	printf ("$: %s: ambiguous redirect\n", *name);
-	free(*name);
-	*name = NULL;
-}
-
 int	here_doc_case(char *str, t_redirection *red, int *i)
 {
+	static int	nbr_heredoc;
+
 	red->fd = -2;
+	get_errno(0);
+	++nbr_heredoc;
+	if (nbr_heredoc > 16 && get_errno(2))
+	{
+		print_error("maximum here-document count exceeded\n", NULL);
+		exit(2);
+	}
 	while (str[*i] && !is_special_red(str[*i]))
 	{
 		if (str[*i] && (str[*i] == 34 || str[*i] == 39) && (*i)++)
@@ -92,14 +73,20 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 	k = *i + 1;
 	if (str[*i] && (is_special_red(str[*i]) || str[*i] == '#'))
 	{
-		printf("$: syntax error near unexpected token `%c'\n", str[*i]);
+		if (!str[*(i) + 1])
+			print_error("syntax error near unexpected token `newline'\n",
+				NULL);
+		else
+			printf("%s: syntax error near unexpected token `%c'\n",
+				get_bash_name(NULL), str[*i]);
 		red->name = NULL;
-		return (258);//exit
+		return (get_errno(258));
 	}
 	(type == 7) && here_doc_case(str, red, i);
 	if (str[*i] == '$' && !var_expand(str, &k))
 	{
 		ft_error(str, &red->name, i);
+		red->fd = -4;
 		return (1);
 	}
 	(type != 7) && valide_name(&(red->name), str, i);
@@ -113,7 +100,7 @@ short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 
 	red = malloc(sizeof(t_redirection));
 	if (!red)
-		exit (1);
+		exit(1);
 	(*i) += (type % 2);
 	red->fd = 0;
 	red->mode = (((type == 8) * O_TRUNC) + ((type == 9) * O_APPEND));

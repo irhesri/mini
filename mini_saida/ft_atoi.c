@@ -6,13 +6,13 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:56:37 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 11:29:33 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:09:34 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_atoi(char *str)
+long long	ft_atoi(char *str)
 {
 	unsigned long long	nb;
 	int					sign;
@@ -34,5 +34,5 @@ int	ft_atoi(char *str)
 		printf("exit\nsben-chi: exit: %s: numeric argument required\n", temp);
 		exit(255);
 	}
-	return ((long long)nb * sign % 255);
+	return ((long long)nb * sign);
 }

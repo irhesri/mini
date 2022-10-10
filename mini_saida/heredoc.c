@@ -1,27 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
+/*   Updated: 2022/10/10 14:37:45 by sben-chi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-
-pid_t pid = -2;
-
-void handle_sigint(int sig)
-{
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	if (pid > 0)
-		kill(pid, SIGINT);
-	else if (!pid)
-		exit (1);
-	rl_on_new_line();
-	rl_redisplay();	
-}
 
 short	chr_rp_var(char *line, int fd)
 {
-	int     i;
-	// char    c;
-	char    *var;
+	int		i;
+	char	*var;
 
 	i = -1;
-	while(line[++i])
+	while (line[++i])
 	{
 		if (line[i] == '$')
 		{
@@ -35,23 +32,38 @@ short	chr_rp_var(char *line, int fd)
 	return (1);
 }
 
-short    heredoc(int fd, t_redirection *data)
+void	my_wait(void)
 {
-	char    *line;
-	int status;
+	int	status;
 
-	pid = fork();
+	signal(SIGINT, SIG_IGN);
+	wait(&status);
+	if (WTERMSIG(status) && WIFSIGNALED(status))
+	{
+		get_errno(1);
+		write(1, "\n", 1);
+	}
 	signal(SIGINT, handle_sigint);
-	if (!pid)
-	{   
-		signal(SIGINT, handle_sigint);
+}
+
+short	heredoc(int fd, t_redirection *red)
+{
+	char	*line;
+	int		len;
+
+	get_errno(0);
+	if (!fork())
+	{
+		signal(SIGINT, SIG_DFL);
 		while (1)
 		{
 			line = readline("> ");
-			if (!line || !ft_strncmp(line, data->name, my_size(NULL, line) + 1))
+			len = my_size(NULL, line);
+			if (!line || !ft_strncmp(line, red->name, len + 1))
 				break ;
-			data->fd == -2 && chr_rp_var(line, fd);
-			data->fd == -3 && write(fd, line, my_size(NULL,line));
+			red->fd == -2 && chr_rp_var(line, fd);
+			red->fd == -3 && write(fd, line, len);
+			write(fd, "\n", 1);
 			free(line);
 			line = NULL;
 			write(fd, "\n", 1);
@@ -59,8 +71,6 @@ short    heredoc(int fd, t_redirection *data)
 		close(fd);
 		exit(0);
 	}
-	wait(&status);
-	if (WIFEXITED(status) && (WEXITSTATUS(status) == 1))
-		return (1);
-	return (0);
+	my_wait();
+	return (get_errno(-1));
 }

@@ -8,9 +8,9 @@ NAME	= mini
 # 			./mini_imane/not_builtin.c ./mini_imane/unset.c ./mini_imane/export.c\
 # 			./mini_imane/history.c ./mini_imane/list_functions.c ./mini_imane/parsing.c\
 # SRC	= ./mini_imane/*.c ./mini_saida/*.c
-CFLAGS = -lreadline -g -fsanitize=address #-Wall -Wextra -Werror 
-LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
-CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
+CFLAGS = -lreadline -g -fsanitize=address -Wall -Wextra -Werror 
+LDFLAGS		= -L /Users/sben-chi/.brew/opt/readline/lib
+CPPFLAGS	= -I /Users/sben-chi/.brew/opt/readline/include
 
 CC = gcc
 

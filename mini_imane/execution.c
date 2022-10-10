@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/10 10:55:58 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:58:36 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	commands_call(t_data *data, char **arg)
 		ptr[0] = not_builtin;
 		ptr[1] = export;
 		ptr[2] = unset;
-		ptr[3] = my_exit;
+		ptr[3] = history;
 		ptr[4] = cd;
-		ptr[5] = history;
+		ptr[5] = my_exit;
 		ptr[6] = env;
 		ptr[7] = echo;
 		ptr[8] = pwd;
@@ -32,7 +32,7 @@ void	commands_call(t_data *data, char **arg)
 	if (!arg || !*arg)
 		return ;
 	b = is_builtin(*arg);
-	if (b < 6 && arg)
+	if (b < 5 && arg)
 		ptr[b](data, arg + (b != 0));
 	else
 		ptr[b](arg + 1);
@@ -76,10 +76,10 @@ void	wait_for_children(pid_t id)
 		if (WIFEXITED(status))
 			n = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-		{
-			write(STDOUT_FILENO, "\n", 1);
+		// {
 			n = 128 + WTERMSIG(status);
-		}
+		// 	write(1, "\n", 1);
+		// }
 		if (id == pid)
 			get_errno(n);
 	}

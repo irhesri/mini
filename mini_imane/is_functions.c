@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:39:35 by imane             #+#    #+#             */
-/*   Updated: 2022/09/26 13:31:59 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/10 16:00:55 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ short	is_builtin(char *arg)
 {
 	short		i;
 	short		b;
-	static char	*call[9] = {"export", "unset", "exit", "cd",
-		"history", "env", "echo", "pwd"};
+	static char	*call[9] = {"export", "unset", "history", "cd",
+		"exit", "env", "echo", "pwd"};
 
 	i = -1;
 	b = 0;
