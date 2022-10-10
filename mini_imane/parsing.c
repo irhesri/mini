@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 19:44:08 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/10 10:57:33 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 	{
 		pipe->arg = array_realloc(pipe->arg, res, -1);
 		pipe->n++;
-		// if (pipe->pipe_id == 0)
-		// 	get_last(my_strdup(res, '\0'), 1);
 	}
 	return (NULL);
 }
