@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/09 19:43:38 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/10 10:57:38 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,6 @@ void	run_commands(t_data *data, t_list *pipes)
 		my_dup2(p, STDIN_FILENO);
 		head = head->next;
 	}
-	wait_for_children(pid);
 	my_dup2(fd, STDIN_FILENO);
+	wait_for_children(pid);
 }

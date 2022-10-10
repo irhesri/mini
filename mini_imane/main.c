@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/09 18:55:09 by sben-chi         ###   ########.fr       */
-=======
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/09 18:13:02 by imane            ###   ########.fr       */
->>>>>>> 9a936896e1c1b9a8594fca94acd0837f352fe0f9
+/*   Updated: 2022/10/10 11:31:37 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +62,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac > 1 || av[1])
 		exit(print_error("Too many arguments\n", NULL));
 	data = malloc(sizeof(t_data));
+	set_termios_echoctl();
 	signal(SIGINT, handle_sigint);
 	init_data(data);
 	init_env(data, envp);
@@ -79,5 +73,6 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 		read_line(data);
 	free_exit(data, get_errno(-1));
+	reset_termios_echoctl();
 	return (0);
 }

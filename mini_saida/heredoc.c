@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/09 19:42:06 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:37:45 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 short	chr_rp_var(char *line, int fd)
 {
-	int     i;
-
-	char    *var;
+	int		i;
+	char	*var;
 
 	i = -1;
-	while(line[++i])
+	while (line[++i])
 	{
 		if (line[i] == '$')
 		{
@@ -33,7 +32,7 @@ short	chr_rp_var(char *line, int fd)
 	return (1);
 }
 
-void	my_wait()
+void	my_wait(void)
 {
 	int	status;
 
@@ -47,19 +46,19 @@ void	my_wait()
 	signal(SIGINT, handle_sigint);
 }
 
-short    heredoc(int fd, t_redirection *red)
+short	heredoc(int fd, t_redirection *red)
 {
 	char	*line;
 	int		len;
 
 	get_errno(0);
 	if (!fork())
-	{   
+	{
 		signal(SIGINT, SIG_DFL);
 		while (1)
 		{
 			line = readline("> ");
-			len = my_size(NULL,line);
+			len = my_size(NULL, line);
 			if (!line || !ft_strncmp(line, red->name, len + 1))
 				break ;
 			red->fd == -2 && chr_rp_var(line, fd);

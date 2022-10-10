@@ -1,4 +1,4 @@
-//* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/08 09:22:46 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:04:11 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,13 +157,19 @@ t_list	*get_exp(t_list *exp);
 void    echo(char **towrite);
 void    pwd(void);
 void	cd(t_data *data, char **path);
-void    my_exit(t_data *data, char **status);
-int     ft_atoi(char *str);
+void   		 my_exit(char **status);
+long long     ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 char    *is_double_quoted(char *str, int *pos);
 short    is_redirection(t_pipe *pipe, char *str, int *i, short type);
 short	is_limiter(char *c);
 void	handle_sigint(int sig);
 short    heredoc(int fd, t_redirection *red);
+void    set_termios_echoctl(void);
+void    reset_termios_echoctl(void);
+t_list	*get_env(t_list *env);
+char    *normal_chars(char *str, int *i, short b);
+void    ft_error(char *str, char **name, int *i);
+short   is_special_red(char c);
 
 #endif
