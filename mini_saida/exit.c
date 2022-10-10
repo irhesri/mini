@@ -6,7 +6,7 @@
 /*   By: sben-chi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:49:41 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/10 15:13:27 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:04:03 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 void	my_exit(char **status)
 {
-//	long long	nb;
+	long long	nb;
 
 	get_errno(0);
 	if (!status[0])
+	{
+		write(1, "exit\n", 5);
 		exit(0);
-	printf("here\n");
-		/*
+	}
 	nb = ft_atoi(status[0]);
 	if (status[1] && get_errno(1))
 	{
@@ -28,5 +29,5 @@ void	my_exit(char **status)
 		return ;
 	}
 	write(1, "exit\n", 5);
-	exit(nb);*/
+	exit(nb);
 }

@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 15:04:11 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:10:09 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void    echo(char **towrite);
 void    pwd(void);
 void	cd(t_data *data, char **path);
 void   		 my_exit(char **status);
-long long     ft_atoi(char *str);
+long long   ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 char    *is_double_quoted(char *str, int *pos);
 short    is_redirection(t_pipe *pipe, char *str, int *i, short type);
