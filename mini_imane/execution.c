@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 21:07:20 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/10 10:55:58 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ void	wait_for_children(pid_t id)
 		if (WIFEXITED(status))
 			n = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		{
+			write(STDOUT_FILENO, "\n", 1);
 			n = 128 + WTERMSIG(status);
+		}
 		if (id == pid)
 			get_errno(n);
 	}
@@ -134,6 +137,6 @@ void	run_commands(t_data *data, t_list *pipes)
 		my_dup2(p, STDIN_FILENO);
 		head = head->next;
 	}
-	wait_for_children(pid);
 	my_dup2(fd, STDIN_FILENO);
+	wait_for_children(pid);
 }
