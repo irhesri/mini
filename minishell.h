@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 16:10:09 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:58:26 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ char	*ft_strjoin(char *str1, char *str2);
 char	*ft_itoa(int n);
 
 // FUNCTIONS
-void	free_exit(t_data *data, short err);
 int		my_dup2(int *newfd, int oldfd);
 char	**array_realloc(char **arr, char *str, short b);
 short	print_error(char *str1, char *str2);
 short	ft_putstr(char *str);
+void	reset_exit(int n);
 
 //	BUILTINS
 void	env(void);

@@ -1,40 +1,41 @@
+NAME	= minishell
 
-NAME	= mini
-DIR = ./mini_imane/
-SRCS		= ./mini_imane/env.c ./mini_imane/functions.c ./mini_imane/initialisation.c \
-			./mini_imane/main.c  ./mini_imane/execution.c ./mini_imane/functions_2.c\
-			./mini_imane/is_functions.c ./mini_imane/new_split.c ./mini_imane/trash_can.c \
-			./mini_imane/expand.c ./mini_imane/global.c ./mini_imane/libft.c         \
-			./mini_imane/not_builtin.c ./mini_imane/unset.c ./mini_imane/export.c\
-			./mini_imane/history.c ./mini_imane/list_functions.c ./mini_imane/parsing.c\
-SRC	= ./mini_imane/*.c ./mini_saida/*.c
-# SRCS= env.c functions.c initialisation.c \
-#  			main.c  execution.c functions_2.c\
-#  			is_functions.c new_split.c trash_can.c \
-#  			expand.c global.c libft.c         \
-#  			not_builtin.c unset.c export.c\
-#  			history.c list_functions.c parsing.c\
-# SRC = $(SRCS:%.c=$(DIR)/%.c)
-CFLAGS = -lreadline -g -fsanitize=address #-Wall -Wextra -Werror 
-LDFLAGS		= -L ~/readline/usr/local/lib
-CPPFLAGS	= -I ~/readline/usr/local/include
+DIR1	= ./execution
+DIR2	= ./parsing
+DIR3	= ./others
+DIR4	= ./builtins
 
-CC = gcc
+SRC1	= execution.c not_builtin.c
+SRC2	= expand.c initialisation.c parsing.c
+SRC3	= functions.c functions_2.c global.c \
+			is_functions.c libft.c list_functions.c \
+			new_split.c trash_can.c	
+SRC4	= history.c env.c export.c unset.c
 
+SRCS	= main.c $(SRC1:%.c=$(DIR1)/%.c) \
+			$(SRC2:%.c=$(DIR2)/%.c) $(SRC3:%.c=$(DIR3)/%.c) \
+			$(SRC4:%.c=$(DIR4)/%.c)
 
+OBJ		= $(SRCS:.c=.o)
+
+CC 			= gcc 
+CFLAGS		= -lreadline # -Wall -Wextra -Werror 
+LDFLAGS		= -L /goinfre/irhesri/.brew/opt/readline/lib
+CPPFLAGS	= -I /goinfre/irhesri/.brew/opt/readline/include
+# LDFLAGS		= -L /Users/irhesri/readline/usr/local/lib
+# CPPFLAGS	= -I /Users/irhesri/readline/usr/local/include
 
 all: 
-	gcc ./mini_imane/*.c ./mini_saida/*.c $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) 
-$(NAME): $(SRC:.c=.o) $(lib:.c=.o)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -o $@ -c $<
-bonus: $(SRC_B:.c=.o) $(lib:.c=.o)
+	gcc -lreadline ./mini_imane/*.c ./mini_saida/*.c $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -g -fsanitize=address
 
+# $(NAME): $(OBG)
+# 	$(CC) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-%.o : %.c
-	$(CC) $(LDFLAGS) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
+# %.o : %.c
+# 	$(CC) $(LDFLAGS) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
 
 clean:
-	@rm -rf mini_imane/*.o
+	@rm -rf *.o
 
 fclean: clean
 	@rm -rf $(NAME)

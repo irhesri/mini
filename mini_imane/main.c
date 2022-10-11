@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/11 14:47:50 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 17:57:43 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	update_last(t_pipe *p, int n)
 {
-	if (!n)
+	if (!n && p->arg)
 		get_last(my_strdup(p->arg[p->n - 1], '\0'), 1);
 	else
 		get_last(NULL, 1);
@@ -64,5 +64,5 @@ int	main(int ac, char **av, char **envp)
 	rl_clear_history();
 	while (1)
 		read_line(data);
-	exit(get_errno(-1));
+	reset_exit(get_errno(-1));
 }

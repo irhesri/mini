@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:48:49 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/10 14:48:56 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:22:10 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ void	cd(t_data *data, char **path)
 		}
 	}
 	if (chdir(temp) < 0 && get_errno(1))
-		perror("$: ");
+	{
+		print_error("cd: ", temp);
+		write(1, ": ", 2);
+		perror("");
+	}
 	modif_env(data, oldpwd);
 }
