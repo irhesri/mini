@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 17:06:05 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 18:48:22 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ short	heredoc(int fd, t_redirection *red)
 			write(fd, "\n", 1);
 			free(line);
 			line = NULL;
-			write(fd, "\n", 1);
 		}
 		close(fd);
 		exit(0);

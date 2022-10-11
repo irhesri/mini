@@ -20,8 +20,8 @@ OBJ		= $(SRCS:.c=.o)
 
 CC 			= gcc 
 CFLAGS		= -lreadline # -Wall -Wextra -Werror 
-LDFLAGS		= -L /goinfre/irhesri/.brew/opt/readline/lib
-CPPFLAGS	= -I /goinfre/irhesri/.brew/opt/readline/include
+LDFLAGS		= -L /Users/sben-chi/.brew/opt/readline/lib
+CPPFLAGS	= -I /Users/sben-chi/.brew/opt/readline/include
 # LDFLAGS		= -L /Users/irhesri/readline/usr/local/lib
 # CPPFLAGS	= -I /Users/irhesri/readline/usr/local/include
 
