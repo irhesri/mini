@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:49:41 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/10 16:04:03 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 11:29:43 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ void	my_exit(char **status)
 {
 	long long	nb;
 
+	
+	nb = 0;
 	get_errno(0);
-	if (!status[0])
+	if (status[0] && status[1] && get_errno(1))
 	{
 		write(1, "exit\n", 5);
-		exit(0);
-	}
-	nb = ft_atoi(status[0]);
-	if (status[1] && get_errno(1))
-	{
-		print_error("exit\n", "sben-chi: exit: too many arguments\n");
+		print_error("exit: too many arguments\n", NULL);
 		return ;
 	}
+	if (status[0])
+		nb = ft_atoi(status[0]);
 	write(1, "exit\n", 5);
+	reset_termios_echoctl();
 	exit(nb);
 }

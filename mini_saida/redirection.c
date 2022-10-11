@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/10 14:30:42 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 11:05:29 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	here_doc_case(char *str, t_redirection *red, int *i)
 	if (nbr_heredoc > 16 && get_errno(2))
 	{
 		print_error("maximum here-document count exceeded\n", NULL);
+		reset_termios_echoctl();
 		exit(2);
 	}
 	while (str[*i] && !is_special_red(str[*i]))
