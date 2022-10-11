@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 18:21:48 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:47:32 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	valide_name(char **name, char *str, int *i)
 			k = *i - 1;
 			var = split_expand(str, i);
 			if (*(var + 1))
-			{	
-				ft_error(str, name, &k);
+			{
+				*name = free_join(*name, normal_chars(str, &k, 1), 0);
 				return (0);
 			}
 			*name = free_join(*name, *var, 1);
@@ -94,6 +94,7 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 	(type == 7) && here_doc_case(str, red, i);
 	if (str[*i] == '$' && !var_expand(str, &k))
 	{
+		red->name = free_join(red->name, normal_chars(str, i, 1), 0);
 		red->fd = -4;
 		return (1);
 	}

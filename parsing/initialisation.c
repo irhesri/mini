@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/09 19:43:28 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:20:45 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ void	open_files(t_pipe *pipe)
 		pipe->fd[(red->mode != 0)] = fd;
 		if (fd < 0)
 		{
-			if (fd == -1)
+			if (fd == -4)
+				print_error(red->name, ": ambiguous redirect\n");
+			else
 				print_error(red->name, ": No such file or directory\n");
 			return ;
 		}
