@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:49:41 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 17:34:33 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:02:02 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@ void	my_exit(char **status)
 	}
 	if (status[0])
 		nb = ft_atoi(status[0]);
-	reset_termios_echoctl();
-	exit(get_errno(-1));
+	reset_exit(get_errno(-1));
 }

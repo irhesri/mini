@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 14:24:33 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:06:05 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,17 @@ short	chr_rp_var(char *line, int fd)
 	int		i;
 	char	*var;
 
-	i = 0;
-	while (line[i])
+	i = -1;
+	while (line[++i])
 	{
-		if (line[i++] == '$')
+		if (line[i] == '$')
 		{
 			var = var_expand(line, &i);
 			write(fd, var, my_size(NULL, var));
 			free(var);
-			var = NULL;
 		}
 		else
-			write(fd, &line[i++], 1);
+			write(fd, &line[i], 1);
 	}
 	return (1);
 }
@@ -67,6 +66,7 @@ short	heredoc(int fd, t_redirection *red)
 			write(fd, "\n", 1);
 			free(line);
 			line = NULL;
+			write(fd, "\n", 1);
 		}
 		close(fd);
 		exit(0);

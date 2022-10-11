@@ -1,0 +1,24 @@
+execution:
+-execution.c 
+-not_builtin.c
+
+parsing:
+-expand.c
+-initialisation.c
+-parsing.c
+
+general functions:
+-functions.c
+-functions_2.c
+-global.c 
+-is_functions.c 
+-libft.c 
+-list_functions.c
+-new_split.c 
+-trash_can.c
+
+builtins:
+-history.c 
+-env.c 
+-export.c
+-unset.c

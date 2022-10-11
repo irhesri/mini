@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:26:44 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/10 14:55:19 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:46:10 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,4 @@ char	*normal_chars(char *str, int *i, short b)
 		(*i)++;
 	}
 	return (my_strdup(&str[j], str[(*i)]));
-}
-
-void	ft_error(char *str, char **name, int *i)
-{
-	*name = free_join(*name, normal_chars(str, i, 1), 0);
-	print_error(*name, ": ambiguous redirect\n");
-	free(*name);
-	*name = NULL;
 }

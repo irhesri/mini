@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 15:44:03 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 15:57:59 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,6 @@ char	*free_join(char *str1, char *str2, short b)
 	return (str);
 }
 
-// frees everything before exiting with err
-// just send NULL as first argument
-void	free_exit(t_data *data, short err)
-{
-	static t_data	*d;
-
-	if (!d)
-	{
-		d = data;
-		return ;
-	}
-	free_all(d);
-	exit(err);
-}
-
 long long	my_atoi(char *str)
 {
 	unsigned long long	n;
@@ -98,4 +83,10 @@ long long	my_atoi(char *str)
 	if (*str || n > LLONG_MAX)
 		return (-1);
 	return (n);
+}
+
+void	reset_exit(int n)
+{
+	reset_termios_echoctl();
+	exit(n);
 }
