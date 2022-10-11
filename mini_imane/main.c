@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/11 17:57:43 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 18:40:38 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;
 
-	get_bash_name("our_bash");
+	get_bash_name("minishell$ ");
 	if (ac > 1 || av[1])
 		exit(print_error("Too many arguments\n", NULL));
 	data = malloc(sizeof(t_data));
