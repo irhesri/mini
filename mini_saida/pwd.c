@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:54:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/10 14:54:07 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:20:43 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	pwd(void)
 		perror("");
 		return ;
 	}
-	printf("%s\n", path);
+	write(1, path, my_size(NULL, path));
+	write(1, "\n", 2);
 	free(path);
 }

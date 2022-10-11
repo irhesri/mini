@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:48:49 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 15:22:10 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:48:10 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,14 @@ void	cd(t_data *data, char **path)
 		temp = my_getenv("HOME");
 		if ((!temp || !(*temp)) && get_errno(1))
 		{
-			write(2, "$: cd: HOME not set\n", 20);
+			print_error("cd: HOME not set\n", NULL);
 			return ;
 		}
 	}
 	if (chdir(temp) < 0 && get_errno(1))
 	{
-		print_error("cd: ", temp);
-		write(1, ": ", 2);
-		perror("");
+		print_error(ft_strjoin("cd: ", temp), ft_strjoin(": ", strerror(errno)));
+		write(1, "\n", 1);
 	}
 	modif_env(data, oldpwd);
 }
