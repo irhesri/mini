@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 16:03:44 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 18:36:25 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	valide_name(char **name, char *str, int *i)
 			k = *i - 1;
 			var = split_expand(str, i);
 			if (*(var + 1))
-			{	
-				ft_error(str, name, &k);
+			{
+				*name = free_join(*name, normal_chars(str, &k, 1), 0);
 				return (0);
 			}
 			*name = free_join(*name, *var, 1);
@@ -85,11 +85,12 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 	(type == 7) && here_doc_case(str, red, i);
 	if (str[*i] == '$' && !var_expand(str, &k))
 	{
-		ft_error(str, &red->name, i);
+		red->name = free_join(red->name, normal_chars(str, i, 1), 0);
 		red->fd = -4;
 		return (1);
 	}
-	(type != 7) && valide_name(&(red->name), str, i);
+	if ((type != 7) && !(valide_name(&(red->name), str, i)))
+		red->fd = -4;
 	return (0);
 }
 
@@ -108,6 +109,8 @@ short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 	while (str[*i] && str[*i] == ' ')
 		(*i)++;
 	exit_val = get_name(red, str, i, type);
+	if (red->fd == -4)
+		;
 	add_node(pipe->redirections, pipe->redirections->last, red);
 	return (exit_val);
 }
