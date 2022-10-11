@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/10 15:58:36 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:44:34 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 	id = fork();
 	if (!id)
 	{
+		reset_termios_echoctl();
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (content->fd[0] < 0 || content->fd[1] < 0)
-			free_exit(data, 1);
+			exit(1);
 		if (p && p[0] > 0)
 			close (p[0]);
 		if (content->fd[0] != 0)
@@ -56,7 +57,7 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 		if (content->fd[1] != 1)
 			my_dup2(content->fd + 1, STDOUT_FILENO);
 		commands_call(data, content->arg);
-		free_exit(data, get_errno(-1));
+		exit(get_errno(-1));
 	}
 	return (id);
 }
@@ -76,13 +77,14 @@ void	wait_for_children(pid_t id)
 		if (WIFEXITED(status))
 			n = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-		// {
+		{
 			n = 128 + WTERMSIG(status);
-		// 	write(1, "\n", 1);
-		// }
+			write(1, "\n", 1);
+		}
 		if (id == pid)
 			get_errno(n);
 	}
+	set_termios_echoctl();
 	signal(SIGINT, handle_sigint);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 11:05:29 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:03:44 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	here_doc_case(char *str, t_redirection *red, int *i)
 	if (nbr_heredoc > 16 && get_errno(2))
 	{
 		print_error("maximum here-document count exceeded\n", NULL);
-		reset_termios_echoctl();
-		exit(2);
+		reset_exit(2);
 	}
 	while (str[*i] && !is_special_red(str[*i]))
 	{
@@ -101,7 +100,7 @@ short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 
 	red = malloc(sizeof(t_redirection));
 	if (!red)
-		exit(1);
+		reset_exit(1);
 	(*i) += (type % 2);
 	red->fd = 0;
 	red->mode = (((type == 8) * O_TRUNC) + ((type == 9) * O_APPEND));

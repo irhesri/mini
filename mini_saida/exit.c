@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:49:41 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 11:29:43 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:03:02 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ void	my_exit(char **status)
 	if (status[0])
 		nb = ft_atoi(status[0]);
 	write(1, "exit\n", 5);
-	reset_termios_echoctl();
-	exit(nb);
+	reset_exit(nb);
 }
