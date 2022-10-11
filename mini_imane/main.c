@@ -6,13 +6,13 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 18:27:38 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 14:47:50 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	update_last(t_pipe *p, int n)
+static void	update_last(t_pipe *p, int n)
 {
 	if (!n)
 		get_last(my_strdup(p->arg[p->n - 1], '\0'), 1);
@@ -24,28 +24,22 @@ void	read_line(t_data *data)
 {
 	char	*str;
 
-	str = readline("---->  ");
+	str = readline("minishell$  ");
 	if (!str)
 		exit (get_errno(-1));
-	if (!*str)
+	if (*str)
 	{
-		free (str);
-		return ;
+		my_add_history(data, str);
+		if (!get_errno(parse_time (data, str)))
+		{
+			update_last(data->pipes->head->content, data->nbr_pipes);
+			if (!init_files(data))
+				run_commands(data, data->pipes);
+		}
+		else
+			get_last(NULL, 1);
+		empty_pipes(data->pipes);
 	}
-	my_add_history(data, str);
-	if (!parse_time (data, str))
-	{
-		get_errno(0);
-		update_last(data->pipes->head->content, data->nbr_pipes);
-		if (!init_files(data))
-			run_commands(data, data->pipes);
-	}
-	else
-	{
-		get_errno(1);
-		get_last(NULL, 1);
-	}
-	empty_pipes(data->pipes);
 	free (str);
 }
 

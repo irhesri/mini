@@ -16,8 +16,8 @@ SRC	= ./mini_imane/*.c ./mini_saida/*.c
 #  			history.c list_functions.c parsing.c\
 # SRC = $(SRCS:%.c=$(DIR)/%.c)
 CFLAGS = -lreadline -g -fsanitize=address #-Wall -Wextra -Werror 
-LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
-CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
+LDFLAGS		= -L ~/readline/usr/local/lib
+CPPFLAGS	= -I ~/readline/usr/local/include
 
 CC = gcc
 

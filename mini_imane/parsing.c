@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 11:11:17 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 13:24:33 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ short	parse_time(t_data *data, char *str)
 		else if (tmp == 3 && ++i)
 			res = new_argument(pipe, split_expand(str, &i), res);
 		else if (tmp > 5 && ++i && (is_redirection(pipe, str, &i, tmp) == 258))
-			return (1);
+			return (258);
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
 		if (tmp == 4 && ++i)
 			pipe = add_pipe(data, pipe, 1);
 	}
-	return (!add_pipe(data, pipe, 0));
+	return (!add_pipe(data, pipe, 0) * 0);
 }
