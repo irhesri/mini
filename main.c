@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 12:18:53 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 15:09:06 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	null_exit(void)
 	rl_on_new_line();
 	rl_redisplay();
 	write(1, "exit\n", 5);
-	exit (get_errno(-1));
+	reset_exit (get_errno(-1));
 }
 
 void	read_line(t_data *data)
