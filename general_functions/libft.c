@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:28 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/11 16:01:17 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 21:17:57 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ short	ft_putstr(char *str)
 {
 	write(1, str, my_size(NULL, str));
 	return (1);
+}
+
+int	ft_strtrim(char *str, int i)
+{
+	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+		i++;
+	return (i);
 }

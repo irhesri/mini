@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 18:48:22 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/12 20:45:10 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@ short	chr_rp_var(char *line, int fd)
 	int		i;
 	char	*var;
 
-	i = -1;
-	while (line[++i])
+	i = 0;
+	while (line[i])
 	{
 		if (line[i] == '$')
 		{
+			i++;
 			var = var_expand(line, &i);
 			write(fd, var, my_size(NULL, var));
 			free(var);
 		}
 		else
-			write(fd, &line[i], 1);
+			write(fd, &line[i++], 1);
 	}
 	return (1);
 }

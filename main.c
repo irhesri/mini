@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 15:09:06 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 21:44:16 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,17 @@ void	read_line(t_data *data)
 	if (*str)
 	{
 		my_add_history(data, str);
-		if (!get_errno(parse_time (data, str)))
+		if (!get_errno(parse_time (data, str, ft_strtrim(str, 0))))
 		{
 			update_last(data->pipes->head->content, data->nbr_pipes);
 			if (!init_files(data))
 				run_commands(data, data->pipes);
 		}
 		else
+		{
+			init_here_doc(data);
 			get_last(NULL, 1);
+		}
 		empty_pipes(data->pipes);
 	}
 	free (str);

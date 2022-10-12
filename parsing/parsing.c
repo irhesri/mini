@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/11 13:24:33 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 21:43:26 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,33 +73,31 @@ char	*parse_time_2(char *str, char *res, int *i, int tmp)
 	return (res);
 }
 
-t_pipe	*add_pipe(t_data *data, t_pipe *pipe, short b)
+short	norm(t_data *data, t_pipe *pipe)
 {
 	if (pipe && !pipe->arg && !(pipe->redirections)->head)
 	{
-		print_error("syntax error near unexpected token `|'\n", NULL);
+		print_error("syntax error near unexpected token `|'\n", "");
+		get_errno(1);
 		return (NULL);
 	}
-	if (b)
-		return (new_pipe(data, 0));
-	return (pipe);
+	return (new_pipe(data, 0));
 }
 
 //	EMPTY PIPES.
-short	parse_time(t_data *data, char *str)
+short	parse_time(t_data *data, char *str, int i)
 {
-	int		i;
 	int		tmp;
 	char	*res;
 	t_pipe	*pipe;
 
-	i = 0;
-	pipe = new_pipe(data, 1);
 	res = NULL;
+	if (!str[i])
+		return (1);
+	pipe = new_pipe(data, 1);
 	while (str[i] && pipe)
 	{
-		while (str[i] == ' ' || str[i] == '\t')
-			i++;
+		i = ft_strtrim(str, i);
 		tmp = is_limiter(str + i);
 		if (tmp < 3)
 			res = parse_time_2(str, res, &i, tmp);
@@ -110,7 +108,7 @@ short	parse_time(t_data *data, char *str)
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
 		if (tmp == 4 && ++i)
-			pipe = add_pipe(data, pipe, 1);
+			pipe = norm(data, pipe);
 	}
-	return (!add_pipe(data, pipe, 0) * 0);
+	return (get_errno(-1));
 }
