@@ -1,45 +1,40 @@
 NAME	= minishell
 
-DIR1	= ./execution
-DIR2	= ./parsing
-DIR3	= ./others
-DIR4	= ./builtins
+CC 			= gcc 
+CFLAGS		= -Wall -Wextra -Werror 
+LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
+CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
 
-SRC1	= execution.c not_builtin.c
-SRC2	= expand.c initialisation.c parsing.c
-SRC3	= functions.c functions_2.c global.c \
+SRC1	= execution.c heredoc.c not_builtin.c termios_signals.c
+SRC2	= expand.c initialisation.c parsing.c \
+			redirection.c redirection_utils.c \
+			parsing_utils.c
+SRC3	= ft_atoi.c functions.c functions_2.c global.c \
 			is_functions.c libft.c list_functions.c \
 			new_split.c trash_can.c	
-SRC4	= history.c env.c export.c unset.c
+SRC4	= history.c env.c export.c unset.c \
+			cd.c echo.c exit.c pwd.c
 
-SRCS	= main.c $(SRC1:%.c=$(DIR1)/%.c) \
-			$(SRC2:%.c=$(DIR2)/%.c) $(SRC3:%.c=$(DIR3)/%.c) \
-			$(SRC4:%.c=$(DIR4)/%.c)
+SRC		= main.c $(SRC1:%.c=./execution/%.c) \
+			$(SRC2:%.c=./parsing/%.c) $(SRC3:%.c=./general_functions/%.c) \
+			$(SRC4:%.c=./builtins/%.c)
 
-OBJ		= $(SRCS:.c=.o)
+OBJ		= $(SRC:.c=.o)
 
-CC 			= gcc 
-CFLAGS		= -lreadline # -Wall -Wextra -Werror 
-LDFLAGS		= -L /Users/sben-chi/.brew/opt/readline/lib
-CPPFLAGS	= -I /Users/sben-chi/.brew/opt/readline/include
-# LDFLAGS		= -L /Users/irhesri/readline/usr/local/lib
-# CPPFLAGS	= -I /Users/irhesri/readline/usr/local/include
+all : $(NAME)
 
-all: 
-	gcc -lreadline ./mini_imane/*.c ./mini_saida/*.c $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -g -fsanitize=address
+$(NAME) : $(OBJ)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -lreadline $(LDFLAGS) $(OBJ) -o $(NAME)
 
-# $(NAME): $(OBG)
-# 	$(CC) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -o $@ -c $<
-
-# %.o : %.c
-# 	$(CC) $(LDFLAGS) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
+%.o : %.c 
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	@rm -rf *.o
+	@rm -rf $(OBJ)
 
 fclean: clean
 	@rm -rf $(NAME)
 
-re: fclean all
+re: fclean $(NAME)
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/11 14:44:34 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 14:02:05 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	wait_for_children(pid_t id)
 	int		status;
 	pid_t	pid;
 
+	n = 0;
 	signal(SIGINT, SIG_IGN);
 	while (1)
 	{
@@ -79,7 +80,8 @@ void	wait_for_children(pid_t id)
 		else if (WIFSIGNALED(status))
 		{
 			n = 128 + WTERMSIG(status);
-			write(1, "\n", 1);
+			(status == 2) && write (STDOUT_FILENO, "\n", 1);
+			(status == 3) && write (STDOUT_FILENO, "QUIT: 3\n", 8);
 		}
 		if (id == pid)
 			get_errno(n);
