@@ -6,34 +6,11 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 21:27:42 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 23:00:36 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	init_data(t_data *data)
-{
-	t_list	*lst;
-
-	data->pipes = malloc(sizeof(t_list));
-	(data->pipes)->head = NULL;
-	(data->pipes)->last = NULL;
-	lst = malloc(sizeof(t_list));
-	lst->head = NULL;
-	lst->last = NULL;
-	lst->size = 0;
-	get_env(lst);
-	lst = malloc(sizeof(t_list));
-	lst->head = NULL;
-	lst->last = NULL;
-	lst->size = 0;
-	get_exp(lst);
-	data->envp = NULL;
-	data->history = NULL;
-	data->history_size = 0;
-	data->history_lines = 0;
-}
 
 void	open_files(t_pipe *pipe)
 {

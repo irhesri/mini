@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 21:36:56 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 23:01:33 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_data
 
 // INITIALISATION		---->		call it at the begining of the program
 void	init_env(t_data *data, char **envp);			
-void	init_data(t_data *data);
 short	init_files(t_data *data);
 short	parse_time(t_data *data, char *str, int i);
 // short	parse_time(t_data *data, char *str);
