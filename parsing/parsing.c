@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 22:46:26 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:58:02 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,4 @@ short	parse_time(t_data *data, char *str, int i)
 			pipe = norm(data, pipe, str + i);
 	}
 	return (!pipe);
-	return (0);
 }
