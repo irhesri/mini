@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 18:47:32 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/12 22:51:38 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	valide_name(char **name, char *str, int *i)
 		{
 			k = *i - 1;
 			var = split_expand(str, i);
-			if (*(var + 1))
+			if (!var || !*var || *(var + 1))
 			{
 				*name = free_join(*name, normal_chars(str, &k, 1), 0);
 				return (0);
@@ -76,7 +76,8 @@ void	error_msg(char *str, int i)
 	{
 		c[0] = str[i];
 		c[1] = '\0';
-		print_error("syntax error near unexpected token `", ft_strjoin(c, "'\n"));
+		print_error("syntax error near unexpected token `",
+			ft_strjoin(c, "'\n"));
 	}
 }
 
@@ -115,6 +116,13 @@ short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 	red->fd = 0;
 	red->mode = (((type == 8) * O_TRUNC) + ((type == 9) * O_APPEND));
 	red->name = NULL;
+	(*i) = ft_strtrim(str, (*i));
+	if (!str[*i])
+	{
+		print_error("syntax error near unexpected token `newline'\n", NULL);
+		get_errno(258);
+		return (258);
+	}
 	while (str[*i] && str[*i] == ' ')
 		(*i)++;
 	exit_val = get_name(red, str, i, type);

@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 14:02:26 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 23:01:33 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ typedef struct s_data
 
 // INITIALISATION		---->		call it at the begining of the program
 void	init_env(t_data *data, char **envp);			
-void	init_data(t_data *data);
 short	init_files(t_data *data);
-short	parse_time(t_data *data, char *str);
+short	parse_time(t_data *data, char *str, int i);
+// short	parse_time(t_data *data, char *str);
+short	init_here_doc(t_data *data);
 
 
 //	PARSE
@@ -103,6 +104,7 @@ char	*ft_strjoin(char *str1, char *str2);
 char	*ft_itoa(int n);
 
 // FUNCTIONS
+int		ft_strtrim(char *str, int i);
 int		my_dup2(int *newfd, int oldfd);
 char	**array_realloc(char **arr, char *str, short b);
 short	print_error(char *str1, char *str2);

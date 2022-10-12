@@ -6,11 +6,34 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 15:09:06 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 23:01:30 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	init_data(t_data *data)
+{
+	t_list	*lst;
+
+	data->pipes = malloc(sizeof(t_list));
+	(data->pipes)->head = NULL;
+	(data->pipes)->last = NULL;
+	lst = malloc(sizeof(t_list));
+	lst->head = NULL;
+	lst->last = NULL;
+	lst->size = 0;
+	get_env(lst);
+	lst = malloc(sizeof(t_list));
+	lst->head = NULL;
+	lst->last = NULL;
+	lst->size = 0;
+	get_exp(lst);
+	data->envp = NULL;
+	data->history = NULL;
+	data->history_size = 0;
+	data->history_lines = 0;
+}
 
 static void	update_last(t_pipe *p, int n)
 {
@@ -20,7 +43,7 @@ static void	update_last(t_pipe *p, int n)
 		get_last(NULL, 1);
 }
 
-void	null_exit(void)
+static void	null_exit(void)
 {
 	rl_replace_line("", 1);
 	rl_on_new_line();
@@ -29,24 +52,30 @@ void	null_exit(void)
 	reset_exit (get_errno(-1));
 }
 
-void	read_line(t_data *data)
+static void	read_line(t_data *data)
 {
+	int		n;
 	char	*str;
 
 	str = readline("minishell$ ");
 	if (!str)
 		null_exit();
-	if (*str)
+	n = ft_strtrim(str, 0);
+	if (str[n])
 	{
 		my_add_history(data, str);
-		if (!get_errno(parse_time (data, str)))
+		if (!parse_time (data, str, n))
 		{
+			get_errno(0);
 			update_last(data->pipes->head->content, data->nbr_pipes);
 			if (!init_files(data))
 				run_commands(data, data->pipes);
 		}
 		else
+		{
+			init_here_doc(data);
 			get_last(NULL, 1);
+		}
 		empty_pipes(data->pipes);
 	}
 	free (str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:48:49 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 17:48:10 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:37:55 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	cd(t_data *data, char **path)
 	}
 	if (chdir(temp) < 0 && get_errno(1))
 	{
-		print_error(ft_strjoin("cd: ", temp), ft_strjoin(": ", strerror(errno)));
+		print_error(ft_strjoin("cd: ", temp),
+			ft_strjoin(": ", strerror(errno)));
 		write(1, "\n", 1);
 	}
 	modif_env(data, oldpwd);
