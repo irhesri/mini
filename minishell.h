@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/11 15:58:26 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 14:02:26 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,6 @@ short	is_limiter(char *c);
 
 // TRASH CAN
 void	empty_pipes(t_list *pipes_lst);
-void	free_all(t_data *data);
-void	my_free(void **content);
-void	free_list(t_list *lst, short b);
 void	free_arr(char **arr);
 
 // GLOBALS

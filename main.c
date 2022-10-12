@@ -6,11 +6,11 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/11 18:40:38 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 12:18:53 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static void	update_last(t_pipe *p, int n)
 {
@@ -20,13 +20,22 @@ static void	update_last(t_pipe *p, int n)
 		get_last(NULL, 1);
 }
 
+void	null_exit(void)
+{
+	rl_replace_line("", 1);
+	rl_on_new_line();
+	rl_redisplay();
+	write(1, "exit\n", 5);
+	exit (get_errno(-1));
+}
+
 void	read_line(t_data *data)
 {
 	char	*str;
 
-	str = readline("minishell$  ");
+	str = readline("minishell$ ");
 	if (!str)
-		exit (get_errno(-1));
+		null_exit();
 	if (*str)
 	{
 		my_add_history(data, str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 18:36:25 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/11 18:47:32 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,20 @@ int	valide_name(char **name, char *str, int *i)
 	return (1);
 }
 
+void	error_msg(char *str, int i)
+{
+	char	c[2];
+
+	if (!str[i + 1])
+		print_error("syntax error near unexpected token `newline'\n", NULL);
+	else
+	{
+		c[0] = str[i];
+		c[1] = '\0';
+		print_error("syntax error near unexpected token `", ft_strjoin(c, "'\n"));
+	}
+}
+
 short	get_name(t_redirection *red, char *str, int *i, short type)
 {
 	int	k;
@@ -73,12 +87,7 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 	k = *i + 1;
 	if (str[*i] && (is_special_red(str[*i]) || str[*i] == '#'))
 	{
-		if (!str[*(i) + 1])
-			print_error("syntax error near unexpected token `newline'\n",
-				NULL);
-		else
-			printf("%s: syntax error near unexpected token `%c'\n",
-				get_bash_name(NULL), str[*i]);
+		error_msg(str, *i);
 		red->name = NULL;
 		return (get_errno(258));
 	}
@@ -109,8 +118,6 @@ short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 	while (str[*i] && str[*i] == ' ')
 		(*i)++;
 	exit_val = get_name(red, str, i, type);
-	if (red->fd == -4)
-		;
 	add_node(pipe->redirections, pipe->redirections->last, red);
 	return (exit_val);
 }

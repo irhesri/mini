@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 13:12:45 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 13:25:12 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*get_path(char *command)
 		if (path)
 			return (path);
 	}
-	print_error(command, ": No such file or directory\n");
+	print_error(command, ": command not found\n");
 	exit (127);
 	return (NULL);
 }
