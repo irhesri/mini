@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 13:25:12 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 15:34:07 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*check_in_env(char **env_paths, char *command)
 		{
 			free (command);
 			return (path);
-		}	
+		}
 		free (path);
 		paths++;
 	}
@@ -84,7 +84,7 @@ char	*get_path(char *command)
 		path = my_getenv("PATH");
 		env_paths = my_split(path, ':', 1);
 		free(path);
-		if (!env_paths && open_file(command, command) == 1)
+		if (!env_paths)
 			return (ft_strjoin("./", command));
 		path = check_in_env(env_paths, command);
 		free_arr(env_paths);
