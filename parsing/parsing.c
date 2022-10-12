@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 22:36:49 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:46:26 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ short	parse_time(t_data *data, char *str, int i)
 	if (!str[i])
 		return (1);
 	pipe = new_pipe(data, 1);
-	while (str[i])
+	while (str[i] && pipe)
 	{
 		i = ft_strtrim(str, i);
 		tmp = is_limiter(str + i);
