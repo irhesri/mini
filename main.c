@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 21:44:16 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:37:13 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,19 @@ void	null_exit(void)
 
 void	read_line(t_data *data)
 {
+	int		n;
 	char	*str;
 
 	str = readline("minishell$ ");
 	if (!str)
 		null_exit();
-	if (*str)
+	n = ft_strtrim(str, 0);
+	if (str[n])
 	{
 		my_add_history(data, str);
-		if (!get_errno(parse_time (data, str, ft_strtrim(str, 0))))
+		if (!parse_time (data, str, n))
 		{
+			get_errno(0);
 			update_last(data->pipes->head->content, data->nbr_pipes);
 			if (!init_files(data))
 				run_commands(data, data->pipes);

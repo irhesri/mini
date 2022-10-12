@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/12 21:24:16 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:42:34 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,11 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 	return (id);
 }
 
-void	wait_for_children(pid_t id)
+void	wait_for_children(pid_t id, pid_t pid)
 {
 	int		n;
 	int		sig;
 	int		status;
-	pid_t	pid;
 
 	n = 0;
 	sig = 0;
@@ -75,9 +74,9 @@ void	wait_for_children(pid_t id)
 	while (pid > 0)
 	{
 		pid = waitpid(-1, &status, 0);
-		if (pid > 0 && WIFEXITED(status))
+		if (pid >= 0 && WIFEXITED(status))
 			n = WEXITSTATUS(status);
-		else if (pid > 0 && WIFSIGNALED(status))
+		else if (pid >= 0 && WIFSIGNALED(status))
 		{
 			n = 128 + WTERMSIG(status);
 			sig && (status == 2) && (sig = 1);
@@ -113,7 +112,7 @@ void	one_command_line(t_data *data, t_pipe *content, int *fd)
 	else
 	{
 		pid = start_child(data, content, NULL);
-		wait_for_children(pid);
+		wait_for_children(pid, 1);
 	}
 }
 
@@ -143,5 +142,5 @@ void	run_commands(t_data *data, t_list *pipes)
 		head = head->next;
 	}
 	my_dup2(fd, STDIN_FILENO);
-	wait_for_children(pid);
+	wait_for_children(pid, 1);
 }

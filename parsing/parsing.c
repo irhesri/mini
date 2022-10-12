@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 21:43:26 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:36:49 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ char	*parse_time_2(char *str, char *res, int *i, int tmp)
 	return (res);
 }
 
-short	norm(t_data *data, t_pipe *pipe)
+t_pipe	*norm(t_data *data, t_pipe *pipe, char *str)
 {
-	if (pipe && !pipe->arg && !(pipe->redirections)->head)
+	if ((pipe && !pipe->arg && !(pipe->redirections)->head)
+		|| !str[ft_strtrim(str, 0)])
 	{
 		print_error("syntax error near unexpected token `|'\n", "");
-		get_errno(1);
+		get_errno(258);
 		return (NULL);
 	}
 	return (new_pipe(data, 0));
@@ -95,7 +96,7 @@ short	parse_time(t_data *data, char *str, int i)
 	if (!str[i])
 		return (1);
 	pipe = new_pipe(data, 1);
-	while (str[i] && pipe)
+	while (str[i])
 	{
 		i = ft_strtrim(str, i);
 		tmp = is_limiter(str + i);
@@ -108,7 +109,8 @@ short	parse_time(t_data *data, char *str, int i)
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
 			res = new_argument(pipe, NULL, res);
 		if (tmp == 4 && ++i)
-			pipe = norm(data, pipe);
+			pipe = norm(data, pipe, str + i);
 	}
-	return (get_errno(-1));
+	return (!pipe);
+	return (0);
 }
