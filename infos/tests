@@ -1,16 +1,69 @@
+*******SYNTAX ERROR
+minishell$ <
+minishell$ : syntax error near unexpected token `newline'
+minishell$ echo $?
+258
+minishell$ >>
+minishell$ : syntax error near unexpected token `newline'
+minishell$ echo $?
+258
+minishell$ <>
+minishell$ : syntax error near unexpected token `newline'
+minishell$ echo $?
+258
+minishell$ |
+minishell$ : syntax error near unexpected token `|'
+minishell$ echo $?
+258
+minishell$ ls |
+minishell$ : syntax error near unexpected token `|'
+minishell$ echo $?
+258
+minishell$ ls | > $null | pwd
+minishell$ : $null: ambiguous redirect
+/Users/irhesri/Desktop/mini
+minishell$ echo $?
+0
+minishell$ ls | > $null 
+minishell$ : $null: ambiguous redirect
+minishell$ echo $?
+1
 
-/*********************************************************************************************************/
->>
->
-<<
-<
-minishell$ export q='     '
-minishell$ > $q  				-->valid name protection
+
+/*****************COMMANDS ERRORS
+bash-3.2$ /parsing
+bash: /parsing: No such file or directory
+bash-3.2$ echo $?
+127
+bash-3.2$ ./parsing/
+bash: ./parsing/: is a directory
+bash-3.2$ ./parsing
+bash: ./parsing: is a directory
+bash-3.2$ parsing/
+bash: parsing/: is a directory
+bash-3.2$ echo $?
+126
+bash-3.2$ parsing
+bash: parsing: command not found
+bash-3.2$ echo $?
+127
+
+bash-3.2$ unset PATH
+bash-3.2$ ls
+bash: ls: No such file or directory
+bash-3.2$ echo $?
+127
+bash-3.2$ ./ls
+bash: ./ls: No such file or directory
+bash-3.2$ /bin/ls
+Makefile                general_functions       main.o                  parsing
+builtins                infos                   minishell               x
+execution               main.c                  minishell.h
+bash-3.2$ ./x
+bash: ./x: Permission denied
+bash-3.2$ x
+bash: x: Permission denied
+bash-3.2$ echo $?
+126
 
 
-
-
-
-
-"ls | "
-echo "
