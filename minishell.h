@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 23:01:33 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:02:28 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_pipe
 typedef struct s_data
 {
 	int		nbr_pipes;
+	char	**paths;
 	char	**envp;
 	char	**history;
 	short	here_doc_nbr;
@@ -92,6 +93,7 @@ t_pipe	*new_pipe(t_data *data, short b);
 // EXECUTION
 void	not_builtin(t_data *data, char **arg);
 void	run_commands(t_data *data, t_list *pipes);
+short	update_path(t_data *data, char *str);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
@@ -143,7 +145,7 @@ short	is_limiter(char *c);
 
 // TRASH CAN
 void	empty_pipes(t_list *pipes_lst);
-void	free_arr(char **arr);
+char	**free_arr(char **arr);
 
 // GLOBALS
 int		get_errno(int n);
@@ -156,7 +158,7 @@ t_list	*get_exp(t_list *exp);
 void    echo(char **towrite);
 void    pwd(void);
 void	cd(t_data *data, char **path);
-void   		 my_exit(char **status);
+void	my_exit(t_data *data, char **status);
 long long   ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 char    *is_double_quoted(char *str, int *pos);

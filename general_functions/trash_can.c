@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 12:26:50 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 18:21:06 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	empty_pipes(t_list *pipes_lst)
 	}
 }
 
-void	free_arr(char **arr)
+char	**free_arr(char **arr)
 {
 	char	**tmp;
 
@@ -64,4 +64,5 @@ void	free_arr(char **arr)
 	while (arr && *arr)
 		free (*arr++);
 	free (tmp);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:46:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 13:12:13 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 18:55:08 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static short	my_error(char **str, int n)
 	free (str);
 	write(1, "allocation error\n", 17);
 	exit (1);
-	return (0);
 }
 
 static void	add_back(t_struct **lst, int n)
@@ -66,6 +65,7 @@ static t_struct	*get_size(char *str, char c, short b)
 		}
 		if (b || i)
 		{
+			i = i * (i != 0) + (i + 1) * (i == 0);
 			add_back(&size, i);
 			size->data++;
 		}
@@ -92,6 +92,7 @@ static	char	**fill(t_struct *size, char *str, char c, short b)
 		j = 0;
 		while (*str != c && *str)
 			words[i][j++] = *str++;
+		(j == 0) && b && (words[i][j++] = '.');
 		words[i][j] = '\0';
 		if (*str)
 			str++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:13 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 17:39:08 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/15 19:10:27 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	export(t_data *data, char **arg)
 	int		i;
 	t_node	*node;
 
+	get_errno(0);
 	if ((!arg || !*arg) && export_print(get_exp(NULL)))
 		return ;
 	while (*arg)
@@ -118,6 +119,8 @@ void	export(t_data *data, char **arg)
 			new_var(*arg, i);
 		else if (i != -1)
 			update_var(data, node, *arg, i);
+		if (!ft_strncmp("PATH=", *arg, 5))
+			update_path(data, my_getenv("PATH"));
 		arg++;
 	}
 }

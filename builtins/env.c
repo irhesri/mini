@@ -6,30 +6,11 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 21:27:40 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 20:08:45 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// update **envp for excve if envp is null
-void	update_envp(t_data *data)
-{
-	int		i;
-	t_node	*head;
-
-	if (data->envp)
-		return ;
-	data->envp = malloc(sizeof(char **) * ((get_env(NULL))->size + 1));
-	head = (get_env(NULL))->head;
-	i = -1;
-	while (head)
-	{
-		data->envp[++i] = head->content;
-		head = head->next;
-	}
-	data->envp[++i] = NULL;
-}
 
 // initialise enviroment and export list
 void	init_env(t_data *data, char **envp)
@@ -56,6 +37,36 @@ void	init_env(t_data *data, char **envp)
 	add_node(get_env(NULL), (get_env(NULL))->last, str);
 	get_last(NULL, 1);
 	update_envp(data);
+}
+
+// update **envp for excve if envp is null
+void	update_envp(t_data *data)
+{
+	int		i;
+	t_node	*head;
+
+	if (data->envp)
+		return ;
+	data->envp = malloc(sizeof(char **) * ((get_env(NULL))->size + 1));
+	head = (get_env(NULL))->head;
+	i = -1;
+	while (head)
+	{
+		data->envp[++i] = head->content;
+		head = head->next;
+	}
+	data->envp[++i] = NULL;
+}
+
+short	update_path(t_data *data, char *str)
+{
+	free_arr(data->paths);
+	if (!str || !*str)
+		data->paths = NULL;
+	else
+		data->paths = my_split(str, ':', 1);
+	free(str);
+	return (1);
 }
 
 // print enviroment variables (env)

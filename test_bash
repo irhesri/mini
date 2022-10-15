@@ -1,0 +1,9 @@
+bash-3.2$ mkdir mini
+bash-3.2$ mini
+bash: mini: command not found
+bash-3.2$ mini/
+bash: mini/: is a directory
+bash-3.2$ unset PATH
+bash-3.2$ mini
+bash: mini: is a directory
+bash-3.2$ 
