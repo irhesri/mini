@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 17:34:04 by imane             #+#    #+#             */
-/*   Updated: 2022/10/08 16:46:19 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 12:13:25 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	history(t_data *data, char **arg)
 	char		*str;
 	long long	n;
 
+	get_errno(0);
 	if ((!arg || !*arg) && display_history(data))
 		return ;
 	n = my_atoi(*arg);

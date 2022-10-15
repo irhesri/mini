@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/12 22:42:34 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:36:33 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	commands_call(t_data *data, char **arg)
 	if (!arg || !*arg)
 		return ;
 	b = is_builtin(*arg);
-	if (b < 5 && arg)
+	if (b < 6 && arg)
 		ptr[b](data, arg + (b != 0));
 	else
 		ptr[b](arg + 1);

@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 23:01:30 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 20:09:20 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	init_data(t_data *data)
 	data->history = NULL;
 	data->history_size = 0;
 	data->history_lines = 0;
+	data->paths = NULL;
 }
 
 static void	update_last(t_pipe *p, int n)
@@ -66,14 +67,13 @@ static void	read_line(t_data *data)
 		my_add_history(data, str);
 		if (!parse_time (data, str, n))
 		{
-			get_errno(0);
 			update_last(data->pipes->head->content, data->nbr_pipes);
 			if (!init_files(data))
 				run_commands(data, data->pipes);
 		}
 		else
 		{
-			init_here_doc(data);
+			(get_errno(-1) != 222) && init_here_doc(data);
 			get_last(NULL, 1);
 		}
 		empty_pipes(data->pipes);
@@ -97,6 +97,7 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, handle_sigint);
 	init_data(data);
 	init_env(data, envp);
+	update_path(data, my_getenv("PATH"));
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	rl_clear_history();

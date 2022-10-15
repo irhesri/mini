@@ -6,113 +6,122 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/13 12:25:52 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:36:14 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-short	open_file(char *path, char *command)
+short	open_file(char *path)
 {
-	if (access(path, F_OK) != -1)
-	{
-		if (access(path, X_OK) != -1)
-		{
-			if (access(path, R_OK) != -1)
-				return (1);
-			if (my_search(command, '/') == -1)
-				command = ft_strjoin("./", command);
-			print_error(command, ": Permission denied\n");
-			free (command);
-			exit (126);
-		}
-		if (my_search(command, '/') == -1)
-			command = ft_strjoin("./", command);
-		print_error(command, ": Permission denied\n");
-		exit (126);
-	}
-	return (127);
+	if (access(path, F_OK) == -1)
+		return (127);
+	if (access(path, X_OK) == -1)
+		return (126);
+	if (access(path, R_OK) == -1)
+		return (125);
+	return (1);
 }
 
-char	*first_check(char *command)
+void	command_error(t_data *data, char *cmd, short b)
 {
+	char	*str;
+
+	if (b == 1)
+		return ;
+	if (!data->paths || b == 128)
+	{
+		if (b == 127 || b == 128)
+			print_error(cmd, ": No such file or directory\n");
+		else
+			print_error(cmd, ": Permission denied\n");
+		exit (b + (b == 125) - (b == 128));
+	}
+	(b == 127) && print_error(cmd, ": command not found\n");
+	if (b == 126)
+	{
+		str = cmd;
+		if (my_search(cmd, '/') == -1)
+			str = ft_strjoin("./", cmd);
+		print_error(str, ": Permission denied\n");
+		free (str);
+	}
+	exit (b + (b == 125));
+}
+
+// check if a path or a directory
+char	*its_directory_or_path(t_data *data, char *command)
+{
+	short		b;
 	struct stat	file_mode;
 
-	if (my_search(command, '/') == -1)
-		return (NULL);
+	b = my_search(command, '/');
 	stat(command, &file_mode);
 	if (S_ISDIR(file_mode.st_mode))
 	{
+		if (data->paths && b == -1)
+		{
+			print_error(command, ": command not found\n");
+			exit (127);
+		}
 		print_error(command, ": is a directory\n");
 		exit (126);
 	}
-	if (open_file(command, command) == 1)
-		return (my_strdup(command, '\0'));
+	if (b != -1)
+	{
+		b = open_file(command);
+		(b == 127) && (b = 128);
+		command_error(data, command, b);
+		return (command);
+	}
 	return (NULL);
 }
 
-char	*check_in_env(char **env_paths, char *command)
+char	*get_path(t_data *data, char **paths, char *cmd)
 {
+	int		i;
 	char	*path;
-	char	**paths;
+	char	*command;
+	short	b[2];
 
-	paths = env_paths;
-	command = ft_strjoin("/", command);
-	while (paths && *paths)
+	b[0] = 0;
+	b[1] = 0;
+	i = -1;
+	command = ft_strjoin("/", cmd);
+	while (paths && paths[++i] && b[0] != 125)
 	{
-		if (**paths)
-			path = ft_strjoin(*paths, command);
-		else
-			path = ft_strjoin(".", command);
-		if (open_file(path, command + 1) == 1)
-		{
-			free (command);
-			return (path);
-		}
+		path = ft_strjoin(paths[i], command);
+		b[0] = open_file(path);
+		if (b[0] == 1)
+			break ;
+		b[1] = (b[1] || b[0] == 126 || b[0] == 125);
 		free (path);
-		paths++;
+		path = NULL;
 	}
 	free (command);
-	return (NULL);
-}
-
-char	*get_path(char *command)
-{
-	char		*path;
-	char		**env_paths;
-
-	if (my_search(command, '/') == -1 && *command)
-	{
-		path = my_getenv("PATH");
-		env_paths = my_split(path, ':', 1);
-		free(path);
-		if (!env_paths && open_file(command, command) == 1)
-			return (ft_strjoin("./", command));
-		else if (env_paths)
-		{
-			path = check_in_env(env_paths, command);
-			free_arr(env_paths);
-			if (path)
-				return (path);
-		}
-	}
-	if (my_search(command, '/') != -1 || !env_paths)
-		print_error(command, ": No such file or directory\n");
-	else
-		print_error(command, ": command not found\n");
-	exit (127);
-	return (NULL);
+	if (!data->paths)
+		paths = free_arr(paths);
+	if (b[0] != 1)
+		command_error(data, cmd, 127 - b[1]);
+	return (path);
 }
 
 void	not_builtin(t_data *data, char **arg)
 {
 	char	*path;
+	char	**paths;
 
+	get_errno(0);
 	if (arg && *arg)
 	{
-		path = first_check(*arg);
+		path = its_directory_or_path(data, *arg);
 		if (!path)
-			path = get_path(*arg);
+		{
+			paths = data->paths;
+			if (!paths)
+				paths = array_realloc(NULL, my_strdup(".", '\0'), 0);
+			path = get_path(data, paths, *arg);
+		}
 		update_envp(data);
 		execve(path, arg, data->envp);
 		free(path);

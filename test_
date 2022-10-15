@@ -1,0 +1,18 @@
+leaks : pwd
+leaks : cd
+---------------------------------------------------------------
+bash-3.2$ export HOME=""
+bash-3.2$ cd
+bash-3.2$ pwd
+/Users/irhesri/Desktop/mini
+---------------------------------------------------------------
+exit nb should be initialised by the errno value
+---------------------------------------------------------------
+> redirections error when they are the only thing in the line
+---------------------------------------------------------------
+
+
+
+
+changed:
+added unclosed quotes case
