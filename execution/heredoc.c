@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/12 20:45:10 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 13:40:22 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ short	heredoc(int fd, t_redirection *red)
 	char	*line;
 	int		len;
 
-	get_errno(0);
 	if (!fork())
 	{
 		signal(SIGINT, SIG_DFL);
