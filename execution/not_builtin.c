@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/15 19:36:14 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 17:04:09 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 short	open_file(char *path)
 {
+
 	if (access(path, F_OK) == -1)
+		return (127);
+	if (is_directory(path))
 		return (127);
 	if (access(path, X_OK) == -1)
 		return (126);
@@ -52,12 +55,10 @@ void	command_error(t_data *data, char *cmd, short b)
 // check if a path or a directory
 char	*its_directory_or_path(t_data *data, char *command)
 {
-	short		b;
-	struct stat	file_mode;
+	short	b;
 
 	b = my_search(command, '/');
-	stat(command, &file_mode);
-	if (S_ISDIR(file_mode.st_mode))
+	if (is_directory(command))
 	{
 		if (data->paths && b == -1)
 		{

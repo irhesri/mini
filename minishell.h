@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/16 15:50:33 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 17:03:03 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,13 @@ typedef struct s_data
 void	init_env(t_data *data, char **envp);			
 short	init_files(t_data *data);
 short	parse_time(t_data *data, char *str, int i);
-// short	parse_time(t_data *data, char *str);
 short	init_here_doc(t_data *data);
 
 
 //	PARSE
 char	*var_expand(char *str, int *size);
 char	*my_getenv(char *str);
-char	**split_expand(char *str, int *len);
+char	**split_expand(char *str, char *res, int *len);
 char	*is_quoted(char *str, int *len, char c);
 char	*new_argument(t_pipe *pipe, char **res2, char *res);
 t_pipe	*new_pipe(t_data *data, short b);
@@ -142,6 +141,7 @@ short	is_digit(char c);
 short	is_alphanum(char c);
 short	is_builtin(char *arg);
 short	is_limiter(char *c);
+short	is_directory(char *path);
 
 // TRASH CAN
 void	empty_pipes(t_list *pipes_lst);

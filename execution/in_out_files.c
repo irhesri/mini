@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisation.c                                   :+:      :+:    :+:   */
+/*   in_out_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/12 23:00:36 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 17:17:37 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	file_error(char *file, int fd)
+{
+	if (fd == -4)
+		print_error(file, ": ambiguous redirect\n");
+	else if (is_directory(file))
+		print_error(file, ": Is a directory\n");
+	else
+		print_error(file, ": No such file or directory\n");
+}
 
 void	open_files(t_pipe *pipe)
 {
@@ -31,10 +41,7 @@ void	open_files(t_pipe *pipe)
 		pipe->fd[(red->mode != 0)] = fd;
 		if (fd < 0)
 		{
-			if (fd == -4)
-				print_error(red->name, ": ambiguous redirect\n");
-			else
-				print_error(red->name, ": No such file or directory\n");
+			file_error(red->name, fd);
 			return ;
 		}
 		lst = lst->next;

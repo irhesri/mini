@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/16 11:17:27 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/16 16:20:17 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	valide_name(char **name, char *str, int *i)
 		else if (str[*i] == '$' && ++(*i))
 		{
 			k = *i - 1;
-			var = split_expand(str, i);
+			var = split_expand(str, NULL, i);
 			if (!var || !*var || *(var + 1))
 			{
 				*name = free_join(*name, normal_chars(str, &k, 1), 0);

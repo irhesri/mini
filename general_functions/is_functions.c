@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:39:35 by imane             #+#    #+#             */
-/*   Updated: 2022/10/10 16:00:55 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:02:04 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,14 @@ short	is_limiter(char *c)
 	if (b > 4)
 		return (b + (*(c + 1) == *c));
 	return (b);
+}
+
+short	is_directory(char *path)
+{
+	struct stat	file_mode;
+
+	stat(path, &file_mode);
+	if (S_ISDIR(file_mode.st_mode))
+		return (1);
+	return (0);
 }
