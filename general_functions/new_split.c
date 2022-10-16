@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:46:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/15 18:55:08 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 15:53:06 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static short	my_error(char **str, int n)
 	while (i < n)
 		free (str[i++]);
 	free (str);
-	write(1, "allocation error\n", 17);
+	write(STDERR_FILENO, "allocation error\n", 17);
 	exit (1);
 }
 

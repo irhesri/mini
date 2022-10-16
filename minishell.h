@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/15 19:02:28 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 15:50:33 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int		ft_strtrim(char *str, int i);
 int		my_dup2(int *newfd, int oldfd);
 char	**array_realloc(char **arr, char *str, short b);
 short	print_error(char *str1, char *str2);
-short	ft_putstr(char *str);
+short	ft_putstr(char *str, int fd);
 void	reset_exit(int n);
 
 //	BUILTINS

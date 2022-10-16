@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:48:49 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/16 13:08:48 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/16 15:52:05 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	modif_env(t_data *data, char *oldpwd)
 	{
 		update[i] = malloc(sizeof(char) * MAXPATHLEN);
 		if (!update[i])
-			exit (write(STDOUT_FILENO, "allocation error\n", 17));
+			exit (write(STDERR_FILENO, "allocation error\n", 17));
 		getcwd(update[i], MAXPATHLEN);
 		update[i] = free_join("PWD=", update[i], 2);
 		i++;
@@ -48,7 +48,7 @@ void	error_case(char *temp)
 	print_error(tmp[0], tmp[1]);
 	free (tmp[0]);
 	free (tmp[1]);
-	write(1, "\n", 1);
+	write(STDERR_FILENO, "\n", 1);
 }
 
 void	cd(t_data *data, char **path)

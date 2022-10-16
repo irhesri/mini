@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/15 20:08:45 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 15:50:42 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	env(void)
 	while (tmp)
 	{
 		str = ft_strjoin(tmp->content, "\n");
-		ft_putstr(str);
+		ft_putstr(str, STDOUT_FILENO);
 		free (str);
 		tmp = tmp->next;
 	}

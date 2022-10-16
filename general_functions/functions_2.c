@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/10/12 15:36:48 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 15:50:51 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ short	print_error(char *str1, char *str2)
 	str = ft_strjoin(get_bash_name(NULL), ": ");
 	str1 = ft_strjoin(str1, str2);
 	str = free_join(str, str1, 0);
-	ft_putstr(str);
+	ft_putstr(str, STDERR_FILENO);
 	free (str);
 	return (1);
 }
