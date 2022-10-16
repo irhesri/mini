@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/15 19:36:33 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 20:48:34 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	wait_for_children(pid_t id, pid_t pid)
 		else if (pid >= 0 && WIFSIGNALED(status))
 		{
 			n = 128 + WTERMSIG(status);
-			sig && (status == 2) && (sig = 1);
 			!sig && ((status == 2) || (status == 3)) && (sig = status);
 		}
 		(id == pid) && get_errno(n);
