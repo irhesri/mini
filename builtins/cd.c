@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:48:49 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/15 19:37:17 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 13:08:48 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	modif_env(t_data *data, char *oldpwd)
 {	
-	char	*update[3];
+	char	*update[4];
 	int		i;
 
 	i = 0;
@@ -30,8 +30,10 @@ void	modif_env(t_data *data, char *oldpwd)
 		i++;
 	}
 	update[i] = NULL;
+	update[++i] = my_strdup(get_last(NULL, 0), '\0');
 	if (update[0])
 		export(data, update);
+	get_last(update[i], 1);
 	i = 0;
 	while (update[i])
 		free (update[i++]);
@@ -59,9 +61,9 @@ void	cd(t_data *data, char **path)
 	if (!temp)
 	{
 		temp = my_getenv("HOME");
-		if ((!temp || !(*temp)) && get_errno(1))
+		if ((!temp || !(*temp)))
 		{
-			(!temp) && print_error("cd: HOME not set\n", NULL);
+			(!temp) && print_error("cd: HOME not set\n", NULL) && get_errno(1);
 			free (temp);
 			return ;
 		}
@@ -69,7 +71,8 @@ void	cd(t_data *data, char **path)
 	oldpwd = my_getenv("PWD");
 	if (chdir(temp) < 0 && get_errno(1))
 		error_case(temp);
-	modif_env(data, oldpwd);
+	else
+		modif_env(data, oldpwd);
 	if (!(*path))
 		free (temp);
 	free (oldpwd);
