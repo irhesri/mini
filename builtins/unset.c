@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:55 by irhesri           #+#    #+#             */
-/*   Updated: 2022/09/23 22:39:59 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/15 19:10:16 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	unset(t_data *data, char **arg)
 	char	*tmp;
 	t_node	*node;
 
+	get_errno(0);
 	while (arg && *arg)
 	{
 		if ((env_regex(*arg, 0) || (**arg == '_' && !((*arg)[1]))) && arg++)
@@ -94,6 +95,7 @@ void	unset(t_data *data, char **arg)
 				data->envp = NULL;
 			}
 			free (tmp);
+			(!ft_strncmp("PATH", *arg, 5)) && update_path(data, NULL);
 		}
 		arg++;
 	}

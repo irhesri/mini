@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/11 14:44:34 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:36:33 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	commands_call(t_data *data, char **arg)
 	if (!arg || !*arg)
 		return ;
 	b = is_builtin(*arg);
-	if (b < 5 && arg)
+	if (b < 6 && arg)
 		ptr[b](data, arg + (b != 0));
 	else
 		ptr[b](arg + 1);
@@ -62,28 +62,30 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 	return (id);
 }
 
-void	wait_for_children(pid_t id)
+void	wait_for_children(pid_t id, pid_t pid)
 {
 	int		n;
+	int		sig;
 	int		status;
-	pid_t	pid;
 
+	n = 0;
+	sig = 0;
 	signal(SIGINT, SIG_IGN);
-	while (1)
+	while (pid > 0)
 	{
 		pid = waitpid(-1, &status, 0);
-		if (pid < 0)
-			break ;
-		if (WIFEXITED(status))
+		if (pid >= 0 && WIFEXITED(status))
 			n = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
+		else if (pid >= 0 && WIFSIGNALED(status))
 		{
 			n = 128 + WTERMSIG(status);
-			write(1, "\n", 1);
+			sig && (status == 2) && (sig = 1);
+			!sig && ((status == 2) || (status == 3)) && (sig = status);
 		}
-		if (id == pid)
-			get_errno(n);
+		(id == pid) && get_errno(n);
 	}
+	(sig == 2) && write (STDOUT_FILENO, "\n", 1);
+	(sig == 3) && write (STDOUT_FILENO, "QUIT: 3\n", 8);
 	set_termios_echoctl();
 	signal(SIGINT, handle_sigint);
 }
@@ -110,7 +112,7 @@ void	one_command_line(t_data *data, t_pipe *content, int *fd)
 	else
 	{
 		pid = start_child(data, content, NULL);
-		wait_for_children(pid);
+		wait_for_children(pid, 1);
 	}
 }
 
@@ -140,5 +142,5 @@ void	run_commands(t_data *data, t_list *pipes)
 		head = head->next;
 	}
 	my_dup2(fd, STDIN_FILENO);
-	wait_for_children(pid);
+	wait_for_children(pid, 1);
 }

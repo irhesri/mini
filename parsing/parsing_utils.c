@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:38:24 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/08 11:24:23 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:36:50 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,25 @@ char	*is_quoted(char *str, int *len, char c)
 
 	res = my_strdup(&str[*len], c);
 	(*len) += my_size(NULL, res);
-	if (str[*len])
-		(*len)++;
+	if (str[*len] != c)
+	{
+		free (res);
+		print_error("unclosed quotes\n", NULL);
+		return (NULL);
+	}
+	(*len)++;
 	return (res);
+}
+
+char	*error_un(char *str, char *quote_val, int *pos)
+{
+	if (str[(*pos)++] != 34)
+	{
+		free (quote_val);
+		print_error("unclosed quotes\n", NULL);
+		return (NULL);
+	}
+	return (quote_val);
 }
 
 char	*is_double_quoted(char *str, int *pos)
@@ -30,7 +46,7 @@ char	*is_double_quoted(char *str, int *pos)
 	int		i;
 
 	quote_val = NULL;
-	if ((!str[*pos] || str[*pos] == 34) && ++(*pos))
+	if ((str[*pos] == 34 && ++(*pos)))
 		return (my_strdup("", '\0'));
 	while (str[*pos] && str[*pos] != 34)
 	{
@@ -46,6 +62,5 @@ char	*is_double_quoted(char *str, int *pos)
 		else
 			quote_val = free_join(quote_val, my_strdup(&str[i], str[*pos]), 0);
 	}
-	(str[*pos] == 34) && (*pos)++;
-	return (quote_val);
+	return (error_un(str, quote_val, pos));
 }

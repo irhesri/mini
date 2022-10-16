@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/11 15:58:26 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:02:28 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_pipe
 typedef struct s_data
 {
 	int		nbr_pipes;
+	char	**paths;
 	char	**envp;
 	char	**history;
 	short	here_doc_nbr;
@@ -75,9 +76,10 @@ typedef struct s_data
 
 // INITIALISATION		---->		call it at the begining of the program
 void	init_env(t_data *data, char **envp);			
-void	init_data(t_data *data);
 short	init_files(t_data *data);
-short	parse_time(t_data *data, char *str);
+short	parse_time(t_data *data, char *str, int i);
+// short	parse_time(t_data *data, char *str);
+short	init_here_doc(t_data *data);
 
 
 //	PARSE
@@ -91,6 +93,7 @@ t_pipe	*new_pipe(t_data *data, short b);
 // EXECUTION
 void	not_builtin(t_data *data, char **arg);
 void	run_commands(t_data *data, t_list *pipes);
+short	update_path(t_data *data, char *str);
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
@@ -103,6 +106,7 @@ char	*ft_strjoin(char *str1, char *str2);
 char	*ft_itoa(int n);
 
 // FUNCTIONS
+int		ft_strtrim(char *str, int i);
 int		my_dup2(int *newfd, int oldfd);
 char	**array_realloc(char **arr, char *str, short b);
 short	print_error(char *str1, char *str2);
@@ -141,10 +145,7 @@ short	is_limiter(char *c);
 
 // TRASH CAN
 void	empty_pipes(t_list *pipes_lst);
-void	free_all(t_data *data);
-void	my_free(void **content);
-void	free_list(t_list *lst, short b);
-void	free_arr(char **arr);
+char	**free_arr(char **arr);
 
 // GLOBALS
 int		get_errno(int n);
@@ -157,7 +158,7 @@ t_list	*get_exp(t_list *exp);
 void    echo(char **towrite);
 void    pwd(void);
 void	cd(t_data *data, char **path);
-void   		 my_exit(char **status);
+void	my_exit(t_data *data, char **status);
 long long   ft_atoi(char *str);
 char    **arr_join(char **arr1, char **arr2);
 char    *is_double_quoted(char *str, int *pos);

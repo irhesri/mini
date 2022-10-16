@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:49:41 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 18:02:02 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/15 12:11:09 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h" 
 
-void	my_exit(char **status)
+void	my_exit(t_data *data, char **status)
 {
 	long long	nb;
 
-	write(1, "exit\n", 5);
+	if (data->nbr_pipes == 0)
+		write(1, "exit\n", 5);
 	if (status[0] && status[1] && get_errno(1))
 	{
 		print_error("exit: too many arguments\n", NULL);
 		return ;
 	}
+	nb = get_errno(-1);
 	if (status[0])
 		nb = ft_atoi(status[0]);
-	reset_exit(get_errno(-1));
+	reset_exit(get_errno(nb));
 }
