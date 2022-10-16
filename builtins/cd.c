@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:48:49 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/16 13:10:57 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 15:04:06 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	modif_env(t_data *data, char *oldpwd)
 		update[i] = free_join("PWD=", update[i], 2);
 		i++;
 	}
-	update[i++] = NULL;
-	update[i] = my_strdup(get_last(NULL, 0), '\0');
+	update[i] = NULL;
+	update[++i] = my_strdup(get_last(NULL, 0), '\0');
 	if (update[0])
 		export(data, update);
 	get_last(update[i], 1);

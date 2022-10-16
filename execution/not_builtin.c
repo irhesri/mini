@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/16 14:10:11 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 15:27:01 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 short	open_file(char *path)
 {
+	struct stat	file_mode;
+	
 	if (access(path, F_OK) == -1)
+		return (127);
+	stat(path, &file_mode);
+	if (S_ISDIR(file_mode.st_mode))
 		return (127);
 	if (access(path, X_OK) == -1)
 		return (126);
@@ -106,25 +111,32 @@ char	*get_path(t_data *data, char **paths, char *cmd)
 	return (path);
 }
 
-void	not_builtin(t_data *data, char **arg)
+short	check_for_path(t_data *data, char **arg)
 {
+	char	*tmp;
 	char	*path;
 	char	**paths;
 
+	path = its_directory_or_path(data, *arg);
+	if (!path)
+	{
+		paths = data->paths;
+		if (!paths)
+			paths = array_realloc(NULL, my_strdup(".", '\0'), 0);
+		path = get_path(data, paths, *arg);
+		tmp = *arg;
+		(*arg) = path;
+		free (tmp);
+	}
+	return (1);
+}
+void	not_builtin(t_data *data, char **arg)
+{
 	get_errno(0);
 	if (arg && *arg)
 	{
-		path = its_directory_or_path(data, *arg);
-		if (!path)
-		{
-			paths = data->paths;
-			if (!paths)
-				paths = array_realloc(NULL, my_strdup(".", '\0'), 0);
-			path = get_path(data, paths, *arg);
-		}
 		update_envp(data);
-		execve(path, arg, data->envp);
-		free(path);
+		execve(*arg, arg, data->envp);
 		perror(get_bash_name(NULL));
 		exit (errno);
 	}

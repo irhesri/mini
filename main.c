@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/16 13:33:30 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 15:09:06 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	read_line(t_data *data)
 		empty_pipes(data->pipes);
 	}
 	free (str);
-	system("leaks minishell");
 }
 
 // initialise bash name

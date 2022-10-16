@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:54:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/15 19:37:42 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/16 12:12:23 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	pwd(void)
 		return ;
 	}
 	write(1, path, my_size(NULL, path));
-	write(1, "\n", 2);
+	write(1, "\n", 1);
 	free(path);
 }

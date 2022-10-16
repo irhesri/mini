@@ -1,7 +1,7 @@
 NAME	= minishell
 
 CC 			= gcc 
-CFLAGS		= -Wall -Wextra -Werror -g 
+CFLAGS		= -Wall -Wextra -Werror -g
 LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
 CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
 
