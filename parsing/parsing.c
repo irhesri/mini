@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 13:30:39 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:09:07 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 			res = *(++res2);
 		}
 		free(tmp);
-		return (res);
 	}
 	else if (res)
 	{
 		pipe->arg = array_realloc(pipe->arg, res, -1);
 		pipe->n++;
+		return (NULL);
 	}
-	return (NULL);
+	return (res);
 }
 
 short	parse_time_2(char *str, char **res, int *i, int tmp)

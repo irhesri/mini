@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:38:24 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/15 19:36:50 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:08:15 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*is_double_quoted(char *str, int *pos)
 			var = var_expand(str, pos);
 			quote_val = free_join(quote_val, my_strdup(&str[i], '$'), 0);
 			quote_val = free_join(quote_val, var, 1);
+			free (var);
 		}
 		else
 			quote_val = free_join(quote_val, my_strdup(&str[i], str[*pos]), 0);

@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/17 13:31:43 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:10:18 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ pid_t	start_child(t_data *data, t_pipe *content, int *p)
 		signal(SIGQUIT, SIG_DFL);
 		if (content->fd[0] < 0 || content->fd[1] < 0)
 			exit(1);
-		(is_builtin(*content->arg) == 0) && check_for_path(data, content->arg);
 		(p && p[0] > 0) && close (p[0]);
 		if (content->fd[0] != 0)
 			my_dup2(content->fd, STDIN_FILENO);

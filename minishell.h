@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 13:30:30 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:09:45 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,6 @@ typedef struct s_data
 void	init_env(t_data *data, char **envp);			
 short	init_files(t_data *data);
 short	parse_time(t_data *data, char *str, int i);
-<<<<<<< HEAD
-=======
-// short	parse_time(t_data *data, char *str);
->>>>>>> fddd3c40ca90cac9a25064c18ba4e4b61ea520b4
 short	init_here_doc(t_data *data);
 
 
@@ -97,10 +93,6 @@ t_pipe	*new_pipe(t_data *data, short b);
 void	not_builtin(t_data *data, char **arg);
 void	run_commands(t_data *data, t_list *pipes);
 short	update_path(t_data *data, char *str);
-<<<<<<< HEAD
-=======
-short	check_for_path(t_data *data, char **arg);
->>>>>>> fddd3c40ca90cac9a25064c18ba4e4b61ea520b4
 
 //	LIST_FUNCTIONS
 void	add_node(t_list *lst, t_node *pos, void *content);
