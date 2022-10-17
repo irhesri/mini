@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:39:35 by imane             #+#    #+#             */
-/*   Updated: 2022/10/17 15:40:25 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 19:32:21 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ short	is_limiter(char *c)
 {
 	int			i;
 	short		b;
-	static char	s[10] = "\'\"$| <<>";
+	static char	s[] = "\'\"$| <<>";
 
 	if (*c == '\0')
 		return (-1);

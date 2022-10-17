@@ -1,9 +1,9 @@
 NAME	= minishell
 
 CC 			= gcc 
-CFLAGS		= -Wall -Wextra -Werror -g
-LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
-CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
+CFLAGS		= -g -fsanitize=address# -Wall -Wextra -Werror
+# LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
+# CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
 
 SRC1	= execution.c heredoc.c not_builtin.c termios_signals.c in_out_files.c
 SRC2	= expand.c parsing.c \
@@ -24,7 +24,7 @@ OBJ		= $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -lreadline $(LDFLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(OBJ) -lreadline -o $(NAME)
 
 %.o : %.c 
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
