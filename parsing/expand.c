@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/16 16:55:25 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:07:25 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**split_expand(char *str, char *tmp, int *len)
 	short	b[2];
 
 	res = var_expand(str, len);
-	b[0] = (res[0] == ' ');
+	b[0] = (res && res[0] == ' ');
 	b[1] = (!is_limiter(str + *len));
 	str = res;
 	while (str && *str)
