@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 18:33:37 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/17 16:18:53 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ char	**split_expand(char *str, char *tmp, int *len)
 
 	res = var_expand(str, len);
 	b[0] = (res && res[0] == ' ');
-	b[1] = (!is_limiter(str + *len));
+	b[1] = 0;
+	if (str[*len] && is_limiter(str + *len) > 2 && res && res[my_size(NULL, res) - 1] == ' ')
+		b[1] = 1;
 	str = res;
 	while (str && *str)
 	{
@@ -88,10 +90,10 @@ char	**split_expand(char *str, char *tmp, int *len)
 		str++;
 	}
 	ress = my_split(res, ' ', 0);
-	free (res);
-	if (b[0] && tmp && ress && *ress)
+	if (b[0] && tmp)
 		ress = array_realloc(ress, my_strdup("", '\0'), 0);
-	if (b[1] && ress && *ress)
+	if (b[1])
 		ress = array_realloc(ress, my_strdup("", '\0'), -1);
+	free (res);
 	return (ress);
 }

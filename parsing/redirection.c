@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/17 19:18:38 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/17 15:25:56 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	valide_name(char **name, char *str, int *i)
 			if (!var || !*var || *(var + 1))
 			{
 				*name = free_join(*name, normal_chars(str, &k, 1), 0);
+				free_arr(var);
 				return (0);
 			}
 			*name = free_join(*name, *var, 1);
@@ -111,7 +112,7 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 			red->fd = -4;
 			return (1);
 		}
-		free(tmp);
+		free (tmp);
 	}
 	if ((type != 7) && !(valide_name(&(red->name), str, i)))
 		red->fd = -4;
