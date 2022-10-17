@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/10/16 15:50:51 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 19:20:13 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ char	*free_join(char *str1, char *str2, short b)
 {
 	char	*str;
 
-	if (!str2)
-		return (str1);
-	if (!str1)
-		return (str2);
 	str = ft_strjoin(str1, str2);
 	if (!b || b == 1)
 		free (str1);
