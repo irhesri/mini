@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:16 by imane             #+#    #+#             */
-/*   Updated: 2022/10/17 15:10:18 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:39:17 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	commands_call(t_data *data, char **arg)
 	else
 		ptr[b](arg + 1);
 }
-
 
 pid_t	start_child(t_data *data, t_pipe *content, int *p)
 {

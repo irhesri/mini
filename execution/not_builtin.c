@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 13:33:15 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:39:30 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 short	open_file(char *path)
 {
-
 	if (access(path, F_OK) == -1)
 		return (127);
 	if (is_directory(path))
