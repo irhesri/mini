@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/16 16:20:17 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/17 19:18:38 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	valide_name(char **name, char *str, int *i)
 				return (0);
 			}
 			*name = free_join(*name, *var, 1);
+			free_arr(var);
 		}
 		else
 			*name = free_join(*name, normal_chars(str, i, 0), 0);
@@ -89,7 +90,8 @@ void	error_msg(char *str, int i)
 
 short	get_name(t_redirection *red, char *str, int *i, short type)
 {
-	int	k;
+	int		k;
+	char	*tmp;
 
 	k = *i + 1;
 	if (str[*i] && (is_special_red(str[*i]) || str[*i] == '#'))
@@ -100,11 +102,16 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 	}
 	if (type == 7 && here_doc_case(str, red, i) == 222)
 		return (get_errno(222));
-	if (str[*i] == '$' && !var_expand(str, &k))
+	if (str[*i] == '$')
 	{
-		red->name = free_join(red->name, normal_chars(str, i, 1), 0);
-		red->fd = -4;
-		return (1);
+		tmp = var_expand(str, &k);
+		if (!tmp)
+		{
+			red->name = free_join(red->name, normal_chars(str, i, 1), 0);
+			red->fd = -4;
+			return (1);
+		}
+		free(tmp);
 	}
 	if ((type != 7) && !(valide_name(&(red->name), str, i)))
 		red->fd = -4;
