@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/18 12:59:06 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:22:00 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char		*var_expand(char *str, int *size);
 char		*my_getenv(char *str);
 char		**split_expand(char *str, char *res, int *len);
 char		*is_quoted(char *str, int *len, char c);
-char		*new_argument(t_pipe *pipe, char **res2, char *res);
+// char		*new_argument(t_pipe *pipe, char **res2, char *res);
 char		*is_double_quoted(char *str, int *pos);
 short		is_redirection(t_pipe *pipe, char *str, int *i, short type);
 char		*normal_chars(char *str, int *i, short b);
