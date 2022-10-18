@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 15:09:24 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:52:21 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;
 
-	get_bash_name("minishell$ ");
+	get_bash_name("minishell");
 	if (ac > 1 || av[1])
 		exit(print_error("Too many arguments\n", NULL));
 	data = malloc(sizeof(t_data));
