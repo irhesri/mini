@@ -1,7 +1,7 @@
 NAME	= minishell
 
 CC 			= gcc 
-CFLAGS		= -Wall -Wextra -Werror -g# -fsanitize=address
+CFLAGS		= -g -fsanitize=address #-Wall -Wextra -Werror 
 LDFLAGS		= -L ~/.brew/opt/readline/lib
 CPPFLAGS	= -I ~/.brew/opt/readline/include
 

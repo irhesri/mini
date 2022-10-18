@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/18 19:00:11 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:21:04 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ t_pipe	*new_pipe(t_data *data, short b)
 	return (pipe);
 }
 
-char	*new_argument(t_pipe *pipe, char **res2, char *res)
+char	*new_argument(t_pipe *pipe, char **res2, char *res, short b)
 {
 	char	**tmp;
 
-	if (res2)
+	if (b && res2)
 	{
 		tmp = res2;
 		res = free_join(res, *res2, 0);
@@ -48,7 +48,7 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res)
 		}
 		free(tmp);
 	}
-	else if (res)
+	else if (!b && res)
 	{
 		pipe->arg = array_realloc(pipe->arg, res, -1);
 		pipe->n++;
@@ -119,11 +119,11 @@ short	parse_time(t_data *data, char *str, int i)
 		if (str[i] && (tmp < 3) && (parse_time_2(str, &res, &i, tmp) == 222))
 			return (222);
 		else if (tmp == 3 && ++i)
-			res = new_argument(pipe, split_expand(str, res, &i), res);
+			res = new_argument(pipe, split_expand(str, res, &i), res, 1);
 		else if (tmp > 5 && ++i && (is_redirection(pipe, str, &i, tmp) == 258))
 			return (258);
 		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
-			res = new_argument(pipe, NULL, res);
+			res = new_argument(pipe, NULL, res, 0);
 		if (tmp == 4 && ++i)
 			pipe = norm(data, pipe, str + i);
 	}
