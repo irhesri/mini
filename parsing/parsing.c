@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 15:09:07 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:51:18 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ short	parse_time(t_data *data, char *str, int i)
 		i = ft_strtrim(str, i);
 		tmp = is_limiter(str + i);
 		if (str[i] && (tmp < 3) && (parse_time_2(str, &res, &i, tmp) == 222))
+		{
+			free(res);
 			return (222);
+		}
 		else if (tmp == 3 && ++i)
 			res = new_argument(pipe, split_expand(str, res, &i), res);
 		else if (tmp > 5 && ++i && (is_redirection(pipe, str, &i, tmp) == 258))

@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/18 12:34:17 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:32:30 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,11 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 		if (!tmp)
 		{
 			red->name = free_join(red->name, normal_chars(str, i, 1), 0);
-			red->fd = -4;
 			return (1);
 		}
 		free (tmp);
 	}
-	red->fd = ((type != 7) && !(valide_name(&(red->name), str, i))) * -4;
-	return (0);
+	return ((type != 7) && !(valide_name(&(red->name), str, i)));
 }
 
 short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
@@ -137,6 +135,8 @@ short	is_redirection(t_pipe *pipe, char *str, int *i, short type)
 		return (get_errno(258));
 	}
 	exit_val = get_name(red, str, i, type);
+	if (exit_val == 1)
+		red->fd = -4;
 	if (exit_val != 222)
 		add_node(pipe->redirections, pipe->redirections->last, red);
 	return (exit_val);
