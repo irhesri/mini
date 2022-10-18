@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/18 18:33:09 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:00:11 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,8 @@ short	parse_time_2(char *str, char **res, int *i, int tmp)
 	(*res) = free_join(*res, string, 0);
 	if (!string)
 	{
-		get_errno(222);
 		free(*res);
-		return (222);
+		return (get_errno(222));
 	}
 	return (0);
 }
