@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:44:32 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/17 15:25:56 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:34:17 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,9 @@ int	valide_name(char **name, char *str, int *i)
 			if (!var || !*var || *(var + 1))
 			{
 				*name = free_join(*name, normal_chars(str, &k, 1), 0);
-				free_arr(var);
-				return (0);
+				return ((int)free_arr(var));
 			}
-			*name = free_join(*name, *var, 1);
-			free_arr(var);
+			*name = free_join(*name, *var, 1) + (int)free_arr(var);
 		}
 		else
 			*name = free_join(*name, normal_chars(str, i, 0), 0);
@@ -114,8 +112,7 @@ short	get_name(t_redirection *red, char *str, int *i, short type)
 		}
 		free (tmp);
 	}
-	if ((type != 7) && !(valide_name(&(red->name), str, i)))
-		red->fd = -4;
+	red->fd = ((type != 7) && !(valide_name(&(red->name), str, i))) * -4;
 	return (0);
 }
 

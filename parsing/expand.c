@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 19:32:33 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/18 11:29:22 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char	**split_expand(char *str, char *tmp, int *len)
 	res = var_expand(str, len);
 	b[0] = (res && res[0] == ' ');
 	b[1] = 0;
-	if (str[*len] && !(is_limiter(str + *len) > 2) && res && res[my_size(NULL, res) - 1] == ' ')
+	if (str[*len] && !(is_limiter(str + *len) > 2) && res
+		&& res[my_size(NULL, res) - 1] == ' ')
 		b[1] = 1;
 	str = res;
 	while (str && *str)
