@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:00:03 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/17 16:52:09 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/18 11:20:13 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ short	heredoc(int fd, t_redirection *red)
 			line = readline("> ");
 			len = my_size(NULL, line);
 			if (!line || !ft_strncmp(line, red->name, len + 1))
-			{
-				free(line);
 				break ;
-			}
 			red->fd == -2 && chr_rp_var(line, fd);
 			red->fd == -3 && write(fd, line, len);
 			write(fd, "\n", 1);
