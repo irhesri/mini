@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/19 14:39:14 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/19 21:32:39 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	extra_env(t_data *data, char ***arr)
 	}
 	node = getenv_node((get_env(NULL))->head, "SHLVL");
 	if (!node)
-		*arr = array_realloc(*arr, my_strdup("SHLVL=1", '\0'), 0);
+		*arr = array_realloc(*arr, my_strdup("SHLVL=1", '\0'), -1);
 	else
 	{
 		str = node->content;
