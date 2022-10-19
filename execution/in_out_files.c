@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   in_out_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:24 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 13:32:21 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/19 22:16:57 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	file_error(char *file, int fd)
 		print_error(file, ": No such file or directory\n");
 }
 
+// open files in pipe and updating pipe->fd[0/1]
 void	open_files(t_pipe *pipe)
 {
 	int				fd;
@@ -48,6 +49,7 @@ void	open_files(t_pipe *pipe)
 	}
 }
 
+// starting all here_docs in the pipe (red->fd == -2/-3)
 short	check_for_here_docs(t_pipe *pip)
 {
 	int				error;
@@ -76,6 +78,7 @@ short	check_for_here_docs(t_pipe *pip)
 	return (0);
 }
 
+// starting all here_docs in the line
 short	init_here_doc(t_data *data)
 {
 	t_node	*head;
@@ -90,6 +93,7 @@ short	init_here_doc(t_data *data)
 	return (0);
 }
 
+// open files after starting heredocs
 short	init_files(t_data *data)
 {
 	t_node	*head;

@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:38 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/18 19:22:00 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/19 21:59:48 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
+//	list of nodes	//
 typedef struct s_list
 {
 	t_node	*head;
@@ -85,21 +86,20 @@ char		*var_expand(char *str, int *size);
 char		*my_getenv(char *str);
 char		**split_expand(char *str, char *res, int *len);
 char		*is_quoted(char *str, int *len, char c);
-// char		*new_argument(t_pipe *pipe, char **res2, char *res);
 char		*is_double_quoted(char *str, int *pos);
-short		is_redirection(t_pipe *pipe, char *str, int *i, short type);
 char		*normal_chars(char *str, int *i, short b);
-t_pipe		*new_pipe(t_data *data, short b);
 short		is_special_red(char c);
+short		is_redirection(t_pipe *pipe, char *str, int *i, short type);
+t_pipe		*new_pipe(t_data *data, short b);
 
 // EXECUTION
 void		not_builtin(t_data *data, char **arg);
 void		run_commands(t_data *data, t_list *pipes);
-short		update_path(t_data *data, char *str);
 void		handle_sigint(int sig);
-short		heredoc(int fd, t_redirection *red);
 void		set_termios_echoctl(void);
 void		reset_termios_echoctl(void);
+short		update_path(t_data *data, char *str);
+short		heredoc(int fd, t_redirection *red);
 
 //	LIST_FUNCTIONS
 void		add_node(t_list *lst, t_node *pos, void *content);
@@ -116,9 +116,9 @@ long long	ft_atoi(char *str);
 int			ft_strtrim(char *str, int i);
 int			my_dup2(int *newfd, int oldfd);
 char		**array_realloc(char **arr, char *str, short b);
+void		reset_exit(int n);
 short		print_error(char *str1, char *str2);
 short		ft_putstr(char *str, int fd);
-void		reset_exit(int n);
 
 //	BUILTINS
 void		env(void);
@@ -156,8 +156,8 @@ short		is_limiter(char *c);
 short		is_directory(char *path);
 
 // TRASH CAN
-void		empty_pipes(t_list *pipes_lst);
 char		**free_arr(char **arr);
+void		empty_pipes(t_list *pipes_lst);
 
 // GLOBALS
 int			get_errno(int n);

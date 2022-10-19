@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 13:49:48 by imane             #+#    #+#             */
-/*   Updated: 2022/10/17 15:43:55 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/19 22:01:42 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ long long	my_atoi(char *str)
 	return (n);
 }
 
+// reset termios attribute before exit
 void	reset_exit(int n)
 {
 	reset_termios_echoctl();

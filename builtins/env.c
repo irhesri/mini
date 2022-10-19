@@ -6,13 +6,11 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/19 21:32:39 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/19 22:09:57 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// initialise enviroment and export list
 
 void	extra_env(t_data *data, char ***arr)
 {
@@ -41,6 +39,7 @@ void	extra_env(t_data *data, char ***arr)
 	export(data, *arr);
 }
 
+// initialise enviroment and export list
 void	init_env(t_data *data, char **envp)
 {
 	char	*str;
@@ -86,6 +85,7 @@ void	update_envp(t_data *data)
 	data->envp[++i] = NULL;
 }
 
+// update envirement paths at first or after exporting/unseting path
 short	update_path(t_data *data, char *str)
 {
 	free_arr(data->paths);
