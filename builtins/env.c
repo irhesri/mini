@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:04 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/18 20:05:05 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:36:46 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,27 @@
 
 // initialise enviroment and export list
 
-char	*get_val(char *envp)
+void	extra_env(t_data *data)
 {
-	if (!ft_strncmp("SHLVL=", envp, 6))
-		return (free_join("SHLVL=", ft_itoa(ft_atoi(envp + 6) + 1), 2));
-	return (my_strdup(envp, '\0'));
+	char	*str;
+	char	**arr;
+	t_node	*node;
+
+	node = getenv_node((get_env(NULL))->head, "SHLVL");
+	if (!node)
+		arr = array_realloc(NULL, my_strdup("SHLVL=1", '\0'), 0);
+	else
+	{
+		str = node->content;
+		str = free_join("SHLVL=", ft_itoa(ft_atoi(str + 6) + 1), 2);
+		arr = array_realloc(NULL, str, 0);
+	}
+	export(data, arr);
+	free_arr (arr);
+	arr = array_realloc(NULL, my_strdup("OLDPWD", '\0'), 0);
+	unset(data, arr);
+	export(data, arr);
+	free_arr (arr);
 }
 
 void	init_env(t_data *data, char **envp)
@@ -30,17 +46,14 @@ void	init_env(t_data *data, char **envp)
 	{
 		if (**envp != '_' || (**envp && (*envp)[1] != '='))
 		{
-			str = get_val(*envp);
+			str = my_strdup(*envp, '\0');
 			add_node(get_env(NULL), (get_env(NULL))->last, str);
 			add_node(get_exp(NULL),
 				get_position((get_exp(NULL))->head, *envp), str);
 		}
 		envp++;
 	}
-	arr = array_realloc(NULL, "OLDPWD", 0);
-	unset(data, arr);
-	export(data, arr);
-	free (arr);
+	extra_env(data);
 	str = my_strdup("_=/usr/bin/env", '\0');
 	add_node(get_env(NULL), (get_env(NULL))->last, str);
 	get_last(NULL, 1);
