@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/10 18:27:13 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/19 22:27:30 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_list	*get_exp(t_list *exp)
 	return (g_exp);
 }
 
+// b == 1 free the static & assign last to it
+// $_ value (previous line last argument)
 char	*get_last(char *last, int b)
 {
 	static char	*g_last;
@@ -51,6 +53,7 @@ char	*get_bash_name(char *str)
 	return (name);
 }
 
+// $? value (previous line exit status)
 int	get_errno(int n)
 {
 	static int	error;

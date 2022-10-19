@@ -6,12 +6,13 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/18 19:21:04 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/19 22:08:16 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// initialise a pipe and add it to data->pipes
 t_pipe	*new_pipe(t_data *data, short b)
 {
 	t_pipe		*pipe;
@@ -32,6 +33,7 @@ t_pipe	*new_pipe(t_data *data, short b)
 	return (pipe);
 }
 
+// add res or res2 to pipe->arg
 char	*new_argument(t_pipe *pipe, char **res2, char *res, short b)
 {
 	char	**tmp;
@@ -57,6 +59,7 @@ char	*new_argument(t_pipe *pipe, char **res2, char *res, short b)
 	return (res);
 }
 
+// case of string + single/double quote
 short	parse_time_2(char *str, char **res, int *i, int tmp)
 {
 	char	*string;
@@ -84,6 +87,7 @@ short	parse_time_2(char *str, char **res, int *i, int tmp)
 	return (0);
 }
 
+// add new pipe or print syntax error
 t_pipe	*norm(t_data *data, t_pipe *pipe, char *str)
 {
 	if ((pipe && !pipe->arg && !(pipe->redirections)->head))
@@ -101,7 +105,7 @@ t_pipe	*norm(t_data *data, t_pipe *pipe, char *str)
 	return (new_pipe(data, 0));
 }
 
-//	EMPTY PIPES
+//	parse the input string
 short	parse_time(t_data *data, char *str, int i)
 {
 	int		tmp;

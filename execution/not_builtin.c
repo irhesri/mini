@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   not_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:48:26 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 16:06:34 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/19 22:18:50 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ short	open_file(char *path)
 	return (1);
 }
 
+// error printing
 void	command_error(t_data *data, char *cmd, short b)
 {
 	char	*str;
@@ -51,7 +52,7 @@ void	command_error(t_data *data, char *cmd, short b)
 	exit (b + (b == 125));
 }
 
-// check if a path or a directory
+// check if the command is a path or a directory
 char	*its_directory_or_path(t_data *data, char *command)
 {
 	short	b;
@@ -77,6 +78,7 @@ char	*its_directory_or_path(t_data *data, char *command)
 	return (NULL);
 }
 
+// return path of command file
 char	*get_path(t_data *data, char **paths, char *cmd)
 {
 	int		i;
@@ -106,6 +108,7 @@ char	*get_path(t_data *data, char **paths, char *cmd)
 	return (path);
 }
 
+// execute a command
 void	not_builtin(t_data *data, char **arg)
 {
 	char	*path;

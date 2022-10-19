@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/19 11:44:33 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/19 22:02:54 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*my_getenv(char *str)
 	return (str);
 }
 
+// case of $$ or ($ + digi)t or $? or $
 static char	*special_cases(char *str, int *size)
 {
 	char	*res;

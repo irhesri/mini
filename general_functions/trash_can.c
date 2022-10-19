@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trash_can.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:52 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/15 18:21:06 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/19 22:22:45 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_red_list(t_list *lst)
 	free (lst);
 }
 
+// free data->pipes and its content + closes the open fds
 void	empty_pipes(t_list *pipes_lst)
 {
 	char	**args;
@@ -56,6 +57,7 @@ void	empty_pipes(t_list *pipes_lst)
 	}
 }
 
+// free double pointer and return NULL
 char	**free_arr(char **arr)
 {
 	char	**tmp;

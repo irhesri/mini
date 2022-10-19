@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:34 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/18 16:52:21 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/19 22:27:54 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	update_last(t_pipe *p, int n)
 		get_last(NULL, 1);
 }
 
+// ctrl + D
 static void	null_exit(void)
 {
 	rl_replace_line("", 1);
@@ -53,6 +54,7 @@ static void	null_exit(void)
 	reset_exit (get_errno(-1));
 }
 
+// read and execute a line
 static void	read_line(t_data *data)
 {
 	int		n;
@@ -84,6 +86,7 @@ static void	read_line(t_data *data)
 // initialise bash name
 // initialise data
 // initialise env
+// initialise enviroment paths
 // start
 int	main(int ac, char **av, char **envp)
 {

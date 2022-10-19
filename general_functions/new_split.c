@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:46:21 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/17 13:31:08 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/19 22:21:25 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ static	char	**fill(t_struct *size, char *str, char c, short b)
 }
 
 // b == 1 python split
-// len == size of the array
 char	**my_split(char *str, char c, short b)
 {
 	t_struct	*size;
