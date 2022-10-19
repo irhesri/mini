@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/19 11:37:28 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/19 11:44:33 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ char	**split_expand(char *str, char *tmp, int *len)
 		str++;
 	}
 	ress = my_split(res, ' ', 0);
-	if (b[0] && tmp)
-		ress = array_realloc(ress, my_strdup("", '\0'), 0);
 	if (b[1] && ress)
 		ress = array_realloc(ress, my_strdup("", '\0'), -1);
+	if (b[0] && tmp)
+		ress = array_realloc(ress, my_strdup("", '\0'), 0);
 	free (res);
 	return (ress);
 }
