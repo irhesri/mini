@@ -6,7 +6,7 @@
 /*   By: sben-chi <sben-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:53:26 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/11 11:46:47 by sben-chi         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:53:04 by sben-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_option(char **str, int *option)
 	int	i;
 
 	i = -1;
-	while (str[++i] && str[i][0] == '-')
+	while (str[++i] && str[i][0] == '-' && str[i][1] != '-')
 	{
 		j = 1;
 		while (str[i][j] && str[i][j] == 'n')
