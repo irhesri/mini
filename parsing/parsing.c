@@ -6,7 +6,7 @@
 /*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/19 22:08:16 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/21 19:16:12 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ short	parse_time_2(char *str, char **res, int *i, int tmp)
 	if (!tmp)
 	{
 		tmp = *i;
-		while (str[*i] && !is_limiter(str + *i))
+		while (str[*i] && !is_limiter(str + *i) && str[*i] != '\n' && str[*i] != '\t')
 			(*i)++;
 		(*res) = free_join(*res, my_strdup(str + tmp, str[*i]), 0);
 		return (0);
@@ -112,8 +112,6 @@ short	parse_time(t_data *data, char *str, int i)
 	char	*res;
 	t_pipe	*pipe;
 
-	if (!str[i])
-		return (1);
 	pipe = new_pipe(data, 1);
 	res = NULL;
 	while (str[i] && pipe)
@@ -126,7 +124,8 @@ short	parse_time(t_data *data, char *str, int i)
 			res = new_argument(pipe, split_expand(str, res, &i), res, 1);
 		else if (tmp > 5 && ++i && (is_redirection(pipe, str, &i, tmp) == 258))
 			return (258);
-		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3)
+		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3 ||
+			str[i] == '\n' || str[i] == '\t')
 			res = new_argument(pipe, NULL, res, 0);
 		if (tmp == 4 && ++i)
 			pipe = norm(data, pipe, str + i);
