@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 14:49:41 by sben-chi          #+#    #+#             */
-/*   Updated: 2022/10/15 12:11:09 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/22 18:14:14 by imane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	my_exit(t_data *data, char **status)
 	}
 	nb = get_errno(-1);
 	if (status[0])
-		nb = ft_atoi(status[0]);
+		nb = ft_atoi(status[0]) % 256;
+	if (nb < 0)
+		nb += 256;
 	reset_exit(get_errno(nb));
 }
