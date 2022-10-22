@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:48 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/21 19:16:12 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/22 03:04:10 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ short	parse_time_2(char *str, char **res, int *i, int tmp)
 	if (!tmp)
 	{
 		tmp = *i;
-		while (str[*i] && !is_limiter(str + *i) && str[*i] != '\n' && str[*i] != '\t')
+		while (str[*i] && !is_limiter(str + *i)
+			&& str[*i] != '\t' && str[*i] != '\n')
 			(*i)++;
 		(*res) = free_join(*res, my_strdup(str + tmp, str[*i]), 0);
 		return (0);
@@ -124,8 +125,8 @@ short	parse_time(t_data *data, char *str, int i)
 			res = new_argument(pipe, split_expand(str, res, &i), res, 1);
 		else if (tmp > 5 && ++i && (is_redirection(pipe, str, &i, tmp) == 258))
 			return (258);
-		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3 ||
-			str[i] == '\n' || str[i] == '\t')
+		if (tmp == 4 || !str[i] || is_limiter(str + i) > 3
+			|| str[i] == '\n' || str[i] == '\t')
 			res = new_argument(pipe, NULL, res, 0);
 		if (tmp == 4 && ++i)
 			pipe = norm(data, pipe, str + i);

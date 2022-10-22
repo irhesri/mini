@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imane <imane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:09 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/21 19:12:59 by imane            ###   ########.fr       */
+/*   Updated: 2022/10/22 03:05:14 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*special_cases(char *str, int *size)
 	}
 	if (str[(*size)] == '?' && ++(*size))
 		return (ft_itoa(get_errno(-1)));
-	if (is_limiter(str + (*size)) || str[*size] == '\t' || str[*size] == '\n')
+	if (is_limiter(str + (*size)) || str[*size] == '\n' || str[*size] == '\t')
 		return (my_strdup("$", '\0'));
 	return (NULL);
 }

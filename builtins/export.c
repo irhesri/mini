@@ -6,7 +6,7 @@
 /*   By: irhesri <irhesri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 21:10:13 by irhesri           #+#    #+#             */
-/*   Updated: 2022/10/15 19:10:27 by irhesri          ###   ########.fr       */
+/*   Updated: 2022/10/22 09:15:08 by irhesri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,16 @@ void	update_var(t_data *data, t_node *node, char *str, int i)
 	node->content = str;
 	node = getenv_node((get_env(NULL))->head, str);
 	if (node)
-	{
 		node->content = str;
-		free (data->envp);
-		data->envp = NULL;
-	}
 	else
 		add_node(get_env(NULL), (get_env(NULL))->last, str);
+	free (data->envp);
+	data->envp = NULL;
 	free (tmp);
 }
 
 // add a new variable
-void	new_var(char *str, int i)
+void	new_var(t_data *data, char *str, int i)
 {
 	if (i != -1 && str[i - 1] == '\0')
 		str = ft_strjoin(str, str + i);
@@ -91,7 +89,11 @@ void	new_var(char *str, int i)
 		str = my_strdup(str, '\0');
 	add_node(get_exp(NULL), get_position((get_exp(NULL))->head, str), str);
 	if (i != -1)
+	{
 		add_node(get_env(NULL), (get_env(NULL))->last, str);
+		free (data->envp);
+		data->envp = NULL;
+	}
 }
 
 // exports arg
@@ -116,7 +118,7 @@ void	export(t_data *data, char **arg)
 			continue ;
 		node = getenv_node((get_exp(NULL))->head, *arg);
 		if (!node)
-			new_var(*arg, i);
+			new_var(data, *arg, i);
 		else if (i != -1)
 			update_var(data, node, *arg, i);
 		if (!ft_strncmp("PATH=", *arg, 5))
