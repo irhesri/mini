@@ -1,9 +1,9 @@
 NAME	= minishell
 
 CC 			= gcc 
-CFLAGS		= -g -fsanitize=address #-Wall -Wextra -Werror 
-# LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
-# CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
+CFLAGS		= -Wall -Wextra -Werror 
+LDFLAGS		= -L /goinfre/irhesri/irhesri/.brew/opt/readline/lib
+CPPFLAGS	= -I /goinfre/irhesri/irhesri/.brew/opt/readline/include
 
 SRC1	= execution.c heredoc.c not_builtin.c termios_signals.c in_out_files.c
 SRC2	= expand.c parsing.c \
