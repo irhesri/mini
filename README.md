@@ -66,3 +66,8 @@ The builtins do the same work as the ones of bash:
 * Only the next functions are allowed:
 >readline, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history, printf, malloc, free, write, access, open, read, close, fork, wait, waitpid, wait3, wait4, signal, sigaction, sigemptyset, sigaddset, kill, exit, getcwd, chdir, stat, lstat, fstat, unlink, execve, dup, dup2, pipe, opendir, readdir, closedir, strerror, perror, isatty, ttyname, ttyslot, ioctl, getenv, tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 * Not use more than one global variable. 
+
+## Conclusion:
+***Minishell*** is a small but useful project that provides a basic set of functionalities and commands similar to the bash shell. And developing it was an enriching learning experience where we were able to understand the core concepts of the command-line interfaces and the underlying system mechanisms that enable them to work by implementing them in a real-world project. Moreover, working on this project we gained practical knowledge about ***multiprocessing*** (creating child processes), ***executing system commands***, ***handling signals***, ***files manipulating***, implementing features such as ***piping*** and ***redirections***, and some ***shell functionalities***.
+Overall, Minishell was an incredibly rewarding experience that deepened our knowledge and skills in ***system programming*** and ***command-line interfaces***.
+
